@@ -11,9 +11,7 @@ module.exports = function(name, test){
 
   function runTheMagic(){
     console.log(name + ' project created!')
-    if(!test){
-      kexec('cd ' + name + '&& npm init && npm install');
-    }
+    if(!test) kexec('cd ' + name + ' && npm init && npm install')
   }
 
   function logCreation(filename){
