@@ -6,9 +6,13 @@ var noop = function(){}
 
 
 tap.test('does all the stuff', function(t){
-  t.plan(7)
+  t.plan(13)
 
   mkproj('AndyWarhol.js')
+
+  console.log = function(msg) {
+    t.ok(msg, 'logs creation')
+  };
 
   setTimeout(function(){
     t.ok(fs.existsSync('AndyWarhol.js'), 'mks a new directory')
@@ -25,5 +29,5 @@ tap.test('does all the stuff', function(t){
     t.ok(fs.readFileSync('AndyWarhol.js/package.json', {encoding: 'utf-8'}).match("\"name\": \"AndyWarhol.js\""),
          'mks a package.json')
     rimraf('AndyWarhol.js', noop)
-  }, 750)
+  }, 500)
 })
