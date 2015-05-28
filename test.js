@@ -4,9 +4,15 @@ var fs = require('fs')
 var rimraf = require('rimraf')
 var noop = function(){}
 
-tap.test('makes new dir with project name', function(t){
-  t.plan(1)
-  mkproj('foobar')
-  t.ok(fs.existsSync('foobar'), 'mks dir')
-  rimraf('foobar', noop)
+tap.test('does all the stuff', function(t){
+  t.plan(2)
+
+  mkproj('AndyWarhol.js')
+
+  setTimeout(function(){
+    t.ok(fs.existsSync('AndyWarhol.js'), 'mks a new directory')
+    t.equal(fs.readFileSync('AndyWarhol.js/.gitignore', {encoding: 'utf-8'}), '/node_modules')
+
+    rimraf('AndyWarhol.js', noop)
+  }, 500)
 })
