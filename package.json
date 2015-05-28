@@ -6,7 +6,7 @@
     "psy": "cmd.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test.js"
   },
   "keywords": [
     "generator",
@@ -16,6 +16,7 @@
   "author": "Cole Willsea <coleww@gmail.com> (http://colewillsea.com/)",
   "license": "MIT",
   "devDependencies": {
+    "rimraf": "^2.3.4",
     "tap": "^1.2.0"
   }
 }
