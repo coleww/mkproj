@@ -1,6 +1,6 @@
 {
   "name": "mkproj",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generates lil nodely projects",
   "bin": {
     "mkproj": "cmd.js"
@@ -22,5 +22,14 @@
   "dependencies": {
     "after": "^0.8.1",
     "kexec": "^1.2.0"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coleww/mkproj.git"
+  },
+  "bugs": {
+    "url": "https://github.com/coleww/mkproj/issues"
+  },
+  "homepage": "https://github.com/coleww/mkproj"
 }
