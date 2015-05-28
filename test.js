@@ -5,7 +5,7 @@ var rimraf = require('rimraf')
 var noop = function(){}
 
 tap.test('does all the stuff', function(t){
-  t.plan(3)
+  t.plan(5)
 
   mkproj('AndyWarhol.js')
 
@@ -17,7 +17,8 @@ tap.test('does all the stuff', function(t){
     t.equal(fs.readFileSync('AndyWarhol.js/README.md', {encoding: 'utf-8'}),
             'AndyWarhol.js\n----------------',
             'echoes proj name into README.md')
-
+    t.ok(fs.existsSync('AndyWarhol.js/index.js'), 'mks an index.js')
+    t.ok(fs.existsSync('AndyWarhol.js/main.css'), 'mks a main.css')
     rimraf('AndyWarhol.js', noop)
   }, 500)
 })

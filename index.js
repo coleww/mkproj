@@ -9,7 +9,8 @@ module.exports = function(name){
     } else {
       fs.writeFile(name + '/.gitignore', '/node_modules', toErr);
       fs.writeFile(name + '/README.md', 'AndyWarhol.js\n----------------', toErr);
-
+      fs.writeFile(name + '/index.js', '', toErr);
+      fs.writeFile(name + '/main.css', '', toErr);
 
 
     }
