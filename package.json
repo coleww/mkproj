@@ -18,5 +18,9 @@
   "devDependencies": {
     "rimraf": "^2.3.4",
     "tap": "^1.2.0"
+  },
+  "dependencies": {
+    "after": "^0.8.1",
+    "kexec": "^1.2.0"
   }
 }

@@ -1,29 +1,46 @@
 var fs = require('fs')
+var after = require("after")
+var kexec = require('kexec');
 
 var makeHTML5Boilerplate = require('./html5')
 var npmInit = require('./npmInit')
 
-function logCreation(filename){
-  return function (err){
-    if (err){
-      throw err
-    } else {
-      console.log("CREATED: " + filename)
+module.exports = function(name, test){
+
+  var initialize = after(6, runTheMagic)
+
+  function runTheMagic(){
+    if(!test){
+      kexec('cd ' + name + '&& npm init && npm install');
+    }
+    console.log(name + ' project created!')
+  }
+
+  function logCreation(filename){
+    return function (err){
+      if (err){
+        throw err
+      } else {
+        console.log("CREATED: " + filename)
+        initialize()
+      }
     }
   }
-}
 
-module.exports = function(name){
+  function writeFile(filename, data){
+    fs.writeFile(filename, data, logCreation(filename))
+  }
+
   fs.mkdir(name, function(err){
     if(err) {
       console.log(err)
     } else {
-      fs.writeFile(name + '/.gitignore', '/node_modules', logCreation(name + '.gitignore'))
-      fs.writeFile(name + '/README.md', 'AndyWarhol.js\n----------------', logCreation(name + 'README.md'))
-      fs.writeFile(name + '/index.js', '', logCreation(name + 'index.js'))
-      fs.writeFile(name + '/main.css', '', logCreation(name + 'main.css'))
-      fs.writeFile(name + '/index.html', makeHTML5Boilerplate(name), logCreation(name + 'index.html'))
-      fs.writeFile(name + '/package.json', npmInit(name), logCreation(name + 'package.json'))
+      writeFile(name + '/.gitignore', '/node_modules')
+      writeFile(name + '/README.md', 'AndyWarhol.js\n----------------')
+      writeFile(name + '/index.js', '')
+      writeFile(name + '/main.css', '')
+      writeFile(name + '/index.html', makeHTML5Boilerplate(name))
+      writeFile(name + '/package.json', npmInit(name))
     }
   })
 }
