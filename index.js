@@ -1,6 +1,7 @@
 var fs = require('fs')
 
-var makeHTML5Boilerplate = require('./html5.js')
+var makeHTML5Boilerplate = require('./html5')
+var npmInit = require('./npmInit')
 
 function toErr(err){
   if (err) throw err;
@@ -16,9 +17,7 @@ module.exports = function(name){
       fs.writeFile(name + '/index.js', '', toErr);
       fs.writeFile(name + '/main.css', '', toErr);
       fs.writeFile(name + '/index.html', makeHTML5Boilerplate(name), toErr)
-
+      fs.writeFile(name + '/package.json', npmInit(name), toErr)
     }
-
-
   })
 }

@@ -6,7 +6,7 @@ var noop = function(){}
 
 
 tap.test('does all the stuff', function(t){
-  t.plan(6)
+  t.plan(7)
 
   mkproj('AndyWarhol.js')
 
@@ -22,6 +22,8 @@ tap.test('does all the stuff', function(t){
     t.ok(fs.existsSync('AndyWarhol.js/main.css'), 'mks a main.css')
     t.ok(fs.readFileSync('AndyWarhol.js/index.html', {encoding: 'utf-8'}).match("<title>AndyWarhol.js</title>"),
          'mks some html5 boilerplate')
+    t.ok(fs.readFileSync('AndyWarhol.js/package.json', {encoding: 'utf-8'}).match("\"name\": \"AndyWarhol.js\""),
+         'mks a package.json')
     rimraf('AndyWarhol.js', noop)
   }, 750)
 })
