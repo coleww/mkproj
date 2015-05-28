@@ -4,8 +4,9 @@ var fs = require('fs')
 var rimraf = require('rimraf')
 var noop = function(){}
 
+
 tap.test('does all the stuff', function(t){
-  t.plan(5)
+  t.plan(6)
 
   mkproj('AndyWarhol.js')
 
@@ -19,6 +20,8 @@ tap.test('does all the stuff', function(t){
             'echoes proj name into README.md')
     t.ok(fs.existsSync('AndyWarhol.js/index.js'), 'mks an index.js')
     t.ok(fs.existsSync('AndyWarhol.js/main.css'), 'mks a main.css')
+    t.ok(fs.readFileSync('AndyWarhol.js/index.html', {encoding: 'utf-8'}).match("<title>AndyWarhol.js</title>"),
+         'mks some html5 boilerplate')
     rimraf('AndyWarhol.js', noop)
-  }, 500)
+  }, 750)
 })
