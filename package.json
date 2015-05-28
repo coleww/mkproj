@@ -1,0 +1,21 @@
+{
+  "name": "mkproj",
+  "version": "1.0.0",
+  "description": "Generates lil nodely projects",
+  "bin": {
+    "psy": "cmd.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "generator",
+    "browserify",
+    "scaffold"
+  ],
+  "author": "Cole Willsea <coleww@gmail.com> (http://colewillsea.com/)",
+  "license": "MIT",
+  "devDependencies": {
+    "tap": "^1.2.0"
+  }
+}
