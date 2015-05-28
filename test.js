@@ -12,7 +12,7 @@ tap.test('does all the stuff', function(t){
 
   console.log = function(msg) {
     t.ok(msg, 'logs creation')
-  };
+  }
 
   setTimeout(function(){
     t.ok(fs.existsSync('AndyWarhol.js'), 'mks a new directory')
@@ -30,4 +30,12 @@ tap.test('does all the stuff', function(t){
          'mks a package.json')
     rimraf('AndyWarhol.js', noop)
   }, 500)
+})
+
+tap.test('does nothing without a project name', function(t){
+  t.plan(2)
+  console.log = function(msg) {
+    t.equal(msg, 'you must pass a project name!', 'warns if no proj name is passed')
+  }
+  t.equal(mkproj(), 'fail', 'process exits')
 })

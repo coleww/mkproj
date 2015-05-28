@@ -6,6 +6,10 @@ var makeHTML5Boilerplate = require('./html5')
 var npmInit = require('./npmInit')
 
 module.exports = function(name, test){
+  if(!name) {
+    console.log('you must pass a project name!')
+    return 'fail'
+  }
 
   var initialize = after(6, runTheMagic)
 
