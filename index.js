@@ -38,7 +38,7 @@ module.exports = function(name, test){
       console.log(err)
     } else {
       writeFile(name + '/.gitignore', '/node_modules')
-      writeFile(name + '/README.md', 'AndyWarhol.js\n----------------')
+      writeFile(name + '/README.md', name+'\n----------------')
       writeFile(name + '/index.js', '')
       writeFile(name + '/main.css', '')
       writeFile(name + '/index.html', makeHTML5Boilerplate(name))
