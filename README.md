@@ -3,6 +3,8 @@ MKPROJ
 
 simple scaffolding tool for Browserify projects.
 
+[![NPM](https://nodei.co/npm/mkproj.png)](https://nodei.co/npm/mkproj/)
+
 ### INSTALL IT
 
 `npm install -g mkproj`
