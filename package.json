@@ -1,6 +1,6 @@
 {
   "name": "mkproj",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Generates lil nodely projects",
   "bin": {
     "mkproj": "cmd.js"
@@ -28,6 +28,7 @@
     "type": "git",
     "url": "https://github.com/coleww/mkproj.git"
   },
+  "preferGlobal": true,
   "bugs": {
     "url": "https://github.com/coleww/mkproj/issues"
   },
