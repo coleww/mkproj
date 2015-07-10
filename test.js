@@ -6,7 +6,7 @@ var noop = function(){}
 
 
 tap.test('does all the stuff', function(t){
-  t.plan(22)
+  t.plan(23)
 
   mkproj('AndyWarhol.js', true)
 
