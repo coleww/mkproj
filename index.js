@@ -11,7 +11,7 @@ module.exports = function(name, test){
     return 'fail'
   }
 
-  var initialize = after(6, runTheMagic)
+  var initialize = after(7, runTheMagic)
 
   function runTheMagic(){
     console.log(name + ' project created!')
@@ -37,6 +37,8 @@ module.exports = function(name, test){
     if(err) {
       console.log(err)
     } else {
+
+      writeFile(name + '/.travis.yml', 'language: node_js\nnode_js:\n  - "0.12"\n  - "0.10"')
       writeFile(name + '/.gitignore', '/node_modules')
       writeFile(name + '/README.md', name+'\n----------------')
       writeFile(name + '/index.js', '')
