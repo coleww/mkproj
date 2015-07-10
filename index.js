@@ -11,7 +11,7 @@ module.exports = function(name, test){
     return 'fail'
   }
 
-  var initialize = after(8, runTheMagic)
+  var initialize = after(9, runTheMagic)
 
   function runTheMagic(){
     console.log(name + ' project created!')
@@ -37,12 +37,18 @@ module.exports = function(name, test){
     if(err) {
       console.log(err)
     } else {
-
+      fs.mkdir(name + '/www', function(err){
+        if(err) {
+          console.log(err)
+        } else {
+          writeFile(name + '/www/demo.js', '')
+          writeFile(name + '/www/main.css', '')
+        }
+      })
       writeFile(name + '/.travis.yml', 'language: node_js\nnode_js:\n  - "0.12"\n  - "0.10"')
       writeFile(name + '/.gitignore', '/node_modules')
       writeFile(name + '/README.md', name+'\n----------------')
       writeFile(name + '/index.js', '')
-      writeFile(name + '/main.css', '')
       writeFile(name + '/test.js', "var tap = require('tape')\ntap.test('',function(t){\n\n})")
       writeFile(name + '/index.html', makeHTML5Boilerplate(name))
       writeFile(name + '/package.json', npmInit(name))
