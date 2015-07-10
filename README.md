@@ -24,6 +24,19 @@ simple scaffolding tool for Browserify projects.
     CREATED: wowowowow/index.html
     CREATED: wowowowow/package.json
     wowowowow project created!
+                               |        |
+                               |\      /|
+                               | \____/ |
+                               |  /\/\  |
+                              .'___  ___`.
+                             /  \|/  \|/  \
+            _.--------------( ____ __ _____)
+         .-' \  -. | | | | | \ ----\/---- /
+       .'\  | | / \` | | | |  `.  -'`-  .'
+      /`  ` ` '/ / \ | | | | \  `------'\
+     /-  `-------.' `-----.       -----. `---.
+    (  / | | | |  )/ | | | )/ | | | | | ) | | )
+     `._________.'_____,,,/\_______,,,,/_,,,,/
     This utility will walk you through creating a package.json file.
     // ...ETC. etc. etc.
 ```
