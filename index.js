@@ -11,7 +11,7 @@ module.exports = function(name, test){
     return 'fail'
   }
 
-  var initialize = after(7, runTheMagic)
+  var initialize = after(8, runTheMagic)
 
   function runTheMagic(){
     console.log(name + ' project created!')
@@ -43,6 +43,7 @@ module.exports = function(name, test){
       writeFile(name + '/README.md', name+'\n----------------')
       writeFile(name + '/index.js', '')
       writeFile(name + '/main.css', '')
+      writeFile(name + '/test.js', "var tap = require('tape')\ntap.test('',function(t){\n\n})")
       writeFile(name + '/index.html', makeHTML5Boilerplate(name))
       writeFile(name + '/package.json', npmInit(name))
     }
