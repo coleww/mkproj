@@ -6,7 +6,7 @@ var noop = function(){}
 
 
 tap.test('does all the stuff', function(t){
-  t.plan(14)
+  t.plan(23)
 
   mkproj('AndyWarhol.js', true)
 
@@ -19,15 +19,22 @@ tap.test('does all the stuff', function(t){
     t.equal(fs.readFileSync('AndyWarhol.js/.gitignore', {encoding: 'utf-8'}),
             '/node_modules',
             'echoes node_modules into gitignore')
+    t.equal(fs.readFileSync('AndyWarhol.js/.npmignore', {encoding: 'utf-8'}),
+            'www',
+            'echoes dubdubdub into npmignore')
     t.equal(fs.readFileSync('AndyWarhol.js/README.md', {encoding: 'utf-8'}),
             'AndyWarhol.js\n----------------',
             'echoes proj name into README.md')
     t.ok(fs.existsSync('AndyWarhol.js/index.js'), 'mks an index.js')
-    t.ok(fs.existsSync('AndyWarhol.js/main.css'), 'mks a main.css')
+    t.ok(fs.existsSync('AndyWarhol.js/www/main.css'), 'mks a main.css')
+    t.ok(fs.existsSync('AndyWarhol.js/www/demo.js'), 'mks a demo.js')
     t.ok(fs.readFileSync('AndyWarhol.js/index.html', {encoding: 'utf-8'}).match("<title>AndyWarhol.js</title>"),
          'mks some html5 boilerplate')
     t.ok(fs.readFileSync('AndyWarhol.js/package.json', {encoding: 'utf-8'}).match("\"name\": \"AndyWarhol.js\""),
          'mks a package.json')
+    t.ok(fs.existsSync('AndyWarhol.js/.travis.yml'), 'mks a trav')
+    t.ok(fs.existsSync('AndyWarhol.js/test.js'), 'mks a test file')
+
     rimraf('AndyWarhol.js', noop)
   }, 500)
 })

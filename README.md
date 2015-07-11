@@ -13,23 +13,39 @@ simple scaffolding tool for Browserify projects.
 
 ```
     $ mkproj wowowowow
-    CREATED: wowowowow/main.css
     CREATED: wowowowow/.gitignore
-    CREATED: wowowowow/index.js
+    CREATED: wowowowow/.travis.yml
+    CREATED: wowowowow/.npmignore
     CREATED: wowowowow/README.md
+    CREATED: wowowowow/index.js
+    CREATED: wowowowow/www/demo.js
+    CREATED: wowowowow/test.js
+    CREATED: wowowowow/www/main.css
     CREATED: wowowowow/index.html
     CREATED: wowowowow/package.json
     wowowowow project created!
+                               |        |
+                               |\      /|
+                               | \____/ |
+                               |  /\/\  |
+                              .'___  ___`.
+                             /  \|/  \|/  \
+            _.--------------( ____ __ _____)
+         .-' \  -. | | | | | \ ----\/---- /
+       .'\  | | / \` | | | |  `.  -'`-  .'
+      /`  ` ` '/ / \ | | | | \  `------'\
+     /-  `-------.' `-----.       -----. `---.
+    (  / | | | |  )/ | | | )/ | | | | | ) | | )
+     `._________.'_____,,,/\_______,,,,/_,,,,/
     This utility will walk you through creating a package.json file.
-    It only covers the most common items, and tries to guess sane defaults.
     // ...ETC. etc. etc.
 ```
 
-After generating the project folder/files, it `cd`'s into the new folder and runs `npm init` and `npm install`.
+After generating the project folder/files, it `cd`'s into the new folder and runs `npm init` and `npm install` and `git init` and `git commit -m "initial"`.
 
-From there, run `npm run watch` to start Watchify, and you can immediately get started writing NODE IN THE BROWSER ZOMG!
+From there run `npm run watch` to start watchify and also plz fire up a simple HTTPserver with yr favorite snake egg or red gem and then you can immediately get started writing NODE IN THE BROWSER ZOMG AWESOME! Use index.js/test.js to write some sweet functions, and then let them loose in yr www/demo.js. Write some sick npm modules and also demo them, or just wail hard on those lego bricks, yeah.
 
-### WHY
+F R E E D O M
 
-I make enough small browserified javascript toys that it started to get annoying to copy over the html5 boiler plate and `echo /node_modules > .gitignore` and etc. This just does it all for me/you, saving literally MINUTES of time.
+
 

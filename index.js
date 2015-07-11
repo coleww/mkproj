@@ -4,6 +4,7 @@ var kexec = require('kexec');
 
 var makeHTML5Boilerplate = require('./html5')
 var npmInit = require('./npmInit')
+var catMe = require('./catMe')
 
 module.exports = function(name, test){
   if(!name) {
@@ -11,11 +12,12 @@ module.exports = function(name, test){
     return 'fail'
   }
 
-  var initialize = after(6, runTheMagic)
+  var initialize = after(10, runTheMagic)
 
   function runTheMagic(){
     console.log(name + ' project created!')
-    if(!test) kexec('cd ' + name + ' && npm init && npm install')
+    console.log(catMe())
+    if(!test) kexec('cd ' + name + ' && npm init && npm install && git init && git add -A && git commit -m "initial"')
   }
 
   function logCreation(filename){
@@ -37,10 +39,20 @@ module.exports = function(name, test){
     if(err) {
       console.log(err)
     } else {
+      fs.mkdir(name + '/www', function(err){
+        if(err) {
+          console.log(err)
+        } else {
+          writeFile(name + '/www/demo.js', '')
+          writeFile(name + '/www/main.css', '')
+        }
+      })
+      writeFile(name + '/.travis.yml', 'language: node_js\nnode_js:\n  - "0.12"\n  - "0.10"')
       writeFile(name + '/.gitignore', '/node_modules')
+      writeFile(name + '/.npmignore', 'www')
       writeFile(name + '/README.md', name+'\n----------------')
       writeFile(name + '/index.js', '')
-      writeFile(name + '/main.css', '')
+      writeFile(name + '/test.js', "var tap = require('tape')\ntap.test('',function(t){\n\n})")
       writeFile(name + '/index.html', makeHTML5Boilerplate(name))
       writeFile(name + '/package.json', npmInit(name))
     }
