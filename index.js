@@ -52,8 +52,8 @@ module.exports = function(name, test){
       writeFile(name + '/.gitignore', '/node_modules')
       writeFile(name + '/.npmignore', 'www')
       writeFile(name + '/README.md', makeReadme(name))
-      writeFile(name + '/index.js', '')
-      writeFile(name + '/test.js', "var tap = require('tape')\ntap.test('',function(t){\n\n})")
+      writeFile(name + '/index.js', 'module.exports = function(){\n\n}')
+      writeFile(name + '/test.js', "var tap = require('tape')\n\ntap.test('',function(t){\n\n})")
       writeFile(name + '/index.html', makeHTML5Boilerplate(name))
       writeFile(name + '/package.json', npmInit(name))
     }
