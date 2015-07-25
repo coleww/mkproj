@@ -18,6 +18,7 @@ module.exports = function(name, test){
   function runTheMagic(){
     console.log(name + ' project created!')
     console.log(catMe())
+    console.log("W A Y    C H I L L!               =^.^=            R A D I C A L!")
     if(!test) kexec('cd ' + name + ' && npm init && npm install && git init && git add -A && git commit -m "initial"')
   }
 
