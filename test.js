@@ -22,8 +22,7 @@ tap.test('does all the stuff', function(t){
     t.equal(fs.readFileSync('AndyWarhol.js/.npmignore', {encoding: 'utf-8'}),
             'www',
             'echoes dubdubdub into npmignore')
-    t.equal(fs.readFileSync('AndyWarhol.js/README.md', {encoding: 'utf-8'}),
-            'AndyWarhol.js\n----------------',
+    t.ok(fs.readFileSync('AndyWarhol.js/README.md', {encoding: 'utf-8'}).match('AndyWarhol.js\n----------------'),
             'echoes proj name into README.md')
     t.ok(fs.existsSync('AndyWarhol.js/index.js'), 'mks an index.js')
     t.ok(fs.existsSync('AndyWarhol.js/www/main.css'), 'mks a main.css')

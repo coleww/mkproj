@@ -4,6 +4,7 @@ var kexec = require('kexec');
 
 var makeHTML5Boilerplate = require('./html5')
 var npmInit = require('./npmInit')
+var makeReadme = require('./makeReadme')
 var catMe = require('./catMe')
 
 module.exports = function(name, test){
@@ -50,7 +51,7 @@ module.exports = function(name, test){
       writeFile(name + '/.travis.yml', 'language: node_js\nnode_js:\n  - "0.12"\n  - "0.10"')
       writeFile(name + '/.gitignore', '/node_modules')
       writeFile(name + '/.npmignore', 'www')
-      writeFile(name + '/README.md', name+'\n----------------')
+      writeFile(name + '/README.md', makeReadme(name))
       writeFile(name + '/index.js', '')
       writeFile(name + '/test.js', "var tap = require('tape')\ntap.test('',function(t){\n\n})")
       writeFile(name + '/index.html', makeHTML5Boilerplate(name))
