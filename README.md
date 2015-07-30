@@ -1,9 +1,11 @@
 MKPROJ
 --------------------
 
-simple scaffolding tool for Browserify projects.
+simple scaffolding tool for making node modules and/or Browserify'd web apps. 
 
 [![NPM](https://nodei.co/npm/mkproj.png)](https://nodei.co/npm/mkproj/)
+[![Build Status](https://secure.travis-ci.org/coleww/mkproj.png)](http://travis-ci.org/coleww/mkproj)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
 ### INSTALL IT
 
@@ -43,9 +45,13 @@ simple scaffolding tool for Browserify projects.
 
 After generating the project folder/files, it `cd`'s into the new folder and runs `npm init` and `npm install` and `git init` and `git commit -m "initial"`.
 
-From there run `npm run watch` to start watchify and also plz fire up a simple HTTPserver with yr favorite snake egg or red gem and then you can immediately get started writing NODE IN THE BROWSER ZOMG AWESOME! Use index.js/test.js to write some sweet functions, and then let them loose in yr www/demo.js. Write some sick npm modules and also demo them, or just wail hard on those lego bricks, yeah.
+From there just CD into the fresh directory and run `npm run watch` to start watchify and also plz fire up a simple HTTPserver ([i like this node module](https://www.npmjs.com/package/serve)) and then you can immediately get started writing NODE IN THE BROWSER ZOMG AWESOME! 
+
+Use index.js to write some sweet functions, 
+and test.js to, err, um, test them.
+Drop that code into www/demo.js, 
+and let those functions fly on index.html.
+If you are making a module to publish, be sure to write good documentation in the readme! 
+
 
 F R E E D O M
-
-
-
