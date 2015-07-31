@@ -6,7 +6,7 @@
     "mkproj": "cmd.js"
   },
   "scripts": {
-    "test": "node test.js"
+    "test": "standard && node test.js"
   },
   "keywords": [
     "generator",
@@ -17,6 +17,7 @@
   "license": "MIT",
   "devDependencies": {
     "rimraf": "^2.3.4",
+    "standard": "^4.5.4",
     "tap": "^1.2.0"
   },
   "dependencies": {
