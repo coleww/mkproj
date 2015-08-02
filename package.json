@@ -6,7 +6,7 @@
     "mkproj": "cmd.js"
   },
   "scripts": {
-    "test": "standard && node test.js"
+    "test": "standard *.js && node test.js"
   },
   "keywords": [
     "generator",
@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "after": "^0.8.1",
+    "camelcase": "^1.2.1",
     "kexec": "^1.2.0"
   },
   "main": "index.js",

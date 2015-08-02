@@ -1,10 +1,10 @@
 var fs = require('fs')
 var after = require('after')
 var kexec = require('kexec')
-
 var makeHTML5Boilerplate = require('./html5')
 var npmInit = require('./npmInit')
 var makeReadme = require('./makeReadme')
+var makeTest = require('./makeTest')
 var catMe = require('./catMe')
 
 module.exports = function (name, test) {
@@ -53,8 +53,8 @@ module.exports = function (name, test) {
       writeFile(name + '/.gitignore', '/node_modules')
       writeFile(name + '/.npmignore', 'www')
       writeFile(name + '/README.md', makeReadme(name))
-      writeFile(name + '/index.js', 'module.exports = function () {\n\n}')
-      writeFile(name + '/test.js', 'var tap = require(\'tape\')\nvar ' + name + ' = require(\'./\')\n\ntap.test(\'does the thing\',function (t) {\n\n})')
+      writeFile(name + '/index.js', 'module.exports = function (str) {\n  return \'hello \' + str\n}\n')
+      writeFile(name + '/test.js', makeTest(name))
       writeFile(name + '/index.html', makeHTML5Boilerplate(name))
       writeFile(name + '/package.json', npmInit(name))
     }
