@@ -1,0 +1,93 @@
+{
+  "name": "tape",
+  "version": "4.0.1",
+  "description": "tap-producing test harness for node and browsers",
+  "main": "index.js",
+  "bin": {
+    "tape": "./bin/tape"
+  },
+  "directories": {
+    "example": "example",
+    "test": "test"
+  },
+  "dependencies": {
+    "deep-equal": "~1.0.0",
+    "defined": "~0.0.0",
+    "glob": "~5.0.3",
+    "inherits": "~2.0.1",
+    "object-inspect": "~1.0.0",
+    "resumer": "~0.0.0",
+    "through": "~2.3.4"
+  },
+  "devDependencies": {
+    "tap": "~0.7.1",
+    "falafel": "~1.0.1",
+    "concat-stream": "~1.4.1"
+  },
+  "scripts": {
+    "test": "tap test/*.js"
+  },
+  "testling": {
+    "files": "test/browser/*.js",
+    "browsers": [
+      "ie/6..latest",
+      "chrome/20..latest",
+      "firefox/10..latest",
+      "safari/latest",
+      "opera/11.0..latest",
+      "iphone/6",
+      "ipad/6"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/substack/tape.git"
+  },
+  "homepage": "https://github.com/substack/tape",
+  "keywords": [
+    "tap",
+    "test",
+    "harness",
+    "assert",
+    "browser"
+  ],
+  "author": {
+    "name": "James Halliday",
+    "email": "mail@substack.net",
+    "url": "http://substack.net"
+  },
+  "license": "MIT",
+  "gitHead": "74635e759f43f3976f0e469ae28be82a3f7fb111",
+  "bugs": {
+    "url": "https://github.com/substack/tape/issues"
+  },
+  "_id": "tape@4.0.1",
+  "_shasum": "b7c8e48c496348ebe66b5f5c3ba3e62601bdb5a9",
+  "_from": "tape@*",
+  "_npmVersion": "3.1.2",
+  "_nodeVersion": "2.0.0",
+  "_npmUser": {
+    "name": "substack",
+    "email": "substack@gmail.com"
+  },
+  "dist": {
+    "shasum": "b7c8e48c496348ebe66b5f5c3ba3e62601bdb5a9",
+    "tarball": "http://registry.npmjs.org/tape/-/tape-4.0.1.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "substack",
+      "email": "mail@substack.net"
+    },
+    {
+      "name": "raynos",
+      "email": "raynos2@gmail.com"
+    },
+    {
+      "name": "domenic",
+      "email": "d@domenic.me"
+    }
+  ],
+  "_resolved": "https://registry.npmjs.org/tape/-/tape-4.0.1.tgz",
+  "readme": "ERROR: No README data found!"
+}

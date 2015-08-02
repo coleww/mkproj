@@ -1,0 +1,94 @@
+{
+  "name": "standard",
+  "description": "JavaScript Standard Style",
+  "version": "4.5.4",
+  "author": {
+    "name": "Feross Aboukhadijeh",
+    "email": "feross@feross.org",
+    "url": "http://feross.org/"
+  },
+  "bin": {
+    "standard": "./bin/cmd.js"
+  },
+  "bugs": {
+    "url": "https://github.com/feross/standard/issues"
+  },
+  "dependencies": {
+    "deglob": "^1.0.0",
+    "dezalgo": "^1.0.1",
+    "eslint": "0.24.1",
+    "eslint-config-standard": "3.4.1",
+    "eslint-config-standard-react": "1.0.1",
+    "eslint-plugin-react": "^2.1.0",
+    "find-root": "^0.1.1",
+    "get-stdin": "^4.0.1",
+    "minimist": "^1.1.0",
+    "pkg-config": "^1.0.1",
+    "standard-format": "^1.3.3",
+    "xtend": "^4.0.0"
+  },
+  "devDependencies": {
+    "mkdirp": "^0.5.0",
+    "run-parallel-limit": "^1.0.1",
+    "tape": "^4.0.0"
+  },
+  "homepage": "https://github.com/feross/standard",
+  "keywords": [
+    "JavaScript Standard Style",
+    "check",
+    "checker",
+    "code",
+    "code checker",
+    "code linter",
+    "code standards",
+    "code style",
+    "enforce",
+    "eslint",
+    "hint",
+    "jscs",
+    "jshint",
+    "lint",
+    "policy",
+    "quality",
+    "simple",
+    "standard",
+    "standard style",
+    "style",
+    "style checker",
+    "style linter",
+    "verify"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/feross/standard.git"
+  },
+  "scripts": {
+    "test": "node ./bin/cmd.js && tape test/*.js",
+    "test-quick": "node ./bin/cmd.js"
+  },
+  "gitHead": "eca547171dae2d7126f0725240fa70f5ffee243c",
+  "_id": "standard@4.5.4",
+  "_shasum": "023e772126debc0c459662270c4570395491e021",
+  "_from": "standard@*",
+  "_npmVersion": "2.11.2",
+  "_nodeVersion": "0.12.5",
+  "_npmUser": {
+    "name": "feross",
+    "email": "feross@feross.org"
+  },
+  "maintainers": [
+    {
+      "name": "feross",
+      "email": "feross@feross.org"
+    }
+  ],
+  "dist": {
+    "shasum": "023e772126debc0c459662270c4570395491e021",
+    "tarball": "http://registry.npmjs.org/standard/-/standard-4.5.4.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/standard/-/standard-4.5.4.tgz",
+  "readme": "ERROR: No README data found!"
+}
