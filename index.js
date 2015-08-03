@@ -53,12 +53,11 @@ module.exports = function (name, test) {
         }
       })
       writeFile(name + '/.travis.yml', 'language: node_js\nnode_js:\n  - "0.12"')
-      writeFile(name + '/.gitignore', '/node_modules\n.DS_Store')
+      writeFile(name + '/.gitignore', '/node_modules\n.DS_Store\n/www/bundle.js\nnpm-debug.log')
       writeFile(name + '/.npmignore', 'www')
       writeFile(name + '/README.md', makeReadme(name))
       writeFile(name + '/index.js', 'module.exports = function (str) {\n  return \'hello \' + str\n}\n')
       writeFile(name + '/test.js', makeTest(camelcase(name)))
-
       writeFile(name + '/package.json', npmInit(name))
     }
   })
