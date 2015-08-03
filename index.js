@@ -2,12 +2,12 @@ var fs = require('fs')
 var after = require('after')
 var kexec = require('kexec')
 var camelcase = require('camelcase')
-var makeHTML5Boilerplate = require('./html5')
-var npmInit = require('./npmInit')
-var makeReadme = require('./makeReadme')
-var makeTest = require('./makeTest')
-var makeDemo = require('./makeDemo')
-var catMe = require('./catMe')
+var makeHTML5Boilerplate = require('./src/html5')
+var npmInit = require('./src/npmInit')
+var makeReadme = require('./src/makeReadme')
+var makeTest = require('./src/makeTest')
+var makeDemo = require('./src/makeDemo')
+var catMe = require('./src/catMe')
 
 module.exports = function (name, test) {
   if (!name) {
@@ -53,7 +53,7 @@ module.exports = function (name, test) {
         }
       })
       writeFile(name + '/.travis.yml', 'language: node_js\nnode_js:\n  - "0.12"')
-      writeFile(name + '/.gitignore', '/node_modules')
+      writeFile(name + '/.gitignore', '/node_modules\n.DS_Store')
       writeFile(name + '/.npmignore', 'www')
       writeFile(name + '/README.md', makeReadme(name))
       writeFile(name + '/index.js', 'module.exports = function (str) {\n  return \'hello \' + str\n}\n')
