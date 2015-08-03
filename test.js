@@ -15,8 +15,7 @@ tap.test('does all the stuff', function (t) {
 
   setTimeout(function () {
     t.ok(fs.existsSync('AndyWarholjs'), 'mks a new directory')
-    t.equal(fs.readFileSync('AndyWarholjs/.gitignore', {encoding: 'utf-8'}),
-            '/node_modules',
+    t.ok(fs.readFileSync('AndyWarholjs/.gitignore', {encoding: 'utf-8'}).match('/node_modules'),
             'echoes node_modules into gitignore')
     t.equal(fs.readFileSync('AndyWarholjs/.npmignore', {encoding: 'utf-8'}),
             'www',
