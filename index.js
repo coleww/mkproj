@@ -49,6 +49,7 @@ module.exports = function (name, test) {
         } else {
           writeFile(name + '/www/demo.js', makeDemo(name))
           writeFile(name + '/www/main.css', '.hidden {\n  display: none;\n}\n')
+          writeFile(name + '/www/index.html', makeHTML5Boilerplate(name))
         }
       })
       writeFile(name + '/.travis.yml', 'language: node_js\nnode_js:\n  - "0.12"')
@@ -57,7 +58,7 @@ module.exports = function (name, test) {
       writeFile(name + '/README.md', makeReadme(name))
       writeFile(name + '/index.js', 'module.exports = function (str) {\n  return \'hello \' + str\n}\n')
       writeFile(name + '/test.js', makeTest(camelcase(name)))
-      writeFile(name + '/index.html', makeHTML5Boilerplate(name))
+
       writeFile(name + '/package.json', npmInit(name))
     }
   })

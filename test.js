@@ -26,7 +26,7 @@ tap.test('does all the stuff', function (t) {
     t.ok(fs.existsSync('AndyWarholjs/index.js'), 'mks an index.js')
     t.ok(fs.existsSync('AndyWarholjs/www/main.css'), 'mks a main.css')
     t.ok(fs.existsSync('AndyWarholjs/www/demo.js'), 'mks a demo.js')
-    t.ok(fs.readFileSync('AndyWarholjs/index.html', {encoding: 'utf-8'}).match('<title>AndyWarholjs</title>'),
+    t.ok(fs.readFileSync('AndyWarholjs/www/index.html', {encoding: 'utf-8'}).match('<title>AndyWarholjs</title>'),
          'mks some html5 boilerplate')
     t.ok(fs.readFileSync('AndyWarholjs/package.json', {encoding: 'utf-8'}).match('\"name\": \"AndyWarholjs\"'),
          'mks a package.json')
