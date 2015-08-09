@@ -9,9 +9,13 @@ tap.test('does all the stuff', function (t) {
 
   mkproj('AndyWarholjs', true)
 
-  console.log = function (msg) {
-    t.ok(msg, 'logs creation')
-  }
+  console.log = (function () {
+    var log = console.log
+    return function (msg) {
+      t.ok(msg, 'logs creation')
+      log.call(console, msg)
+    }
+  })()
 
   setTimeout(function () {
     t.ok(fs.existsSync('AndyWarholjs'), 'mks a new directory')

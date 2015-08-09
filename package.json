@@ -23,7 +23,8 @@
   "dependencies": {
     "after": "^0.8.1",
     "camelcase": "^1.2.1",
-    "kexec": "^1.2.0"
+    "kexec": "^1.2.0",
+    "mustache": "^2.1.3"
   },
   "main": "index.js",
   "repository": {

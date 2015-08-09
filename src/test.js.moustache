@@ -1,0 +1,7 @@
+var tap = require('tape')
+var {{camelName}} = require('./')
+
+tap.test('does the thing', function (t) {
+  t.plan(1)
+  t.equal({{camelName}}('world'), 'hello world', 'does it')
+})
