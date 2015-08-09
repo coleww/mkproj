@@ -1,19 +1,20 @@
+var Mustache = require('mustache')
 var fs = require('fs')
 var after = require('after')
 var kexec = require('kexec')
 var camelcase = require('camelcase')
-var makeHTML5Boilerplate = require('./src/html5')
-var npmInit = require('./src/npmInit')
-var makeReadme = require('./src/makeReadme')
-var makeTest = require('./src/makeTest')
-var makeDemo = require('./src/makeDemo')
-var catMe = require('./src/catMe')
+// TODO: make a cat ascii module
+var catMe = function () {
+  return "                               |        |\n                               |\\      /|\n                               | \\____/ |\n                               |  /\\/\\  |\n                              .'___  ___`.\n                             /  \\|/  \\|/  \\\n            _.--------------( ____ __ _____)\n         .-' \\  -. | | | | | \\ ----\\/---- /\n       .'\\  | | / \\` | | | |  `.  -'`-  .'\n      /`  ` ` '/ / \\ | | | | \\  `------'\\\n     /-  `-------.' `-----.       -----. `---.\n    (  / | | | |  )/ | | | )/ | | | | | ) | | )\n     `._________.'_____,,,/\\_______,,,,/_,,,,/"
+}
 
 module.exports = function (name, test) {
   if (!name) {
     console.log('you must pass a project name!')
     return 'fail'
   }
+
+  var templateData = {name: name, camelName: camelcase(name)}
 
   var initialize = after(10, runTheMagic)
 
@@ -39,6 +40,10 @@ module.exports = function (name, test) {
     fs.writeFile(filename, data, logCreation(filename))
   }
 
+  function compiley (filename, data) {
+    return Mustache.render(fs.readFileSync('./src/' + filename + '.moustache').toString(), data)
+  }
+
   fs.mkdir(name, function (err) {
     if (err) {
       console.log(err)
@@ -47,18 +52,14 @@ module.exports = function (name, test) {
         if (err) {
           console.log(err)
         } else {
-          writeFile(name + '/www/demo.js', makeDemo(name))
-          writeFile(name + '/www/main.css', '.hidden {\n  display: none;\n}\n')
-          writeFile(name + '/www/index.html', makeHTML5Boilerplate(name))
+          var files = ['.gitignore', '.npmignore', '.travis.yml', 'README.md',
+                       'index.js', 'package.json', 'test.js', 'www/demo.js',
+                       'www/index.html', 'www/main.css']
+          files.forEach(function (filename) {
+            writeFile(name + '/' + filename, compiley(filename, templateData))
+          })
         }
       })
-      writeFile(name + '/.travis.yml', 'language: node_js\nnode_js:\n  - "0.12"')
-      writeFile(name + '/.gitignore', '/node_modules\n.DS_Store\n/www/bundle.js\nnpm-debug.log')
-      writeFile(name + '/.npmignore', 'www')
-      writeFile(name + '/README.md', makeReadme(name))
-      writeFile(name + '/index.js', 'module.exports = function (str) {\n  return \'hello \' + str\n}\n')
-      writeFile(name + '/test.js', makeTest(camelcase(name)))
-      writeFile(name + '/package.json', npmInit(name))
     }
   })
 }

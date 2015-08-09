@@ -1,0 +1,28 @@
+{
+  "name": "{{name}}",
+  "description": "Put A Description Here!",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify www/demo.js -o www/bundle.js",
+    "deploy": "gh-pages-deploy",
+    "test": "standard && node test.js",
+    "watch": "watchify www/demo.js -o www/bundle.js --debug --verbose"
+  },
+  "devDependencies": {
+    "browserify": "*",
+    "standard": "4.5.4",
+    "tape": "4.0.1",
+    "watchify": "*",
+    "gh-pages-deploy": "*"
+  },
+  "gh-pages-deploy": {
+    "staticpath": "www",
+    "prep": [
+      "test",
+      "build"
+    ],
+    "noprompt": false
+  },
+  "license": "MIT"
+}
