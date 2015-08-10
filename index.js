@@ -41,7 +41,7 @@ module.exports = function (name, test) {
   }
 
   function compiley (filename, data) {
-    return Mustache.render(fs.readFileSync('./src/' + filename + '.moustache').toString(), data)
+    return Mustache.render(fs.readFileSync(__dirName + '/src/' + filename + '.moustache').toString(), data)
   }
 
   fs.mkdir(name, function (err) {
