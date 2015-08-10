@@ -1,6 +1,5 @@
 var Mustache = require('mustache')
 var fs = require('fs')
-var path = require('path')
 var after = require('after')
 var kexec = require('kexec')
 var camelcase = require('camelcase')
@@ -42,7 +41,7 @@ module.exports = function (name, test) {
   }
 
   function compiley (filename, data) {
-    return Mustache.render(fs.readFileSync(path.resolve(path.dirname()) + '/src/' + filename + '.moustache').toString(), data)
+    return Mustache.render(fs.readFileSync(__dirname + '/src/' + filename + '.moustache').toString(), data)
   }
 
   fs.mkdir(name, function (err) {

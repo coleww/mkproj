@@ -1,6 +1,10 @@
 CH-CH-CH-CHANGES
 ----------------------------------------------
 
+8/10/2015 v3.1.2
+- actually fix issue with loading moustache templates that broke everything
+- `__dirname` is the magic. I was WAY off on that other thing...
+
 8/10/2015 v3.1.1
 - fix issue with loading moustache templates that broke everything
 - don't use relative paths in a node module, except in `require()`'s I guess?
