@@ -1,6 +1,9 @@
 CH-CH-CH-CHANGES
 ----------------------------------------------
 
+8/10/2015 v3.1.1
+- fix issue with loading moustache templates that broke everything
+- don't use relative paths in a node module, except in `require()`'s I guess?
 
 8/9/2015 V3.1.0
 - remove broken gh-pages script
