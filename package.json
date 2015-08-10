@@ -1,6 +1,6 @@
 {
   "name": "mkproj",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "Generates lil nodely projects",
   "bin": {
     "mkproj": "cmd.js"
