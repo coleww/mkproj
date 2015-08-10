@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "browserify www/demo.js -o www/bundle.js",
-    "deploy": "gh-pages-deploy",
+    "deploy": "git push origin master && gh-pages-deploy",
     "test": "standard && node test.js",
     "watch": "watchify www/demo.js -o www/bundle.js --debug --verbose"
   },
