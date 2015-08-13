@@ -20,3 +20,5 @@ var argv = require('yargs')
   .argv
 
 var projectName = argv._.join('-').replace(/\W/, '-')
+
+require('./')(projectName, {browserify: argv.b, twitter: argv.t, cli: argv.c})

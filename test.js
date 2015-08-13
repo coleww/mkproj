@@ -4,10 +4,10 @@ var fs = require('fs')
 var rimraf = require('rimraf')
 var noop = function () {}
 
-tap.test('does all the stuff', function (t) {
+tap.test('does all the stuff (LEGACY)', function (t) {
   t.plan(25)
 
-  mkproj('AndyWarholjs', {test: true})
+  mkproj('AndyWarholjs', {test: true, browserify: true})
 
   console.log = (function () {
     var log = console.log
