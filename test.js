@@ -4,16 +4,52 @@ var fs = require('fs')
 var rimraf = require('rimraf')
 var noop = function () {}
 
+tap.test('does the default', function (t) {
+  t.plan(22)
+
+  mkproj('defaulty', {testing: true})
+
+  console.log = (function () {
+    // var log = console.log
+    return function (msg) {
+      t.ok(msg, 'logs creation')
+      // log.call(console, msg)
+    }
+  })()
+
+  setTimeout(function () {
+    t.ok(fs.existsSync('defaulty'), 'mks a new directory')
+    t.ok(fs.readFileSync('defaulty/.gitignore', {encoding: 'utf-8'}).toString().match('/node_modules'),
+            'echoes node_modules into gitignore')
+    t.equal(fs.readFileSync('defaulty/.npmignore', {encoding: 'utf-8'}),
+            'www',
+            'echoes dubdubdub into npmignore')
+    t.ok(fs.readFileSync('defaulty/README.md', {encoding: 'utf-8'}).toString().match('defaulty\n----------------'),
+            'echoes proj name into README.md')
+    t.ok(fs.existsSync('defaulty/index.js'), 'mks an index.js')
+    t.ok(fs.readFileSync('defaulty/package.json').toString().match('\"tap\"'),
+         'mks a package.json containing tap instead of tape cuz its no-browser time')
+    t.ok(fs.existsSync('defaulty/.travis.yml'), 'mks a trav')
+    t.ok(fs.readFileSync('defaulty/test.js').toString().match('\'tap\''), 'mks a test file that requires tap')
+    var exec = require('child_process').exec
+    exec('cp -r tap_modules defaulty/node_modules && cd defaulty && standard && node test.js', function (error, stdout, stderr) {
+      t.ok(!error, 'generated module also works fail')
+      rimraf('defaulty', noop)
+    })
+
+  }, 1000)
+})
+
 tap.test('does all the stuff (LEGACY)', function (t) {
   t.plan(25)
 
-  mkproj('AndyWarholjs', {test: true, browserify: true})
+  mkproj('AndyWarholjs', {testing: true, browserify: true})
 
   console.log = (function () {
-    var log = console.log
+    // var log = console.log
     return function (msg) {
       t.ok(msg, 'logs creation')
-      log.call(console, msg)
+      // log.call(console, msg)
     }
   })()
 

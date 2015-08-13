@@ -14,7 +14,13 @@ module.exports = function (name, options) {
     return 'fail'
   }
 
-  var templateData = {name: name, camelName: camelcase(name)}
+  var templateData = {
+    name: name,
+    camelName: camelcase(name),
+    browserify: options.browserify,
+    cli: options.cli,
+    twitter: options.twitter
+  }
 
   var initialize = after(10, runTheMagic)
 
@@ -22,7 +28,7 @@ module.exports = function (name, options) {
     console.log(name + ' project created!')
     console.log(catMe())
     console.log('W A Y    C H I L L!               =^.^=            R A D I C A L!')
-    if (!options.test) kexec('cd ' + name + ' && npm init && npm install && git init && git add -A && git commit -m \'initial\'')
+    if (!options.testing) kexec('cd ' + name + ' && npm init && npm install && git init && git add -A && git commit -m \'initial\'')
   }
 
   function logCreation (filename) {
