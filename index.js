@@ -8,7 +8,7 @@ var catMe = function () {
   return "                               |        |\n                               |\\      /|\n                               | \\____/ |\n                               |  /\\/\\  |\n                              .'___  ___`.\n                             /  \\|/  \\|/  \\\n            _.--------------( ____ __ _____)\n         .-' \\  -. | | | | | \\ ----\\/---- /\n       .'\\  | | / \\` | | | |  `.  -'`-  .'\n      /`  ` ` '/ / \\ | | | | \\  `------'\\\n     /-  `-------.' `-----.       -----. `---.\n    (  / | | | |  )/ | | | )/ | | | | | ) | | )\n     `._________.'_____,,,/\\_______,,,,/_,,,,/"
 }
 
-module.exports = function (name, test) {
+module.exports = function (name, options) {
   if (!name) {
     console.log('you must pass a project name!')
     return 'fail'
@@ -22,7 +22,7 @@ module.exports = function (name, test) {
     console.log(name + ' project created!')
     console.log(catMe())
     console.log('W A Y    C H I L L!               =^.^=            R A D I C A L!')
-    if (!test) kexec('cd ' + name + ' && npm init && npm install && git init && git add -A && git commit -m \'initial\'')
+    if (!options.test) kexec('cd ' + name + ' && npm init && npm install && git init && git add -A && git commit -m \'initial\'')
   }
 
   function logCreation (filename) {

@@ -7,7 +7,7 @@ var noop = function () {}
 tap.test('does all the stuff', function (t) {
   t.plan(25)
 
-  mkproj('AndyWarholjs', true)
+  mkproj('AndyWarholjs', {test: true})
 
   console.log = (function () {
     var log = console.log
