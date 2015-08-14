@@ -16,7 +16,7 @@ function testIt () {
   tap.test('makes a tweety', function (t) {
     t.plan(25)
 
-    mkproj('tweety', {testing: true, twitter: true})
+    mkproj(test_name, {testing: true, twitter: true})
 
     console.log = (function () {
       // var log = console.log
@@ -29,12 +29,11 @@ function testIt () {
     setTimeout(function () {
       checkBasics(test_name, t)
 
-
-      t.ok(fs.readFileSync('tweety/tweet.js').toString().match('twit'), 'mks a twitter boilerplate file')
-      t.ok(fs.readFileSync('tweety/bot.js').toString().match('tweet'), 'mks a botfile')
-      t.ok(fs.readFileSync('tweety/package.json').toString().match('twit'),
+      t.ok(fs.readFileSync(test_name + '/tweet.js').toString().match('twit'), 'mks a twitter boilerplate file')
+      t.ok(fs.readFileSync(test_name + '/bot.js').toString().match('tweet'), 'mks a botfile')
+      t.ok(fs.readFileSync(test_name + '/package.json').toString().match('twit'),
            'mks a package.json containing twit cuz it is tooting time')
-      t.ok(fs.existsSync('tweety/test.js'), 'mks a test file')
+      t.ok(fs.existsSync(test_name + '/test.js'), 'mks a test file')
 
       checkAbsence(test_name, t, ['cmd.js', 'www'])
       checkGeneratedApp(test_name, t, 'tap')
