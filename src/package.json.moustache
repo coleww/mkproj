@@ -21,6 +21,14 @@
   {{/browserify}}
     "gh-pages-deploy": "^0.3.0"
   },
+  "dependencies": {
+  {{#cli}}
+  "yargs": "^3.18.0"
+  {{/cli}}
+  {{#twitter}}
+  "twit": "^2.1.0"
+  {{/twitter}}
+  },
   "gh-pages-deploy": {
     "staticpath": "www",
     "prep": [

@@ -19,6 +19,6 @@ var argv = require('yargs')
   .describe('c', 'adds yargs and cmd.js file')
   .argv
 
-var projectName = argv._.join('-').replace(/\W/, '-')
+var projectName = argv._.join('-').replace(/\W/g, '-')
 
 require('./')(projectName, {browserify: argv.b, twitter: argv.t, cli: argv.c})

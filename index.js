@@ -21,8 +21,11 @@ module.exports = function (name, options) {
     cli: options.cli,
     twitter: options.twitter
   }
-
-  var initialize = after(10, runTheMagic)
+  var count = 7
+  if (options.browserify) count += 3
+  if (options.cli) count++
+  if (options.twitter) count += 2
+  var initialize = after(count, runTheMagic)
 
   function runTheMagic () {
     console.log(name + ' project created!')
@@ -50,22 +53,30 @@ module.exports = function (name, options) {
     return Mustache.render(fs.readFileSync(__dirname + '/src/' + filename + '.moustache').toString(), data)
   }
 
+  function doYourWorst (err) {
+    if (err) {
+      console.log(err)
+    } else {
+      var files = ['.gitignore', '.npmignore', '.travis.yml', 'README.md',
+                   'index.js', 'package.json', 'test.js']
+      if (options.browserify) files = files.concat(['www/demo.js', 'www/index.html', 'www/main.css'])
+      if (options.twitter) files = files.concat(['bot.js', 'tweet.js'])
+      if (options.cli) files = files.concat('cmd.js')
+      files.forEach(function (filename) {
+        writeFile(name + '/' + filename, compiley(filename, templateData))
+      })
+    }
+  }
+
   fs.mkdir(name, function (err) {
     if (err) {
       console.log(err)
     } else {
-      fs.mkdir(name + '/www', function (err) {
-        if (err) {
-          console.log(err)
-        } else {
-          var files = ['.gitignore', '.npmignore', '.travis.yml', 'README.md',
-                       'index.js', 'package.json', 'test.js', 'www/demo.js',
-                       'www/index.html', 'www/main.css']
-          files.forEach(function (filename) {
-            writeFile(name + '/' + filename, compiley(filename, templateData))
-          })
-        }
-      })
+      if (options.browserify) {
+        fs.mkdir(name + '/www', doYourWorst)
+      } else {
+        doYourWorst()
+      }
     }
   })
 }

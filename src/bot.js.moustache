@@ -1,0 +1,4 @@
+var tweet = require('./tweet')
+var {{camelName}} = require('./')
+
+tweet({{camelName}}())
