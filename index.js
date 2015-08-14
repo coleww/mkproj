@@ -25,14 +25,24 @@ module.exports = function (name, options) {
     both: both
   }
 
+  var selected = []
   var count = 7
-  if (options.browserify) count += 3
-  if (options.cli) count++
-  if (options.twitter) count += 2
+  if (options.browserify) {
+    count += 3
+    selected.push('browserify')
+  }
+  if (options.cli) {
+    count++
+    selected.push('CLI')
+  }
+  if (options.twitter) {
+    count += 2
+    selected.push('twitterbot')
+  }
   var initialize = after(count, runTheMagic)
 
   function runTheMagic () {
-    console.log(name + ' project created!')
+    console.log(name + ' project has been mk\'d with ' + selected.join(' and ') + ' boilerplate!')
     console.log(catMe())
     console.log('W A Y    C H I L L!               =^.^=            R A D I C A L!')
     if (!options.testing) kexec('cd ' + name + ' && npm init && npm install && git init && git add -A && git commit -m \'initial\'')
