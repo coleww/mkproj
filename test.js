@@ -1,9 +1,5 @@
 var tap = require('tap')
 var mkproj = require('./')
-var fs = require('fs')
-var rimraf = require('rimraf')
-var noop = function () {}
-var exec = require('child_process').exec
 
 tap.test('does nothing without a project name', function (t) {
   t.plan(2)
@@ -12,3 +8,9 @@ tap.test('does nothing without a project name', function (t) {
   }
   t.equal(mkproj(), 'fail', 'process exits')
 })
+
+require('tests/default_test.js')
+require('tests/cli_test.js')
+require('tests/everything_test.js')
+require('tests/browserify_test.js')
+require('tests/twitter_test.js')

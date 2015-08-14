@@ -14,13 +14,17 @@ module.exports = function (name, options) {
     return 'fail'
   }
 
+  var both = (options.cli && options.twitter) ? ',' : ''
+
   var templateData = {
     name: name,
     camelName: camelcase(name),
     browserify: options.browserify,
     cli: options.cli,
-    twitter: options.twitter
+    twitter: options.twitter,
+    both: both
   }
+
   var count = 7
   if (options.browserify) count += 3
   if (options.cli) count++
