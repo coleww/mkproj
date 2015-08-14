@@ -1,13 +1,12 @@
 var tap = require('tap')
 var mkproj = require('../')
 var fs = require('fs')
-var rimraf = require('rimraf')
-var noop = function () {}
-var exec = require('child_process').exec
+
 var testUtils = require('./test_utils')
 var checkBasics = testUtils.checkBasics
 var checkAbsence = testUtils.checkAbsence
 var cleanUpAndRun = testUtils.cleanUpAndRun
+var checkGeneratedApp = testUtils.checkGeneratedApp
 
 var test_name = 'defaulty'
 
@@ -15,7 +14,7 @@ cleanUpAndRun(test_name, testIt)
 
 function testIt () {
   tap.test('does the default', function (t) {
-    t.plan(20)
+    t.plan(23)
 
     mkproj(test_name, {testing: true})
 
@@ -37,10 +36,7 @@ function testIt () {
 
       checkAbsence(test_name, t, ['www', 'tweet.js', 'bot.js', 'cmd.js'])
 
-      exec('cp -r tap_modules defaulty/node_modules && cd defaulty && standard && node test.js', function (error, stdout, stderr) {
-        t.ok(!error, 'generated module also works')
-        rimraf(test_name, noop)
-      })
+      checkGeneratedApp(test_name, t, 'tap')
 
     }, 1000)
   })
