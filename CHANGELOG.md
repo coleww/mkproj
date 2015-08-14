@@ -4,7 +4,7 @@ CH-CH-CH-CHANGES
 8/13/205 v3.2.0
 - adds sweet yargs/figlet CLI interface
 - adds options for generating browersify/www, twitter-bot, and CLI boilerplate
-- new default is to only make index.js and test.js w standard and tap 
+- new default is to only make index.js and test.js w/ standard and tap 
 - old default is now basically `mkproj project-name -b`
 
 8/10/2015 v3.1.2
