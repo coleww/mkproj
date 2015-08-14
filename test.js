@@ -9,8 +9,8 @@ tap.test('does nothing without a project name', function (t) {
   t.equal(mkproj(), 'fail', 'process exits')
 })
 
-require('tests/default_test.js')
-require('tests/cli_test.js')
-require('tests/everything_test.js')
-require('tests/browserify_test.js')
-require('tests/twitter_test.js')
+require('./tests/default_test.js')
+require('./tests/cli_test.js')
+require('./tests/everything_test.js')
+require('./tests/browserify_test.js')
+require('./tests/twitter_test.js')
