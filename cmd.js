@@ -15,7 +15,7 @@ var argv = require('yargs')
   .describe('b', 'adds browserify/watchify and /www folder')
   .alias('t', 'twitter')
   .describe('t', 'adds twit and tweet.js file')
-  .alias('c', 'CLI')
+  .alias('c', 'cli')
   .describe('c', 'adds yargs and cmd.js file')
   .argv
 
