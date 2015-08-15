@@ -55,28 +55,27 @@ After generating the project folder/files, it `cd`'s into the new folder and run
 ### THE COMMAND LINE API
 
 ```
-$$\      $$\       $$\   $$\       $$$$$$$\        $$$$$$$\         $$$$$$\           $$$$$\
-$$$\    $$$ |      $$ | $$  |      $$  __$$\       $$  __$$\       $$  __$$\          \__$$ |
-$$$$\  $$$$ |      $$ |$$  /       $$ |  $$ |      $$ |  $$ |      $$ /  $$ |            $$ |
-$$\$$\$$ $$ |      $$$$$  /        $$$$$$$  |      $$$$$$$  |      $$ |  $$ |            $$ |
-$$ \$$$  $$ |      $$  $$<         $$  ____/       $$  __$$<       $$ |  $$ |      $$\   $$ |
-$$ |\$  /$$ |      $$ |\$$\        $$ |            $$ |  $$ |      $$ |  $$ |      $$ |  $$ |
-$$ | \_/ $$ |      $$ | \$$\       $$ |            $$ |  $$ |       $$$$$$  |      \$$$$$$  |
-\__|     \__|      \__|  \__|      \__|            \__|  \__|       \______/        \______/
-
-
+  __  __   _  __  ____    ____     ___        _
+ |  \/  | | |/ / |  _ \  |  _ \   / _ \      | |
+ | |\/| | | ' /  | |_) | | |_) | | | | |  _  | |
+ | |  | | | . \  |  __/  |  _ <  | |_| | | |_| |
+ |_|  |_| |_|\_\ |_|     |_| \_\  \___/   \___/
 
 generates tiny node projects
 
 Options:
-  -b, --browserify  adds browserify/watchify and /www folder
-  -t, --twitter     adds twit and tweet.js file
-  -c, --cli         adds yargs and cmd.js file
-  -h, --help        Show help                                   
+  -b, --browserify, --browser, --bacon  installs browserify/watchify and adds /
+                                        www folder
+  -c, --cli, --cmd, -l, --lettuce       installs yargs and adds cmd.js file
+  -t, --twitter, --tweet, --tomato      installs twit and adds tweet.js file
+  -n, --noPleaseDoNotInstallThanks      skip the whole "npm init/npm install/git
+                                        init/initial commit" business
+  -h, --help                            Show help                      [boolean]
 
 Examples:
-  mkproj yr-awesome-node-project -b
-  mkproj wowowowow -bct
+  mkproj yr-awesome-vanilla-node-project
+  mkproj yr-cool-twitter-bpt -tweet
+  mkproj make-me-a-sandwich-please -blt
 
 ```
 

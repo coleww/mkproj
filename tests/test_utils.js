@@ -46,28 +46,34 @@ var checkGeneratedApp = function (path, t, type) {
   })
 }
 
-var checkForCli = function (path, t) {
+var checkForCli = function (path, t, goThere) {
   t.ok(fs.readFileSync(path + '/cmd.js').toString().match('yargs'), 'mks a CLI boilerplate file')
-  t.ok(fs.readFileSync(path + '/package.json').toString().match('yargs'), 'mks a package.json containing yargs cuz it is YARRRRRRRR time')
+  if (goThere) {
+    t.ok(fs.readFileSync(path + '/package.json').toString().match('yargs'), 'mks a package.json containing yargs cuz it is YARRRRRRRR time')
+  }
 }
 
-var checkForTwitter = function (path, t) {
+var checkForTwitter = function (path, t, goThere) {
   t.ok(fs.readFileSync(path + '/tweet.js').toString().match('twit'), 'mks a twitter boilerplate file')
   t.ok(fs.readFileSync(path + '/bot.js').toString().match('tweet'), 'mks a botfile')
-  t.ok(fs.readFileSync(path + '/package.json').toString().match('twit'), 'mks a package.json containing twit cuz it is tooting time')
+  if (goThere) {
+    t.ok(fs.readFileSync(path + '/package.json').toString().match('twit'), 'mks a package.json containing twit cuz it is tooting time')
+  }
 }
 
-var checkForBrowser = function (path, t) {
+var checkForBrowser = function (path, t, goThere) {
   t.ok(fs.existsSync(path + '/www/main.css'), 'mks a main.css')
   t.ok(fs.existsSync(path + '/www/demo.js'), 'mks a demo.js')
   t.ok(fs.readFileSync(path + '/www/index.html').toString().match('<title>' + path + '</title>'), 'mks some html5 boilerplate')
-  var packaged = fs.readFileSync(path + '/package.json').toString()
-  t.ok(packaged.match('browserify'), 'mks a package.json containing browserify cuz it is time')
-  t.ok(packaged.match('watchify'), 'mks a package.json containing watchify cuz it is cool')
-  t.ok(packaged.match('gh-pages-deploy'), 'mks a package.json containing gh-pages-deploy cuz it is sweet')
+  if (goThere) {
+    var packaged = fs.readFileSync(path + '/package.json').toString()
+    t.ok(packaged.match('browserify'), 'mks a package.json containing browserify cuz it is time')
+    t.ok(packaged.match('watchify'), 'mks a package.json containing watchify cuz it is cool')
+    t.ok(packaged.match('gh-pages-deploy'), 'mks a package.json containing gh-pages-deploy cuz it is sweet')
+  }
 }
 
-module.exports = function (name, options) {
+var testIt = function (name, options) {
   var count = 7 // number of files generated == number of logs that happen/get t.ok'd
   var exclusions = [] // files to check for exclusion
   if (options.browserify) {
@@ -95,7 +101,7 @@ module.exports = function (name, options) {
     tap.test(name, function (t) {
       t.plan(count + exclusions.length + 12)
       // 3 from index.js, 6 from checkBasics, 1 from generatedApp, 2 for checkForTesty
-      options.testing = true
+      options.noFunnyBusiness = true
       mkproj(name, options)
 
       console.log = function (msg) {
@@ -106,13 +112,13 @@ module.exports = function (name, options) {
         checkBasics(name, t)
         checkForTesty(name, t, type)
         if (options.browserify) {
-          checkForBrowser(name, t)
+          checkForBrowser(name, t, true)
         }
         if (options.cli) {
-          checkForCli(name, t)
+          checkForCli(name, t, true)
         }
         if (options.twitter) {
-          checkForTwitter(name, t)
+          checkForTwitter(name, t, true)
         }
 
         checkAbsence(name, t, exclusions)
@@ -120,4 +126,65 @@ module.exports = function (name, options) {
       }, 1000)
     })
   }
+}
+
+var testAddingIt = function (name, options) {
+
+
+
+  // for browserify: npm install, add www/ folder
+  // for cli: npm install, add cmd.js
+  // for tweet: npm install, add tweet/bot
+  // don't worry bout tap vs. tape here.
+  // OR have a command to npm install tap or tape and make a test.js file
+
+
+
+  // var count = 0
+  // if (options.browserify) {
+  //   count += 9 // 3 files generated + 3 assertions
+  // }
+  // if (options.cli) {
+  //   count += 3 // 1 file generated + 1 assertions
+  // }
+  // if (options.twitter) {
+  //   count += 5 // 2 files generated + 2 assertions
+  // }
+
+
+  // cleanUpAndRun(name, reallyTestIt)
+
+  // function reallyTestIt () {
+  //   tap.test(name, function (t) {
+  //     t.plan(count + exclusions.length + 12)
+  //     // 3 from index.js, 6 from checkBasics, 1 from generatedApp, 2 for checkForTesty
+  //     options.testing = true
+  //
+
+  //     console.log = function (msg) {
+  //       t.ok(msg, 'logs creation')
+  //     }
+
+  // mkproj(name, options)
+  //     setTimeout(function () {
+  //       if (options.browserify) {
+  //         checkForBrowser(name, t)
+  //       }
+  //       if (options.cli) {
+  //         checkForCli(name, t)
+  //       }
+  //       if (options.twitter) {
+  //         checkForTwitter(name, t)
+  //       }
+
+  //       checkAbsence(name, t, exclusions)
+  //       checkGeneratedApp(name, t, type)
+  //     }, 1000)
+  //   })
+  // }
+}
+
+module.exports = {
+  testIt: testIt,
+  testAddingIt: testAddingIt
 }

@@ -1,4 +1,8 @@
-var testIt = require('./tests/test_utils')
+var testUtils = require('./tests/test_utils')
+var testIt = testUtils.testIt
+var testAddingIt = testUtils.testAddingIt
+
+process.chdir('./tests')
 
 testIt('defaulty', {twitter: false, browserify: false, cli: false})
 testIt('cli', {twitter: false, browserify: false, cli: true})
@@ -9,6 +13,9 @@ testIt('clibro', {twitter: false, browserify: true, cli: true})
 testIt('tweecli', {twitter: true, browserify: false, cli: true})
 testIt('everything', {twitter: true, browserify: true, cli: true})
 
+// testAddingIt('clingy', {twitter: false, browserify: false, cli: true})
+// testAddingIt('brewsy', {twitter: false, browserify: true, cli: false})
+// testAddingIt('tooty', {twitter: true, browserify: false, cli: false})
 // um where to put this lol
 // tap.test('does nothing without a project name', function (t) {
 //   t.plan(2)
