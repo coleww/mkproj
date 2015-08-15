@@ -1,7 +1,7 @@
 MKPROJ
 --------------------
 
-simple scaffolding tool for making node modules and/or Browserify'd web apps. 
+simple scaffolding tool for making node modules and/or Browserify'd web apps and/or twitter bots and/or CLI tools, or any combination thereof. 
 
 [![NPM](https://nodei.co/npm/mkproj.png)](https://nodei.co/npm/mkproj/)
 [![Build Status](https://secure.travis-ci.org/coleww/mkproj.png)](http://travis-ci.org/coleww/mkproj)
@@ -14,15 +14,26 @@ simple scaffolding tool for making node modules and/or Browserify'd web apps.
 ### USE IT
 
 ```
-    $ mkproj wowowowow
-    CREATED: wowowowow/.gitignore
-    CREATED: wowowowow/.travis.yml
-    CREATED: wowowowow/.npmignore
-    CREATED: wowowowow/README.md
-    CREATED: wowowowow/index.js
-    CREATED: wowowowow/test.js
-    CREATED: wowowowow/package.json
-    wowowowow project created!
+$ mkproj wat
+$$\      $$\       $$\   $$\       $$$$$$$\        $$$$$$$\         $$$$$$\           $$$$$\
+$$$\    $$$ |      $$ | $$  |      $$  __$$\       $$  __$$\       $$  __$$\          \__$$ |
+$$$$\  $$$$ |      $$ |$$  /       $$ |  $$ |      $$ |  $$ |      $$ /  $$ |            $$ |
+$$\$$\$$ $$ |      $$$$$  /        $$$$$$$  |      $$$$$$$  |      $$ |  $$ |            $$ |
+$$ \$$$  $$ |      $$  $$<         $$  ____/       $$  __$$<       $$ |  $$ |      $$\   $$ |
+$$ |\$  /$$ |      $$ |\$$\        $$ |            $$ |  $$ |      $$ |  $$ |      $$ |  $$ |
+$$ | \_/ $$ |      $$ | \$$\       $$ |            $$ |  $$ |       $$$$$$  |      \$$$$$$  |
+\__|     \__|      \__|  \__|      \__|            \__|  \__|       \______/        \______/
+
+
+
+CREATED: wat/.gitignore
+CREATED: wat/.travis.yml
+CREATED: wat/.npmignore
+CREATED: wat/README.md
+CREATED: wat/package.json
+CREATED: wat/index.js
+CREATED: wat/test.js
+wat project has been mk'd with  boilerplate!
                                |        |
                                |\      /|
                                | \____/ |
@@ -36,13 +47,12 @@ simple scaffolding tool for making node modules and/or Browserify'd web apps.
      /-  `-------.' `-----.       -----. `---.
     (  / | | | |  )/ | | | )/ | | | | | ) | | )
      `._________.'_____,,,/\_______,,,,/_,,,,/
-    This utility will walk you through creating a package.json file.
-    // ...ETC. etc. etc.
+W A Y    C H I L L!               =^.^=            R A D I C A L!
 ```
 
-After generating the project folder/files, it `cd`'s into the new folder and runs `npm init` and `npm install` and `git init` and `git commit -m "initial"`.
+After generating the project folder/files, it `cd`'s into the new folder and runs `npm init` and `npm install` and `git init` and `git commit -m "initial"` FOR YOU! NO WORRIES! WE GOT YOU ON THIS ONE!
 
-### API
+### THE COMMAND LINE API
 
 ```
 $$\      $$\       $$\   $$\       $$$$$$$\        $$$$$$$\         $$$$$$\           $$$$$\
@@ -72,7 +82,7 @@ Examples:
 
 ### BROWSERIFY
 
-Browserify is awesome. It lets you use node modules in the browser, and push all yr code to npm. Sweet. Even if you are making a "node module" to publish, you might want to use browserify to create a tiny demo page for your tiny module. Run `npm run watch` to start watchify and also plz fire up a simple HTTPserver ([i like this node module](https://www.npmjs.com/package/serve)) and then you can immediately get started writing NODE IN THE BROWSER ZOMG AWESOME! 
+Browserify is awesome. It lets you use node modules in the browser, and push all yr code to npm. Sweet. Even if you are making a "node module" to publish, you might want to use browserify to create a tiny demo page for your tiny module. Run `npm run watch` to start watchify and also plz fire up a simple HTTPserver ([i like this node module](https://www.npmjs.com/package/serve)) and then you can immediately get started writing NODE IN THE BROWSER ZOMG AWESOME! This also adds gh-pages deploy, which is a pretty sweet way to push yr projects to the cloud for free. Check the config in the package.json.
 
 ### TWITTER
 

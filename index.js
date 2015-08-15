@@ -14,7 +14,8 @@ module.exports = function (name, options) {
     return 'fail'
   }
 
-  var both = (options.cli && options.twitter) ? ',' : ''
+  var both = options.cli && options.twitter ? ',' : ''
+  var either = options.cli || options.twitter
 
   var templateData = {
     name: name,
@@ -22,7 +23,8 @@ module.exports = function (name, options) {
     browserify: options.browserify,
     cli: options.cli,
     twitter: options.twitter,
-    both: both
+    both: both,
+    either: either
   }
 
   var selected = []
