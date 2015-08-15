@@ -1,4 +1,5 @@
-var tap = require('tape')
+var tap = {{#browserify}}require('tape'){{/browserify}}{{^browserify}}require('tap'){{/browserify}}
+
 var {{camelName}} = require('./')
 
 tap.test('does the thing', function (t) {
