@@ -34,7 +34,7 @@ var cleanUpAndRun = function (test_name, cb) {
 
 var checkGeneratedApp = function (test_name, t, type) {
   exec('cp -r ./' + type + '_modules ./' + test_name + '/node_modules && cd ' + test_name + ' && standard && node test.js', function (error, stdout, stderr) {
-    t.ok(!error, 'generated module also works' + JSON.stringify(error))
+    t.ok(!error, 'generated module also works' + JSON.stringify(error) + stdout + stderr)
     rimraf(test_name, noop)
   })
 }
