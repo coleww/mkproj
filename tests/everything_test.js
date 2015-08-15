@@ -17,13 +17,9 @@ function testIt () {
 
     mkproj('everything', {testing: true, twitter: true, browserify: true, cli: true})
 
-    console.log = (function () {
-      // var log = console.log
-      return function (msg) {
-        t.ok(msg, 'logs creation')
-        // log.call(console, msg)
-      }
-    })()
+    console.log = function (msg) {
+      t.ok(msg, 'logs creation')
+    }
 
     setTimeout(function () {
       checkBasics(test_name, t)
