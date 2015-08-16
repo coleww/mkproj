@@ -6,6 +6,7 @@
     "mkproj": "cmd.js"
   },
   "scripts": {
+    "publish": "npm run test",
     "test": "standard *.js && node test.js"
   },
   "keywords": [
@@ -23,6 +24,7 @@
   "dependencies": {
     "after": "^0.8.1",
     "camelcase": "^1.2.1",
+    "cat-me": "^1.0.0",
     "figlet": "^1.1.1",
     "kexec": "^1.2.0",
     "mustache": "^2.1.3",

@@ -4,11 +4,7 @@ var after = require('after')
 var kexec = require('kexec')
 var camelcase = require('camelcase')
 var npmAddScript = require('npm-add-script')
-
-// TODO: make a cat ascii module
-var catMe = function () {
-  return "                               |        |\n                               |\\      /|\n                               | \\____/ |\n                               |  /\\/\\  |\n                              .'___  ___`.\n                             /  \\|/  \\|/  \\\n            _.--------------( ____ __ _____)\n         .-' \\  -. | | | | | \\ ----\\/---- /\n       .'\\  | | / \\` | | | |  `.  -'`-  .'\n      /`  ` ` '/ / \\ | | | | \\  `------'\\\n     /-  `-------.' `-----.       -----. `---.\n    (  / | | | |  )/ | | | )/ | | | | | ) | | )\n     `._________.'_____,,,/\\_______,,,,/_,,,,/"
-}
+var catMe = require('cat-me')
 
 var baseFiles = ['.gitignore', '.npmignore', '.travis.yml', 'README.md',
                    'index.js', 'package.json', 'test.js']
