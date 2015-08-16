@@ -9,7 +9,11 @@
     "deploy": "git push origin master && gh-pages-deploy",
     "watch": "watchify www/demo.js -o www/bundle.js --debug --verbose",
   {{/browserify}}
-    "test": "standard && node test.js"
+  {{#twitter}}
+    "tweet": "node bot.js",
+  {{/twitter}}
+    "test": "standard && node test.js",
+    "publish": "npm run test"
   },
   "devDependencies": {
   {{#browserify}}
@@ -37,5 +41,10 @@
     "noprompt": false
   },
 {{/browserify}}
+{{#cli}}
+  "bin": {
+    "mkproj": "cmd.js"
+  },
+{{/cli}}
   "license": "MIT"
 }

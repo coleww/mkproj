@@ -48,6 +48,7 @@ var checkGeneratedApp = function (path, t, type) {
 
 var checkForCli = function (path, t, goThere) {
   t.ok(fs.readFileSync(path + '/cmd.js').toString().match('yargs'), 'mks a CLI boilerplate file')
+  t.ok(fs.readFileSync(path + '/package.json').toString().match('bin'), 'mks a package.json containing bin entry because i am garbage')
   if (goThere) {
     t.ok(fs.readFileSync(path + '/package.json').toString().match('yargs'), 'mks a package.json containing yargs cuz it is YARRRRRRRR time')
   }
@@ -56,6 +57,7 @@ var checkForCli = function (path, t, goThere) {
 var checkForTwitter = function (path, t, goThere) {
   t.ok(fs.readFileSync(path + '/tweet.js').toString().match('twit'), 'mks a twitter boilerplate file')
   t.ok(fs.readFileSync(path + '/bot.js').toString().match('tweet'), 'mks a botfile')
+  t.ok(fs.readFileSync(path + '/package.json').toString().match('node bot.js'), 'mks a package.json containing scripts entry for tooting')
   if (goThere) {
     t.ok(fs.readFileSync(path + '/package.json').toString().match('twit'), 'mks a package.json containing twit cuz it is tooting time')
   }
@@ -65,6 +67,7 @@ var checkForBrowser = function (path, t, goThere) {
   t.ok(fs.existsSync(path + '/www/main.css'), 'mks a main.css')
   t.ok(fs.existsSync(path + '/www/demo.js'), 'mks a demo.js')
   t.ok(fs.existsSync(path + '/www/index.html'), 'mks some html5 boilerplate')
+  t.ok(fs.readFileSync(path + '/package.json').toString().match('build'), 'adds scripts entries for building/watching')
   if (goThere) {
     var packaged = fs.readFileSync(path + '/package.json').toString()
     t.ok(packaged.match('browserify'), 'mks a package.json containing browserify cuz it is time')
@@ -77,17 +80,17 @@ var testIt = function (name, options) {
   var count = 0
   var exclusions = [] // files to check for exclusion
   if (options.browserify) {
-    count += 6 // 6 assertions
+    count += 7 // 6 assertions
   } else {
     exclusions.push('www')
   }
   if (options.cli) {
-    count += 2 // 2 assertions
+    count += 3 // 2 assertions
   } else {
     exclusions.push('cmd.js')
   }
   if (options.twitter) {
-    count += 3 // 3 assertions
+    count += 4 // 3 assertions
   } else {
     exclusions.push('tweet.js')
     exclusions.push('bot.js')
@@ -127,13 +130,13 @@ var testIt = function (name, options) {
 var testAddingIt = function (name, options) {
   var count = 0
   if (options.browserify) {
-    count += 3 // 3 assertions
+    count += 4 // 3 assertions
   }
   if (options.cli) {
-    count += 1 // 1 assertions
+    count += 2 // 1 assertions
   }
   if (options.twitter) {
-    count += 2 // 2 assertions
+    count += 3 // 2 assertions
   }
   cleanUpAndRun(name, reallyTestIt)
 
