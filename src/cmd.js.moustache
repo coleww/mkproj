@@ -16,6 +16,7 @@ if (process.stdin.isTTY) {
 
   process.stdout.write(yrModule(text))
   process.stdout.write('\n')
+  process.exit()
 } else {
   // data is being piped in!
   var data = ''
@@ -28,5 +29,11 @@ if (process.stdin.isTTY) {
   process.stdin.on('end', function () {
     process.stdout.write(yrModule(data))
     process.stdout.write('\n')
+    process.exit()
   })
+
+  // // be sure to use the correct exit code if an error occurs:
+  // if (err) {
+  //   process.exit(1)
+  // }
 }
