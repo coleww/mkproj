@@ -31,5 +31,5 @@ var argv = require('yargs')
 
 var projectName = argv._.join('-').replace(/\W/g, '-')
 
-mproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b, twitter: argv.t, cli: argv.c})
+mkproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b, twitter: argv.t, cli: argv.c})
 
