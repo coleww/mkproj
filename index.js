@@ -9,19 +9,21 @@ var catMe = require('cat-me')
 var baseFiles = ['.gitignore', '.npmignore', '.travis.yml', 'README.md',
                    'index.js', 'package.json', 'test.js']
 var browserifyFiles = ['www/demo.js', 'www/index.html', 'www/main.css']
-var browserPackages = 'browserify watchify tape --save-dev'
+var browserPackages = 'npm install browserify watchify tape --save-dev'
 var cliFiles = ['cmd.js']
-var cliPackages = 'yargs --save'
+var cliPackages = 'npm install yargs --save'
 var twitterFiles = ['bot.js', 'tweet.js']
-var twitterPackages = 'twit --save'
+var twitterPackages = 'npm install twit --save'
 
 module.exports = function (name, options) {
   if (fs.existsSync('.git')) {
-    add2proj(name, options)
+    console.log('ADDING', name, options, fs.readdirSync('.'), process.cwd())
+    add2proj(name, options || {})
   } else if (!name) {
     throw new ItIsEssentialThatYouGiveThisProjectSomeSortOfNameHowAboutFluffyDestroyerError()
   } else {
-    mkTheProj(name, options)
+    console.log('MAKING', name, options)
+    mkTheProj(name, options || {})
   }
 }
 
@@ -77,36 +79,44 @@ function mkTheProj (name, options) {
 }
 
 function add2proj (name, options) {
+  var templateData = makeTemplateData(name, options)
+  var files = []
+  if (options.browserify) files = files.concat(browserifyFiles)
+  if (options.twitter) files = files.concat(twitterFiles)
+  if (options.cli) files = files.concat(cliFiles)
+  function doYourWorst (err) {
+    if (err) {
+      console.log(err)
+    } else {
+      files.forEach(function (filename) {
+        writeFile(filename, compiley(filename, templateData), logCreation)
+      })
+      addScripts(templateData)
+      if (!options.noFunnyBusiness) kexec(templateData.install.join('&&'))
+    }
+  }
   if (options.browserify || options.cli || options.twitter) {
-    var templateData = makeTemplateData(name, options)
-    var files = []
-    if (options.browserify) files = files.concat(browserifyFiles)
-    if (options.twitter) files = files.concat(twitterFiles)
-    if (options.cli) files = files.concat(cliFiles)
     if (options.browserify && !fs.existsSync('./www')) {
       fs.mkdir('www', doYourWorst)
     } else {
       doYourWorst()
     }
-    function doYourWorst (err) {
-      if (err) {
-        console.log(err)
-      } else {
-        files.forEach(function (filename) {
-          writeFile(filename, compiley(filename, templateData), logCreation)
-        })
-        addScripts(templateData)
-        if (!options.noFunnyBusiness) kexec('npm install ' + templateData.install + ' --save')
-      }
-    }
   } else {
-    // throw an error or something!
+    console.log('ERRING OUT', name, options)
+    throw new YouMustGiveMeAtLeastOneThingToDoPleaseThankYouError()
   }
 }
 
 function makeTemplateData (name, options) {
   var both = options.cli && options.twitter ? ',' : ''
   var either = options.cli || options.twitter
+  var installs = [
+    options.browserify ? browserPackages : 'echo ' + catMe(),
+    options.cli ? cliPackages : 'echo ' + catMe(),
+    options.twitter ? twitterPackages : 'echo ' + catMe()
+  ].filter(function (op) {
+    return op
+  })
 
   return {
     name: name,
@@ -116,7 +126,7 @@ function makeTemplateData (name, options) {
     twitter: options.twitter,
     both: both,
     either: either,
-    install: options.browserify ? browserPackages : options.cli ? cliPackages : options.twitter ? twitterPackages : ''
+    install: installs
   }
 }
 
@@ -166,3 +176,11 @@ function ItIsEssentialThatYouGiveThisProjectSomeSortOfNameHowAboutFluffyDestroye
 
 ItIsEssentialThatYouGiveThisProjectSomeSortOfNameHowAboutFluffyDestroyerError.prototype = new Error()
 ItIsEssentialThatYouGiveThisProjectSomeSortOfNameHowAboutFluffyDestroyerError.prototype.constructor = ItIsEssentialThatYouGiveThisProjectSomeSortOfNameHowAboutFluffyDestroyerError
+
+function YouMustGiveMeAtLeastOneThingToDoPleaseThankYouError () {
+  this.name = 'YouMustGiveMeAtLeastOneThingToDoPleaseThankYouError'
+  this.message = 'Please retry the command again, this time passing a command, perhaps -h for help?'
+}
+
+YouMustGiveMeAtLeastOneThingToDoPleaseThankYouError.prototype = new Error()
+YouMustGiveMeAtLeastOneThingToDoPleaseThankYouError.prototype.constructor = YouMustGiveMeAtLeastOneThingToDoPleaseThankYouError
