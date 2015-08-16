@@ -20,13 +20,16 @@ module.exports = function (name, options) {
     // we are in a project folder already.
     // interpret the options as:
        // "please make these files and add these modules for me please, thanks".
-    add2proj(options)
+    add2proj(name, options)
   } else if (!name) {
     console.log('you must pass a project name!')
     return 'fail' // probably should throw an error here I suppose.
   } else {
-
+    mkTheProj(name, options)
   }
+}
+
+function mkTheProj (name, options) {
   var templateData = makeTemplateData(name, options)
 
   var selected = []
@@ -43,25 +46,12 @@ module.exports = function (name, options) {
     count += 2
     selected.push('twitterbot')
   }
-  var initialize = after(count, runTheMagic)
-
-  function runTheMagic () {
+  var initialize = after(count, function () {
     console.log(name + ' project has been mk\'d with ' + selected.join(' and ') + ' boilerplate!')
     console.log(catMe())
     console.log('W A Y    C H I L L!               =^.^=            R A D I C A L!')
     if (!options.noFunnyBusiness) kexec('cd ' + name + ' && npm init && npm install && git init && git add -A && git commit -m \'initial\'')
-  }
-
-  function logCreation (filename) {
-    return function (err) {
-      if (err) {
-        throw err
-      } else {
-        console.log('CREATED: ' + filename)
-        initialize()
-      }
-    }
-  }
+  })
 
   function doYourWorst (err) {
     if (err) {
@@ -72,7 +62,7 @@ module.exports = function (name, options) {
       if (options.twitter) files = files.concat(twitterFiles)
       if (options.cli) files = files.concat(cliFiles)
       files.forEach(function (filename) {
-        writeFile(name + '/' + filename, compiley(filename, templateData), logCreation)
+        writeFile(name + '/' + filename, compiley(filename, templateData), logCreation, initialize)
       })
     }
   }
@@ -91,26 +81,30 @@ module.exports = function (name, options) {
 }
 
 function add2proj (name, options) {
-  // if not at least one of the things: FAIL
-  // get list of what is needed to do.
-  // check that those things do not already exist
-  // copy them, passing along datas.
-  // if not testing thing, run the npm install.
-
-  // var templateData = {
-  //   name: name,
-  //   camelName: camelcase(name),
-  //   browserify: options.browserify,
-  //   cli: options.cli,
-  //   twitter: options.twitter
-  // }
-
-  // files.forEach(function (filename) {
-  //   writeFile(name + '/' + filename, compiley(filename, templateData), logCreation)
-  // })
-
-// if (!options.noFunnyBusiness) kexec('npm install ' + templateData.install + ' --save')
-
+  if (options.browserify || options.cli || options.twitter){
+    var templateData = makeTemplateData(name, options)
+    var files = []
+    if (options.browserify) files = files.concat(browserifyFiles)
+    if (options.twitter) files = files.concat(twitterFiles)
+    if (options.cli) files = files.concat(cliFiles)
+    if (options.browserify && !fs.existsSync('./www')) {
+      fs.mkdir('www', doYourWorst)
+    } else {
+      doYourWorst()
+    }
+    function doYourWorst (err) {
+      if (err) {
+        console.log(err)
+      } else {
+        files.forEach(function (filename) {
+          writeFile(filename, compiley(filename, templateData), logCreation)
+        })
+        if (!options.noFunnyBusiness) kexec('npm install ' + templateData.install + ' --save')
+      }
+    }
+  } else {
+    // throw an error or something!
+  }
 }
 
 function makeTemplateData (name, options) {
@@ -133,8 +127,18 @@ function compiley (filename, data) {
   return Mustache.render(fs.readFileSync(__dirname + '/src/' + filename + '.moustache').toString(), data)
 }
 
-function writeFile (filename, data, logy) {
-  fs.writeFile(filename, data, logy(filename))
+function writeFile (filename, data, logy, cb) {
+  fs.writeFile(filename, data, logy(filename, cb))
 }
 
+function logCreation (filename, cb) {
+  return function (err) {
+    if (err) {
+      throw err
+    } else {
+      console.log('CREATED: ' + filename)
+      if(cb) cb()
+    }
+  }
+}
 

@@ -64,7 +64,7 @@ var checkForTwitter = function (path, t, goThere) {
 var checkForBrowser = function (path, t, goThere) {
   t.ok(fs.existsSync(path + '/www/main.css'), 'mks a main.css')
   t.ok(fs.existsSync(path + '/www/demo.js'), 'mks a demo.js')
-  t.ok(fs.readFileSync(path + '/www/index.html').toString().match('<title>' + path + '</title>'), 'mks some html5 boilerplate')
+  t.ok(fs.existsSync(path + '/www/index.html'), 'mks some html5 boilerplate')
   if (goThere) {
     var packaged = fs.readFileSync(path + '/package.json').toString()
     t.ok(packaged.match('browserify'), 'mks a package.json containing browserify cuz it is time')
@@ -74,20 +74,20 @@ var checkForBrowser = function (path, t, goThere) {
 }
 
 var testIt = function (name, options) {
-  var count = 7 // number of files generated == number of logs that happen/get t.ok'd
+  var count = 0
   var exclusions = [] // files to check for exclusion
   if (options.browserify) {
-    count += 9 // 3 files generated + 6 assertions
+    count += 6 // 6 assertions
   } else {
     exclusions.push('www')
   }
   if (options.cli) {
-    count += 3 // 1 file generated + 2 assertions
+    count += 2 // 2 assertions
   } else {
     exclusions.push('cmd.js')
   }
   if (options.twitter) {
-    count += 5 // 2 files generated + 3 assertions
+    count += 3 // 3 assertions
   } else {
     exclusions.push('tweet.js')
     exclusions.push('bot.js')
@@ -99,14 +99,10 @@ var testIt = function (name, options) {
 
   function reallyTestIt () {
     tap.test(name, function (t) {
-      t.plan(count + exclusions.length + 12)
-      // 3 from index.js, 6 from checkBasics, 1 from generatedApp, 2 for checkForTesty
+      t.plan(count + exclusions.length + 9)
+      // 6 from checkBasics, 1 from generatedApp, 2 for checkForTesty
       options.noFunnyBusiness = true
       mkproj(name, options)
-
-      console.log = function (msg) {
-        t.ok(msg, 'logs creation')
-      }
 
       setTimeout(function () {
         checkBasics(name, t)
@@ -129,59 +125,46 @@ var testIt = function (name, options) {
 }
 
 var testAddingIt = function (name, options) {
+  var count = 0
+  if (options.browserify) {
+    count += 3 // 3 assertions
+  }
+  if (options.cli) {
+    count += 1 // 1 assertions
+  }
+  if (options.twitter) {
+    count += 2 // 2 assertions
+  }
+  cleanUpAndRun(name, reallyTestIt)
 
+  function reallyTestIt () {
+    tap.test(name, function (t) {
+      t.plan(count)
 
+      mkproj(name, {noFunnyBusiness: true, browserify: false, twitter: false, cli: false})
 
-  // for browserify: npm install, add www/ folder
-  // for cli: npm install, add cmd.js
-  // for tweet: npm install, add tweet/bot
-  // don't worry bout tap vs. tape here.
-  // OR have a command to npm install tap or tape and make a test.js file
-
-
-
-  // var count = 0
-  // if (options.browserify) {
-  //   count += 9 // 3 files generated + 3 assertions
-  // }
-  // if (options.cli) {
-  //   count += 3 // 1 file generated + 1 assertions
-  // }
-  // if (options.twitter) {
-  //   count += 5 // 2 files generated + 2 assertions
-  // }
-
-
-  // cleanUpAndRun(name, reallyTestIt)
-
-  // function reallyTestIt () {
-  //   tap.test(name, function (t) {
-  //     t.plan(count + exclusions.length + 12)
-  //     // 3 from index.js, 6 from checkBasics, 1 from generatedApp, 2 for checkForTesty
-  //     options.testing = true
-  //
-
-  //     console.log = function (msg) {
-  //       t.ok(msg, 'logs creation')
-  //     }
-
-  // mkproj(name, options)
-  //     setTimeout(function () {
-  //       if (options.browserify) {
-  //         checkForBrowser(name, t)
-  //       }
-  //       if (options.cli) {
-  //         checkForCli(name, t)
-  //       }
-  //       if (options.twitter) {
-  //         checkForTwitter(name, t)
-  //       }
-
-  //       checkAbsence(name, t, exclusions)
-  //       checkGeneratedApp(name, t, type)
-  //     }, 1000)
-  //   })
-  // }
+      setTimeout(function () {
+        process.chdir(name)
+        exec('git init', function () {
+          options.noFunnyBusiness = true
+          mkproj('', options)
+          setTimeout(function () {
+            if (options.browserify) {
+              checkForBrowser('.', t)
+            }
+            if (options.cli) {
+              checkForCli('.', t)
+            }
+            if (options.twitter) {
+              checkForTwitter('.', t)
+            }
+            process.chdir('../')
+            rimraf(name, noop)
+          }, 1500)
+        })
+      }, 2500)
+    })
+  }
 }
 
 module.exports = {
