@@ -17,12 +17,10 @@ var twitterPackages = 'npm install twit --save'
 
 module.exports = function (name, options) {
   if (fs.existsSync('.git')) {
-    console.log('ADDING', name, options, fs.readdirSync('.'), process.cwd())
     add2proj(name, options || {})
   } else if (!name) {
     throw new ItIsEssentialThatYouGiveThisProjectSomeSortOfNameHowAboutFluffyDestroyerError()
   } else {
-    console.log('MAKING', name, options)
     mkTheProj(name, options || {})
   }
 }
@@ -102,7 +100,6 @@ function add2proj (name, options) {
       doYourWorst()
     }
   } else {
-    console.log('ERRING OUT', name, options)
     throw new YouMustGiveMeAtLeastOneThingToDoPleaseThankYouError()
   }
 }

@@ -32,4 +32,10 @@ var argv = require('yargs')
 
 var projectName = argv._.join('-').replace(/\W/g, '-')
 
-mkproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b, twitter: argv.t, cli: argv.c})
+try {
+  mkproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b, twitter: argv.t, cli: argv.c})
+  process.exit()
+} catch (e) {
+  console.log(e)
+  process.exit(1)
+}
