@@ -17,13 +17,9 @@ var twitterPackages = 'twit --save'
 
 module.exports = function (name, options) {
   if (fs.existsSync('.git')) {
-    // we are in a project folder already.
-    // interpret the options as:
-       // "please make these files and add these modules for me please, thanks".
     add2proj(name, options)
   } else if (!name) {
-    console.log('you must pass a project name!')
-    return 'fail' // probably should throw an error here I suppose.
+    throw new ItIsEssentialThatYouGiveThisProjectSomeSortOfNameHowAboutFluffyDestroyerError()
   } else {
     mkTheProj(name, options)
   }
@@ -81,7 +77,7 @@ function mkTheProj (name, options) {
 }
 
 function add2proj (name, options) {
-  if (options.browserify || options.cli || options.twitter){
+  if (options.browserify || options.cli || options.twitter) {
     var templateData = makeTemplateData(name, options)
     var files = []
     if (options.browserify) files = files.concat(browserifyFiles)
@@ -137,8 +133,21 @@ function logCreation (filename, cb) {
       throw err
     } else {
       console.log('CREATED: ' + filename)
-      if(cb) cb()
+      if (cb) cb()
     }
   }
 }
 
+
+// "bin": {
+//   "mkproj": "cmd.js"
+// },
+
+
+function ItIsEssentialThatYouGiveThisProjectSomeSortOfNameHowAboutFluffyDestroyerError () {
+  this.name = 'ItIsEssentialThatYouGiveThisProjectSomeSortOfNameHowAboutFluffyDestroyerError'
+  this.message = 'Please retry the command again, this time passing a name for this thing that you would like for me to make for you here and now in this present directory.'
+}
+
+ItIsEssentialThatYouGiveThisProjectSomeSortOfNameHowAboutFluffyDestroyerError.prototype = new Error()
+ItIsEssentialThatYouGiveThisProjectSomeSortOfNameHowAboutFluffyDestroyerError.prototype.constructor = ItIsEssentialThatYouGiveThisProjectSomeSortOfNameHowAboutFluffyDestroyerError

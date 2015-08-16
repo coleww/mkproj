@@ -24,11 +24,11 @@ setTimeout(function () {
   }, 5000)
 }, 5000)
 
-
-
-// um where to put this lol
-
-// tap.test('throws an error if not passed a project name', function (t) {
-//   t.plan(1)
-//   t.throws(!mkproj(null, {}), 'process exits')
-// })
+tap.test('throws an error if not passed a project name', function (t) {
+  t.plan(1)
+  try {
+    mkproj(null, {noFunnyBusiness: true})
+  } catch (e) {
+    t.ok(e)
+  }
+})
