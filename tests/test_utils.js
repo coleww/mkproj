@@ -143,7 +143,6 @@ var testAddingIt = function (name, options) {
   function reallyTestIt () {
     tap.test(name, function (t) {
       t.plan(count)
-
       mkproj(name, {noFunnyBusiness: true, browserify: false, twitter: false, cli: false})
 
       setTimeout(function () {
@@ -163,7 +162,7 @@ var testAddingIt = function (name, options) {
             }
             process.chdir('../')
             rimraf(name, noop)
-          }, 1500)
+          }, 2500)
         })
       }, 2500)
     })
