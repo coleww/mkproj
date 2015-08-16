@@ -1,2 +1,2 @@
-tape_modules
-tap_modules
+tests/tape_modules
+tests/tap_modules
