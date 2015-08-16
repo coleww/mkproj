@@ -15,14 +15,14 @@ tap.test('throws an error if not passed a project name', function (t) {
   }
 })
 
-testIt('defaulty', {twitter: false, browserify: false, cli: false})
-testIt('cli', {twitter: false, browserify: false, cli: true})
-testIt('browsy', {twitter: false, browserify: true, cli: false})
-testIt('tweety', {twitter: true, browserify: false, cli: false})
-testIt('browsatweet', {twitter: true, browserify: true, cli: false})
-testIt('clibro', {twitter: false, browserify: true, cli: true})
-testIt('tweecli', {twitter: true, browserify: false, cli: true})
-testIt('everything', {twitter: true, browserify: true, cli: true})
+// testIt('defaulty', {twitter: false, browserify: false, cli: false})
+// testIt('cli', {twitter: false, browserify: false, cli: true})
+// testIt('browsy', {twitter: false, browserify: true, cli: false})
+// testIt('tweety', {twitter: true, browserify: false, cli: false})
+// testIt('browsatweet', {twitter: true, browserify: true, cli: false})
+// testIt('clibro', {twitter: false, browserify: true, cli: true})
+// testIt('tweecli', {twitter: true, browserify: false, cli: true})
+// testIt('everything', {twitter: true, browserify: true, cli: true})
 
 // must do these pseudo-synchronously due to process.chdir shenanigans
 testAddingIt('brewsy', {twitter: false, browserify: true, cli: false})

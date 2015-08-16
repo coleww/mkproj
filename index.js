@@ -95,7 +95,7 @@ function add2proj (name, options) {
         files.forEach(function (filename) {
           writeFile(filename, compiley(filename, templateData), logCreation)
         })
-        addScripts(filename, templateData)
+        addScripts(templateData)
         if (!options.noFunnyBusiness) kexec('npm install ' + templateData.install + ' --save')
       }
     }
@@ -143,11 +143,11 @@ function splicey (stir, idx, rem, insert) {
   return (stir.slice(0, idx) + insert + stir.slice(idx + Math.abs(rem)))
 }
 
-function addScripts (name, data) {
+function addScripts (data) {
   if (data.browserify) {
-    npmAddScript('build', 'browserify www/demo.js -o www/bundle.js')
-    npmAddScript('deploy', 'git push origin master && gh-pages-deploy')
-    npmAddScript('watch', 'watchify www/demo.js -o www/bundle.js --debug --verbose')
+    npmAddScript({key: 'build', value: 'browserify www/demo.js -o www/bundle.js'})
+    npmAddScript({key: 'deploy', value: 'git push origin master && gh-pages-deploy'})
+    npmAddScript({key: 'watch', value: 'watchify www/demo.js -o www/bundle.js --debug --verbose'})
   }
   if (data.cli) {
     var packaged = fs.readFileSync('package.json').toString()
@@ -155,7 +155,7 @@ function addScripts (name, data) {
     fs.writeFileSync('package.json', splicey(packaged, scriptMatch.index, 0, '"bin": {\n    "' + data.camelName + '": "cmd.js"\n  },\n  '))
   }
   if (data.twitter) {
-    npmAddScript('tweet', 'node bot.js')
+    npmAddScript({key: 'tweet', value: 'node bot.js'})
   }
 }
 
