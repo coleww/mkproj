@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 var mkproj = require('./')
 var figlet = require('figlet')
-var header = figlet.textSync('M K P R O J')//, { font: 'Big Money-nw'}) // make list of good ones
+var fonts = ['Big Money-nw', 'Def Leppard', 'Alligator2']
+var header = figlet.textSync('M K P R O J', { font: fonts[~~(Math.random() * fonts.length)]})
 console.log(header)
 
 var argv = require('yargs')
