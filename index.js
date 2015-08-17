@@ -122,9 +122,7 @@ function makeTemplateData (name, options) {
     options.browserify ? browserPackages : 'echo \'' + catMe() + '\'',
     options.cli ? cliPackages : 'echo \'' + catMe() + '\'',
     options.twitter ? twitterPackages : 'echo \'' + catMe() + '\''
-  ].filter(function (op) {
-    return op
-  })
+  ]
 
   return {
     name: name,
