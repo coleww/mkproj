@@ -58,7 +58,7 @@ function mkTheProj (name, options) {
       if (options.twitter) files = files.concat(twitterFiles)
       if (options.cli) files = files.concat(cliFiles)
       files.forEach(function (filename) {
-        writeFile(name + '/' + filename, compiley(filename, templateData), logCreation, initialize)
+        writeFile(name + '/' + filename, compiley('/src/' + filename, templateData), logCreation, initialize)
       })
     }
   }
@@ -79,15 +79,26 @@ function mkTheProj (name, options) {
 function add2proj (name, options) {
   var templateData = makeTemplateData(name, options)
   var files = []
-  if (options.browserify) files = files.concat(browserifyFiles)
-  if (options.twitter) files = files.concat(twitterFiles)
-  if (options.cli) files = files.concat(cliFiles)
+  var selected = []
+  if (options.browserify) {
+    files = files.concat(browserifyFiles)
+    selected.push('browserify')
+  }
+  if (options.twitter) {
+    files = files.concat(twitterFiles)
+    selected.push('twitter')
+  }
+  if (options.cli) {
+    files = files.concat(cliFiles)
+    selected.push('CLI')
+  }
   function doYourWorst (err) {
     if (err) {
       console.log(err)
     } else {
+      console.log('Generating the ' + selected.join(' and ') + ' boilerplate for you now!!!')
       files.forEach(function (filename) {
-        writeFile(filename, compiley(filename, templateData), logCreation)
+        writeFile(filename, compiley('/src/' + filename, templateData), logCreation)
       })
       addScripts(templateData)
       if (!options.noFunnyBusiness) kexec(templateData.install.join('&&'))
@@ -108,9 +119,9 @@ function makeTemplateData (name, options) {
   var both = options.cli && options.twitter ? ',' : ''
   var either = options.cli || options.twitter
   var installs = [
-    options.browserify ? browserPackages : 'echo ' + catMe(),
-    options.cli ? cliPackages : 'echo ' + catMe(),
-    options.twitter ? twitterPackages : 'echo ' + catMe()
+    options.browserify ? browserPackages : 'echo \'' + catMe() + '\'',
+    options.cli ? cliPackages : 'echo \'' + catMe() + '\'',
+    options.twitter ? twitterPackages : 'echo \'' + catMe() + '\''
   ].filter(function (op) {
     return op
   })
@@ -128,7 +139,7 @@ function makeTemplateData (name, options) {
 }
 
 function compiley (filename, data) {
-  return Mustache.render(fs.readFileSync(__dirname + '/src/' + filename + '.moustache').toString(), data)
+  return Mustache.render(fs.readFileSync(__dirname + filename + '.moustache').toString(), data)
 }
 
 function writeFile (filename, data, logy, cb) {

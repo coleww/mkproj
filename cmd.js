@@ -8,7 +8,6 @@ console.log(header)
 var argv = require('yargs')
   .alias('h', 'help')
   .help('help')
-  .demand(1, figlet.textSync('E R R O R :', { font: 'Fire Font-k'}) + figlet.textSync('You must pass', { font: 'Fire Font-s'}) + figlet.textSync('a project name', { font: 'Fire Font-s'}))
   .usage('generates tiny node projects')
   .example('mkproj yr-awesome-vanilla-node-project')
   .example('mkproj yr-cool-twitter-bpt -tweet')
@@ -32,10 +31,4 @@ var argv = require('yargs')
 
 var projectName = argv._.join('-').replace(/\W/g, '-')
 
-try {
-  mkproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b, twitter: argv.t, cli: argv.c})
-  process.exit()
-} catch (e) {
-  console.log(e)
-  process.exit(1)
-}
+mkproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b, twitter: argv.t, cli: argv.c})
