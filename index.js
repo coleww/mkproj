@@ -143,7 +143,11 @@ function compiley (filename, data) {
 }
 
 function writeFile (filename, data, logy, cb) {
-  fs.writeFile(filename, data, logy(filename, cb))
+  if (fs.existsSync(filename)) {
+    console.log('BORKED: ' + filename + ' already exists! Maybe delete it and try again?')
+  } else {
+    fs.writeFile(filename, data, logy(filename, cb))
+  }
 }
 
 function logCreation (filename, cb) {
