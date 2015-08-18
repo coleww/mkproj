@@ -35,34 +35,35 @@ var additions = [
 ]
 
 var denials = [
-  ['tweetfile', 'BORKED: tweet.js already exists! Maybe delete it and try again?', {twitter: true}],
-  ['botfile', 'BORKED: bot.js already exists! Maybe delete it and try again?', {twitter: true}],
-  ['tweetscript', 'CATastrophic failure occurred while trying to shove stuff into package.json:', {twitter: true}],
+  ['tweetfile', {expected: 'BORKED: tweet.js already exists! Maybe delete it and try again?', twitter: true}],
+  ['botfile', {expected: 'BORKED: bot.js already exists! Maybe delete it and try again?', twitter: true}],
+  ['tweetscript', {expected: 'CATastrophic failure occurred while trying to shove stuff into package.json:', twitter: true}],
 
-  ['cmdfile', 'BORKED: cmd.js already exists! Maybe delete it and try again?', {cli: true}],
-  ['clibin', 'WEEEOOOO looks like you already have a bin entry in yr package.json?', {cli: true}],
+  ['cmdfile', {expected: 'BORKED: cmd.js already exists! Maybe delete it and try again?', cli: true}],
+  ['clibin', {expected: 'WEEEOOOO looks like you already have a bin entry in yr package.json?', cli: true}],
 
-  ['browsyscripts', 'CATastrophic failure occurred while trying to shove stuff into package.json:', {browserify: true}],
-  ['browsyindex', 'BORKED: www/index.html already exists! Maybe delete it and try again?', {browserify: true}],
-  ['browsydemo', 'BORKED: www/demo.js already exists! Maybe delete it and try again?', {browserify: true}],
-  ['browsymain', 'BORKED: www/main.css already exists! Maybe delete it and try again?', {browserify: true}]
+  ['browsyscripts', {expected: 'CATastrophic failure occurred while trying to shove stuff into package.json:', browserify: true}],
+  ['browsyindex', {expected: 'BORKED: www/index.html already exists! Maybe delete it and try again?', browserify: true}],
+  ['browsydemo', {expected: 'BORKED: www/demo.js already exists! Maybe delete it and try again?', browserify: true}],
+  ['browsymain', {expected: 'BORKED: www/main.css already exists! Maybe delete it and try again?', browserify: true}]
 ]
 
-// tests for adding files to existing projects use a timeout,
-// because they engage in chdir shenanigans that routinely clobber each other.
-// TODO: use promises or something instead I guess...
-var timer = 0
+// probably a better way to make this data structure...
 var testCases = [].concat(creations.map(function (tc) {
-  return [testIt, tc, 1]
+  return [testIt, tc]
 })).concat(additions.map(function (tc) {
-  return [testAddingIt, tc, 15000]
+  return [testAddingIt, tc]
 })).concat(denials.map(function (tc) {
-  return [testDenyingIt, tc, 12500]
+  return [testDenyingIt, tc]
 }))
-testCases.forEach(function (tc) {
-  console.log(tc)
-  setTimeout(function () {
-    tc[0].apply(this, tc[1])
-    console.log('FIRING', tc)
-  }, timer += tc[2])
-})
+
+function doThatDance () {
+  var tc = testCases.pop()
+  if (tc) {
+    var args = tc[1]
+    args.push(doThatDance)
+    tc[0].apply(this, args)
+  }
+}
+
+doThatDance()

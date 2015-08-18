@@ -2,7 +2,6 @@ var tap = require('tap')
 var mkproj = require('../')
 var exec = require('child_process').exec
 var rimraf = require('rimraf')
-var noop = function () {}
 var fs = require('fs')
 
 var checkBasics = function (path, t) {
@@ -39,10 +38,10 @@ var checkForTesty = function (path, t, type) {
   t.ok(fs.readFileSync(path + '/test.js').toString().match('\'' + type + '\''), 'mks a test file that requires ' + type + '.')
 }
 
-var checkGeneratedApp = function (path, t, type) {
+var checkGeneratedApp = function (path, t, type, cb) {
   exec('cp -r ./' + type + '_modules ./' + path + '/node_modules && cd ' + path + ' && standard && node test.js', function (error, stdout, stderr) {
     t.ok(!error, 'generated module also works' + JSON.stringify(error) + stdout + stderr)
-    rimraf(path, noop)
+    rimraf(path, cb)
   })
 }
 
@@ -76,7 +75,7 @@ var checkForBrowser = function (path, t, goThere) {
   }
 }
 
-var testIt = function (name, options) {
+var testIt = function (name, options, cb) {
   var count = 0
   var exclusions = [] // files to check for exclusion
   if (options.browserify) {
@@ -121,13 +120,13 @@ var testIt = function (name, options) {
         }
 
         checkAbsence(name, t, exclusions)
-        checkGeneratedApp(name, t, type)
+        checkGeneratedApp(name, t, type, cb)
       }, 1000)
     })
   }
 }
 
-var testAddingIt = function (name, options) {
+var testAddingIt = function (name, options, cb) {
   var count = 0
   if (options.browserify) {
     count += 4 // 3 assertions
@@ -161,7 +160,7 @@ var testAddingIt = function (name, options) {
               checkForTwitter('.', t)
             }
             process.chdir('../')
-            rimraf(name, noop)
+            rimraf(name, cb)
           }, 2500)
         })
       }, 2500)
@@ -169,7 +168,7 @@ var testAddingIt = function (name, options) {
   }
 }
 
-var testDenyingIt = function (name, expected, options) {
+var testDenyingIt = function (name, options, cb) {
   cleanUpAndRun(name, actuallyTestThings)
 
   function actuallyTestThings () {
@@ -183,13 +182,13 @@ var testDenyingIt = function (name, expected, options) {
         exec('git init', function () {
           var l = console.log
           console.log = function (msg) {
-            if (msg === expected) t.ok(true, 'logs ' + expected + ' as expected')
+            if (msg === options.expected) t.ok(true, 'logs ' + options.expected + ' as expected')
           }
           mkproj(name, options)
           setTimeout(function () {
             console.log = l
             process.chdir('../')
-            rimraf(name, noop)
+            rimraf(name, cb)
           }, 2500)
         })
       }, 3500)
