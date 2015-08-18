@@ -15,17 +15,17 @@ var cliPackages = 'npm install yargs --save'
 var twitterFiles = ['bot.js', 'tweet.js']
 var twitterPackages = 'npm install twit --save'
 
-module.exports = function (name, options) {
+module.exports = function (name, options, cb) {
   if (fs.existsSync('.git')) {
-    add2proj(name, options || {})
+    add2proj(name, options || {}, cb || function () {})
   } else if (!name) {
     throw new ItIsEssentialThatYouGiveThisProjectSomeSortOfNameHowAboutFluffyDestroyerError()
   } else {
-    mkTheProj(name, options || {})
+    mkTheProj(name, options || {}, cb || function () {})
   }
 }
 
-function mkTheProj (name, options) {
+function mkTheProj (name, options, cb) {
   var templateData = makeTemplateData(name, options)
 
   var selected = []
@@ -46,6 +46,7 @@ function mkTheProj (name, options) {
     console.log(name + ' project has been mk\'d with ' + selected.join(' and ') + ' boilerplate!')
     console.log(catMe())
     console.log('W A Y    C H I L L!               =^.^=            R A D I C A L!')
+    cb()
     if (!options.noFunnyBusiness) kexec('cd ' + name + ' && npm init && npm install && git init && git add -A && git commit -m \'initial\'')
   })
 
@@ -76,9 +77,7 @@ function mkTheProj (name, options) {
   })
 }
 
-function add2proj (name, options) {
-  // IT NEEDS THE NAME HERE! FOR THE TEMPLATES! TEST THIS CASE TOO!
-
+function add2proj (name, options, cb) {
   var templateData = makeTemplateData(name, options)
   var files = []
   var selected = []
@@ -108,6 +107,7 @@ function add2proj (name, options) {
         console.log('CATastrophic failure occurred while trying to shove stuff into package.json:')
         console.log(e)
       }
+      cb()
       if (!options.noFunnyBusiness) kexec(templateData.install.join('&&'))
     }
   }

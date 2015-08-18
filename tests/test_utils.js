@@ -102,11 +102,8 @@ var testIt = function (name, options, cb) {
   function reallyTestIt () {
     tap.test(name, function (t) {
       t.plan(count + exclusions.length + 9)
-      // 6 from checkBasics, 1 from generatedApp, 2 for checkForTesty
       options.noFunnyBusiness = true
-      mkproj(name, options)
-
-      setTimeout(function () {
+      mkproj(name, options, function () {
         checkBasics(name, t)
         checkForTesty(name, t, type)
         if (options.browserify) {
@@ -121,7 +118,7 @@ var testIt = function (name, options, cb) {
 
         checkAbsence(name, t, exclusions)
         checkGeneratedApp(name, t, type, cb)
-      }, 1000)
+      })
     })
   }
 }
@@ -129,27 +126,24 @@ var testIt = function (name, options, cb) {
 var testAddingIt = function (name, options, cb) {
   var count = 0
   if (options.browserify) {
-    count += 4 // 3 assertions
+    count += 4
   }
   if (options.cli) {
-    count += 2 // 1 assertions
+    count += 2
   }
   if (options.twitter) {
-    count += 3 // 2 assertions
+    count += 3
   }
   cleanUpAndRun(name, reallyTestIt)
 
   function reallyTestIt () {
     tap.test(name, function (t) {
       t.plan(count)
-      mkproj(name, {noFunnyBusiness: true, browserify: false, twitter: false, cli: false})
-
-      setTimeout(function () {
+      mkproj(name, {noFunnyBusiness: true, browserify: false, twitter: false, cli: false}, function () {
         process.chdir(name)
         exec('git init', function () {
           options.noFunnyBusiness = true
-          mkproj(name, options)
-          setTimeout(function () {
+          mkproj(name, options, function () {
             if (options.browserify) {
               checkForBrowser('.', t)
             }
@@ -161,9 +155,9 @@ var testAddingIt = function (name, options, cb) {
             }
             process.chdir('../')
             rimraf(name, cb)
-          }, 2500)
+          })
         })
-      }, 2500)
+      })
     })
   }
 }
@@ -175,23 +169,20 @@ var testDenyingIt = function (name, options, cb) {
     tap.test('logs a helpful message if trying to add a ' + name + ' that already exists', function (t) {
       t.plan(1)
       options.noFunnyBusiness = true
-      mkproj(name, options)
-
-      setTimeout(function () {
+      mkproj(name, options, function () {
         process.chdir(name)
         exec('git init', function () {
           var l = console.log
           console.log = function (msg) {
             if (msg === options.expected) t.ok(true, 'logs ' + options.expected + ' as expected')
           }
-          mkproj(name, options)
-          setTimeout(function () {
+          mkproj(name, options, function () {
             console.log = l
             process.chdir('../')
             rimraf(name, cb)
-          }, 2500)
+          })
         })
-      }, 3500)
+      })
     })
   }
 }
