@@ -46,7 +46,7 @@ var checkGeneratedApp = function (path, t, type, cb) {
 }
 
 var checkForCli = function (path, t, goThere) {
-  t.ok(fs.readFileSync(path + '/cmd.js').toString().match('yargs'), 'mks a CLI boilerplate file')
+  t.ok(fs.existsSync(path + '/cmd.js'), 'mks a CLI boilerplate file')
   t.ok(fs.readFileSync(path + '/package.json').toString().match('bin'), 'mks a package.json containing bin entry because i am garbage')
   if (goThere) {
     t.ok(fs.readFileSync(path + '/package.json').toString().match('yargs'), 'mks a package.json containing yargs cuz it is YARRRRRRRR time')
@@ -54,8 +54,8 @@ var checkForCli = function (path, t, goThere) {
 }
 
 var checkForTwitter = function (path, t, goThere) {
-  t.ok(fs.readFileSync(path + '/tweet.js').toString().match('twit'), 'mks a twitter boilerplate file')
-  t.ok(fs.readFileSync(path + '/bot.js').toString().match('tweet'), 'mks a botfile')
+  t.ok(fs.existsSync(path + '/tweet.js'), 'mks a twitter boilerplate file')
+  t.ok(fs.existsSync(path + '/bot.js'), 'mks a botfile')
   t.ok(fs.readFileSync(path + '/package.json').toString().match('node bot.js'), 'mks a package.json containing scripts entry for tooting')
   if (goThere) {
     t.ok(fs.readFileSync(path + '/package.json').toString().match('twit'), 'mks a package.json containing twit cuz it is tooting time')
