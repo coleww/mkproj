@@ -77,6 +77,8 @@ function mkTheProj (name, options) {
 }
 
 function add2proj (name, options) {
+  // IT NEEDS THE NAME HERE! FOR THE TEMPLATES! TEST THIS CASE TOO!
+
   var templateData = makeTemplateData(name, options)
   var files = []
   var selected = []
@@ -100,7 +102,12 @@ function add2proj (name, options) {
       files.forEach(function (filename) {
         writeFile(filename, compiley('/src/' + filename, templateData), logCreation)
       })
-      addScripts(templateData)
+      try {
+        addScripts(templateData)
+      } catch (e) {
+        console.log('CATastrophic failure occurred while trying to shove stuff into package.json:')
+        console.log(e)
+      }
       if (!options.noFunnyBusiness) kexec(templateData.install.join('&&'))
     }
   }
@@ -171,6 +178,7 @@ function addScripts (data) {
   }
   if (data.cli) {
     var packaged = fs.readFileSync('package.json').toString()
+    if (packaged.indexOf('"bin": {') !== -1) console.log('WEEEOOOO looks like you already have a bin entry in yr package.json?')
     var scriptMatch = packaged.match('"scripts":').index
     fs.writeFileSync('package.json', splicey(packaged, scriptMatch.index, 0, '"bin": {\n    "' + data.camelName + '": "cmd.js"\n  },\n  '))
   }

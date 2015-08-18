@@ -149,7 +149,7 @@ var testAddingIt = function (name, options) {
         process.chdir(name)
         exec('git init', function () {
           options.noFunnyBusiness = true
-          mkproj('', options)
+          mkproj(name, options)
           setTimeout(function () {
             if (options.browserify) {
               checkForBrowser('.', t)
@@ -169,7 +169,36 @@ var testAddingIt = function (name, options) {
   }
 }
 
+var testDenyingIt = function (name, expected, options) {
+  cleanUpAndRun(name, actuallyTestThings)
+
+  function actuallyTestThings () {
+    tap.test('logs a helpful message if trying to add a ' + name + ' that already exists', function (t) {
+      t.plan(1)
+      options.noFunnyBusiness = true
+      mkproj(name, options)
+
+      setTimeout(function () {
+        process.chdir(name)
+        exec('git init', function () {
+          var l = console.log
+          console.log = function (msg) {
+            if (msg === expected) t.ok(true, 'logs ' + expected + ' as expected')
+          }
+          mkproj(name, options)
+          setTimeout(function () {
+            console.log = l
+            process.chdir('../')
+            rimraf(name, noop)
+          }, 2500)
+        })
+      }, 3500)
+    })
+  }
+}
+
 module.exports = {
   testIt: testIt,
-  testAddingIt: testAddingIt
+  testAddingIt: testAddingIt,
+  testDenyingIt: testDenyingIt
 }
