@@ -5,7 +5,7 @@ var testHandlingFileCollissionsWhileAdding = testUtils.testHandlingFileCollissio
 var tap = require('tap')
 var mkproj = require('./')
 
-// DO EVERYTHING from inside the /tests directory so u got a clean state.
+// DO EVERYTHING from inside the /tests directory, so u got a clean state.
 process.chdir('./tests')
 
 tap.test('throws an error if not passed a project name', function (t) {
@@ -17,7 +17,6 @@ tap.test('throws an error if not passed a project name', function (t) {
   }
 })
 
-// oh um yeah, generate this through an algorithm, that would be cool
 var creations = [
   ['defaulty', {}],
   ['cli', {cli: true}],
@@ -29,7 +28,6 @@ var creations = [
   ['everything', {twitter: true, browserify: true, cli: true}]
 ]
 
-// test adding multiples? cuz why not?
 var additions = [
   ['brewsy', {browserify: true}],
   ['clingy', {cli: true}],
@@ -50,13 +48,13 @@ var denials = [
   ['browsymain', {expected: 'BORKED: www/main.css already exists! Maybe delete it and try again?', browserify: true}]
 ]
 
-// probably a better way to make this data structure...
-var testCases = [].concat(creations.map(function (tc) {
+// there is probably a clever-er way to make this data structure thing...
+var testCases = [].concat(denials.map(function (tc) {
+  return [testHandlingFileCollissionsWhileAdding, tc]
+})).concat(creations.map(function (tc) {
   return [testMkingAProject, tc]
 })).concat(additions.map(function (tc) {
   return [testAddingToAnExistingProject, tc]
-})).concat(denials.map(function (tc) {
-  return [testHandlingFileCollissionsWhileAdding, tc]
 }))
 
 function doThatDance () {
@@ -69,3 +67,4 @@ function doThatDance () {
 }
 
 doThatDance()
+// so elegant
