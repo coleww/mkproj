@@ -57,12 +57,19 @@ var testCases = [].concat(denials.map(function (tc) {
   return [testAddingToAnExistingProject, tc]
 }))
 
+var after = require('after')
+var counter = after(testCases.length, function () {
+  console.log('CALLED THEM ALL!! ALL OF THEM!!! (but did they all pass? (that is a question for my friend Travis. (he would know!)))')
+})
+
 function doThatDance () {
   var tc = testCases.pop()
+  console.log('Running one now!!! Ok so like ' + testCases.length + ' tests left!!!')
   if (tc) {
     var args = tc[1]
     args.push(doThatDance)
     tc[0].apply(this, args)
+    counter()
   }
 }
 
