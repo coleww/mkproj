@@ -43,6 +43,7 @@ function mkTheProj (name, options, cb) {
     count += 2
     selected.push('twitterbot')
   }
+  if (!options.twitter && !options.browserify && !options.cli) selected.push('default')
   var init = after(count, function () {
     console.log(name + ' project has been mk\'d with ' + selected.join(' and ') + ' boilerplate!')
     console.log(catMe())
