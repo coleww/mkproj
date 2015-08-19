@@ -89,21 +89,19 @@ function testAddingToAnExistingProject (name, options, cb) {
       t.plan(count)
       mkproj(name, {noFunnyBusiness: true, browserify: false, twitter: false, cli: false}, function () {
         process.chdir(name)
-        exec('git init', function () {
-          options.noFunnyBusiness = true
-          mkproj(name, options, function () {
-            if (options.browserify) {
-              checkForBrowser('.', t)
-            }
-            if (options.cli) {
-              checkForCli('.', t)
-            }
-            if (options.twitter) {
-              checkForTwitter('.', t)
-            }
-            process.chdir('../')
-            rimraf(name, cb)
-          })
+        options.noFunnyBusiness = true
+        mkproj(name, options, function () {
+          if (options.browserify) {
+            checkForBrowser('.', t)
+          }
+          if (options.cli) {
+            checkForCli('.', t)
+          }
+          if (options.twitter) {
+            checkForTwitter('.', t)
+          }
+          process.chdir('../')
+          rimraf(name, cb)
         })
       })
     })
@@ -117,18 +115,18 @@ function testHandlingFileCollissionsWhileAdding (name, options, cb) {
     tap.test('logs a helpful message if trying to add a ' + name + ' that already exists', function (t) {
       t.plan(1)
       options.noFunnyBusiness = true
+      console.log('dir', process.cwd(), fs.readdirSync('.'))
       mkproj(name, options, function () {
         process.chdir(name)
-        exec('git init', function () {
-          var l = console.log
-          console.log = function (msg) {
-            if (msg === options.expected) t.ok(true, 'logs ' + options.expected + ' as expected')
-          }
-          mkproj(name, options, function () {
-            console.log = l
-            process.chdir('../')
-            rimraf(name, cb)
-          })
+        var l = console.log
+        console.log = function (msg) {
+          if (msg === options.expected) t.ok(true, 'logs ' + options.expected + ' as expected')
+          l(msg)
+        }
+        mkproj(name, options, function () {
+          console.log = l
+          process.chdir('../')
+          rimraf(name, cb)
         })
       })
     })
@@ -145,33 +143,35 @@ function cleanUpAndRun (path, cb) {
   }
 }
 
-// these next 3 will break if checking for things to beinstalled unless "goThere" NOTE/TODO/FIXTHIS
+// CHANGE DEEZ to check for the project name??
 function checkForCli (path, t, goThere) {
-  t.ok(fs.existsSync(path + '/cmd.js'), 'mks a CLI boilerplate file')
-  t.ok(fs.readFileSync(path + '/package.json').toString().match('bin'), 'mks a package.json containing bin entry because i am garbage')
+  t.ok(fs.readFileSync(path + '/cmd.js').toString().match('yargs'), 'mks a CLI boilerplate file')
+  var packagedJson = fs.readFileSync(path + '/package.json').toString()
+  t.ok(packagedJson.match('bin'), 'mks a package.json containing bin entry because i am garbage')
   if (goThere) {
-    t.ok(fs.readFileSync(path + '/package.json').toString().match('yargs'), 'mks a package.json containing yargs cuz it is YARRRRRRRR time')
+    t.ok(packagedJson.match('yargs'), 'mks a package.json containing yargs cuz it is YARRRRRRRR time')
   }
 }
 
 function checkForTwitter (path, t, goThere) {
-  t.ok(fs.existsSync(path + '/tweet.js'), 'mks a twitter boilerplate file')
-  t.ok(fs.existsSync(path + '/bot.js'), 'mks a botfile')
-  t.ok(fs.readFileSync(path + '/package.json').toString().match('node bot.js'), 'mks a package.json containing scripts entry for tooting')
+  t.ok(fs.readFileSync(path + '/tweet.js').toString().match('twit'), 'mks a twitter boilerplate file')
+  t.ok(fs.readFileSync(path + '/bot.js').toString().match('tweet'), 'mks a botfile')
+  var packagedJson = fs.readFileSync(path + '/package.json').toString()
+  t.ok(packagedJson.match('node bot.js'), 'mks a package.json containing scripts entry for tooting')
   if (goThere) {
-    t.ok(fs.readFileSync(path + '/package.json').toString().match('twit'), 'mks a package.json containing twit cuz it is tooting time')
+    t.ok(packagedJson.match('twit'), 'mks a package.json containing twit cuz it is tooting time')
   }
 }
 
 function checkForBrowser (path, t, goThere) {
-  t.ok(fs.existsSync(path + '/www/main.css'), 'mks a main.css')
-  t.ok(fs.existsSync(path + '/www/demo.js'), 'mks a demo.js')
-  t.ok(fs.existsSync(path + '/www/index.html'), 'mks some html5 boilerplate')
-  t.ok(fs.readFileSync(path + '/package.json').toString().match('build'), 'adds scripts entries for building/watching')
+  t.ok(fs.readFileSync(path + '/www/main.css').toString().match('hidden'), 'mks a main.css')
+  t.ok(fs.readFileSync(path + '/www/demo.js').toString().match('document'), 'mks a demo.js')
+  t.ok(fs.readFileSync(path + '/www/index.html').toString().match('html'), 'mks some html5 boilerplate')
+  var packagedJson = fs.readFileSync(path + '/package.json').toString()
+  t.ok(packagedJson.match('build'), 'adds scripts entries for building/watching')
   if (goThere) {
-    var packaged = fs.readFileSync(path + '/package.json').toString()
-    t.ok(packaged.match('browserify'), 'mks a package.json containing browserify cuz it is time')
-    t.ok(packaged.match('watchify'), 'mks a package.json containing watchify cuz it is cool')
-    t.ok(packaged.match('gh-pages-deploy'), 'mks a package.json containing gh-pages-deploy cuz it is sweet')
+    t.ok(packagedJson.match('browserify'), 'mks a package.json containing browserify cuz it is time')
+    t.ok(packagedJson.match('watchify'), 'mks a package.json containing watchify cuz it is cool')
+    t.ok(packagedJson.match('gh-pages-deploy'), 'mks a package.json containing gh-pages-deploy cuz it is sweet')
   }
 }
