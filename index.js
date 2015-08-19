@@ -122,13 +122,17 @@ function add2proj (name, options, cb) {
   }
 }
 
+function getName () {
+  fs.readFile
+}
+
 function makeTemplateData (name, options) {
   var both = options.cli && options.twitter ? ',' : ''
   var either = options.cli || options.twitter
   var installs = [
-    options.browserify ? browserPackages : 'echo \'' + catMe() + '\'',
-    options.cli ? cliPackages : 'echo \'' + catMe() + '\'',
-    options.twitter ? twitterPackages : 'echo \'' + catMe() + '\''
+    options.browserify ? browserPackages : 'echo "=^.^= coool =^.^="',
+    options.cli ? cliPackages : 'echo "=^.^= raaadical =^.^="',
+    options.twitter ? twitterPackages : 'echo "=^.^= aaawwwesome =^.^="'
   ]
 
   return {
