@@ -1,10 +1,11 @@
-var Mustache = require('mustache')
-var fs = require('fs')
 var after = require('after')
-var kexec = require('kexec')
 var camelcase = require('camelcase')
-var npmAddScript = require('npm-add-script')
 var catMe = require('cat-me')
+var fs = require('fs')
+var jsonfile = require('jsonfile')
+var kexec = require('kexec')
+var mustache = require('mustache')
+var npmAddScript = require('npm-add-script')
 
 var baseFiles = ['.gitignore', '.npmignore', '.travis.yml', 'README.md',
                    'index.js', 'package.json', 'test.js']
@@ -16,8 +17,8 @@ var twitterFiles = ['bot.js', 'tweet.js']
 var twitterPackages = 'npm install twit --save'
 
 module.exports = function (name, options, cb) {
-  if (fs.existsSync('.git')) {
-    add2proj(name, options || {}, cb || function () {})
+  if (fs.existsSync('package.json')) {
+    add2proj(name || getName(), options || {}, cb || function () {})
   } else if (!name) {
     throw new ItIsEssentialThatYouGiveThisProjectSomeSortOfNameHowAboutFluffyDestroyerError()
   } else {
@@ -123,7 +124,7 @@ function add2proj (name, options, cb) {
 }
 
 function getName () {
-  fs.readFile
+  return jsonfile.readFileSync('package.json').name
 }
 
 function makeTemplateData (name, options) {
@@ -148,7 +149,7 @@ function makeTemplateData (name, options) {
 }
 
 function compiley (filename, data) {
-  return Mustache.render(fs.readFileSync(__dirname + filename + '.moustache').toString(), data)
+  return mustache.render(fs.readFileSync(__dirname + filename + '.moustache').toString(), data)
 }
 
 function writeFile (filename, data, logy, cb) {

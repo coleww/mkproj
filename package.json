@@ -26,6 +26,7 @@
     "camelcase": "^1.2.1",
     "cat-me": "^1.0.0",
     "figlet": "^1.1.1",
+    "jsonfile": "^2.2.1",
     "kexec": "^1.2.0",
     "mustache": "^2.1.3",
     "npm-add-script": "^1.0.3",
