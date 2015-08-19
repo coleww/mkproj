@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-var yrModule = require('./')
+var {{camelName}} = require('./')
 var argv = require('yargs')
   .alias('h', 'help')
   .help('help')
   .usage('what it do?')
-  .example('yrModule lol cool whatever')
+  .example('{{camelName}} lol cool whatever')
   .alias('i', 'intensity')
   .describe('i', 'describe the intensity')
   .argv
@@ -14,7 +14,7 @@ if (process.stdin.isTTY) {
   // we are at a terminal!
   var text = argv._.join(' ')
 
-  process.stdout.write(yrModule(text))
+  process.stdout.write({{camelName}}(text))
   process.stdout.write('\n')
   process.exit()
 } else {
@@ -27,7 +27,7 @@ if (process.stdin.isTTY) {
   })
 
   process.stdin.on('end', function () {
-    process.stdout.write(yrModule(data))
+    process.stdout.write({{camelName}}(data))
     process.stdout.write('\n')
     process.exit()
   })
