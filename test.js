@@ -70,6 +70,8 @@ function doThatDance () {
     args.push(doThatDance)
     tc[0].apply(this, args)
     counter()
+  } else {
+    console.log('finished!')
   }
 }
 
