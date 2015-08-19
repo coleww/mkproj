@@ -43,7 +43,7 @@ function mkTheProj (name, options, cb) {
     count += 2
     selected.push('twitterbot')
   }
-  var initialize = after(count, function () {
+  var init = after(count, function () {
     console.log(name + ' project has been mk\'d with ' + selected.join(' and ') + ' boilerplate!')
     console.log(catMe())
     console.log('W A Y    C H I L L!               =^.^=            R A D I C A L!')
@@ -53,21 +53,21 @@ function mkTheProj (name, options, cb) {
 
   function doYourWorst (err) {
     if (err) {
-      console.log(err)
+      throw err
     } else {
       var files = baseFiles
       if (options.browserify) files = files.concat(browserifyFiles)
       if (options.twitter) files = files.concat(twitterFiles)
       if (options.cli) files = files.concat(cliFiles)
       files.forEach(function (filename) {
-        writeFile(name + '/' + filename, compiley('/src/' + filename, templateData), logCreation, initialize)
+        writeFile(name + '/' + filename, compiley('/src/' + filename, templateData), logCreation, init)
       })
     }
   }
 
   fs.mkdir(name, function (err) {
     if (err) {
-      console.log(err)
+      throw err
     } else {
       if (options.browserify) {
         fs.mkdir(name + '/www', doYourWorst)
@@ -94,13 +94,17 @@ function add2proj (name, options, cb) {
     files = files.concat(cliFiles)
     selected.push('CLI')
   }
+  var init = after(files.length, function () {
+    cb()
+    if (!options.noFunnyBusiness) kexec(templateData.install.join(' && '))
+  })
   function doYourWorst (err) {
     if (err) {
       console.log(err)
     } else {
       console.log('Generating the ' + selected.join(' and ') + ' boilerplate for you now!!!')
       files.forEach(function (filename) {
-        writeFile(filename, compiley('/src/' + filename, templateData), logCreation)
+        writeFile(filename, compiley('/src/' + filename, templateData), logCreation, init)
       })
       try {
         addScripts(templateData)
@@ -108,8 +112,6 @@ function add2proj (name, options, cb) {
         console.log('CATastrophic failure occurred while trying to shove stuff into package.json:')
         console.log(e)
       }
-      cb()
-      if (!options.noFunnyBusiness) kexec(templateData.install.join('&&'))
     }
   }
   if (options.browserify || options.cli || options.twitter) {
