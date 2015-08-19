@@ -95,7 +95,8 @@ function add2proj (name, options, cb) {
     files = files.concat(cliFiles)
     selected.push('CLI')
   }
-  var init = after(files.length, function () {
+  console.log('todo', files.length)
+  var init = after(files.length + 1, function () {
     cb()
     if (!options.noFunnyBusiness) kexec(templateData.install.join(' && '))
   })
@@ -107,11 +108,14 @@ function add2proj (name, options, cb) {
       files.forEach(function (filename) {
         writeFile(filename, compiley('/src/' + filename, templateData), logCreation, init)
       })
+
       try {
         addScripts(templateData)
       } catch (e) {
         console.log('CATastrophic failure occurred while trying to shove stuff into package.json:')
-        console.log(e)
+        console.log(e.message)
+      } finally {
+        init()
       }
     }
   }
@@ -158,6 +162,7 @@ function compiley (filename, data) {
 function writeFile (filename, data, logy, cb) {
   if (fs.existsSync(filename)) {
     console.log('BORKED: ' + filename + ' already exists! Maybe delete it and try again?')
+    cb()
   } else {
     fs.writeFile(filename, data, logy(filename, cb))
   }
