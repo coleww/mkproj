@@ -171,10 +171,6 @@ function logCreation (filename, cb) {
   }
 }
 
-function splicey (stir, idx, rem, insert) {
-  return (stir.slice(0, idx) + insert + stir.slice(idx + Math.abs(rem)))
-}
-
 function addScripts (data) {
   if (data.browserify) {
     npmAddScript({key: 'build', value: 'browserify www/demo.js -o www/bundle.js'})
@@ -182,10 +178,12 @@ function addScripts (data) {
     npmAddScript({key: 'watch', value: 'watchify www/demo.js -o www/bundle.js --debug --verbose'})
   }
   if (data.cli) {
-    var packaged = fs.readFileSync('package.json').toString()
-    if (packaged.indexOf('"bin": {') !== -1) console.log('WEEEOOOO looks like you already have a bin entry in yr package.json?')
-    var scriptMatch = packaged.match('"scripts":').index
-    fs.writeFileSync('package.json', splicey(packaged, scriptMatch.index, 0, '"bin": {\n    "' + data.camelName + '": "cmd.js"\n  },\n  '))
+    var packaged = jsonfile.readFileSync('package.json')
+    if (packaged.bin) console.log('WEEEOOOO looks like you already have a bin entry in yr package.json?')
+    var bin = {}
+    bin[data.camelName] = 'cmd.js'
+    packaged.bin = bin
+    jsonfile.writeFileSync('package.json', packaged)
   }
   if (data.twitter) {
     npmAddScript({key: 'tweet', value: 'node bot.js'})
