@@ -1,7 +1,7 @@
 var testUtils = require('./tests/test_utils')
-var testIt = testUtils.testIt
-var testAddingIt = testUtils.testAddingIt
-var testDenyingIt = testUtils.testDenyingIt
+var testMkingAProject = testUtils.testMkingAProject
+var testAddingToAnExistingProject = testUtils.testAddingToAnExistingProject
+var testHandlingFileCollissionsWhileAdding = testUtils.testHandlingFileCollissionsWhileAdding
 var tap = require('tap')
 var mkproj = require('./')
 
@@ -17,6 +17,7 @@ tap.test('throws an error if not passed a project name', function (t) {
   }
 })
 
+// oh um yeah, generate this through an algorithm, that would be cool
 var creations = [
   ['defaulty', {}],
   ['cli', {cli: true}],
@@ -28,6 +29,7 @@ var creations = [
   ['everything', {twitter: true, browserify: true, cli: true}]
 ]
 
+// test adding multiples? cuz why not?
 var additions = [
   ['brewsy', {browserify: true}],
   ['clingy', {cli: true}],
@@ -50,11 +52,11 @@ var denials = [
 
 // probably a better way to make this data structure...
 var testCases = [].concat(creations.map(function (tc) {
-  return [testIt, tc]
+  return [testMkingAProject, tc]
 })).concat(additions.map(function (tc) {
-  return [testAddingIt, tc]
+  return [testAddingToAnExistingProject, tc]
 })).concat(denials.map(function (tc) {
-  return [testDenyingIt, tc]
+  return [testHandlingFileCollissionsWhileAdding, tc]
 }))
 
 function doThatDance () {
