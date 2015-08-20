@@ -112,18 +112,22 @@ function testAddingToAnExistingProject (options, cb) {
 
 function testHandlingFileCollissionsWhileAdding (options, cb) {
   var name = makeName(options)
+  var expectations = options.expectations
+
   cleanUpAndRun(name, actuallyTestThings)
 
   function actuallyTestThings () {
     tap.test('logs a helpful message if trying to add a ' + name + ' that already exists', function (t) {
-      t.plan(1)
+      t.plan(expectations.length)
       options.noFunnyBusiness = true
-      console.log('dir', process.cwd(), fs.readdirSync('.'))
       mkproj(name, options, function () {
         process.chdir(name)
         var l = console.log
         console.log = function (msg) {
-          if (msg === options.expected) t.ok(true, 'logs ' + options.expected + ' as expected')
+          var i
+          if ((i = expectations.indexOf(msg)) !== -1) {
+            t.ok(true, 'logs ' + expectations.splice(i, 1) + ' as expected')
+          }
           l(msg)
         }
         mkproj(name, options, function () {

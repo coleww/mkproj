@@ -29,19 +29,21 @@ var testCases = [
   {kind: 'add', browserify: true},
   {kind: 'add', cli: true},
   {kind: 'add', twitter: true},
-  {kind: 'deny', twitter: true, expected: 'BORKED: tweet.js already exists! Maybe delete it and try again?'},
-  {kind: 'deny', twitter: true, expected: 'BORKED: bot.js already exists! Maybe delete it and try again?'},
-  {kind: 'deny', twitter: true, expected: 'CATastrophic failure occurred while trying to shove stuff into package.json:'},
-  {kind: 'deny', cli: true, expected: 'BORKED: cmd.js already exists! Maybe delete it and try again?'},
-  {kind: 'deny', cli: true, expected: 'WEEEOOOO looks like you already have a bin entry in yr package.json?'},
-  {kind: 'deny', browserify: true, expected: 'CATastrophic failure occurred while trying to shove stuff into package.json:'},
-  {kind: 'deny', browserify: true, expected: 'BORKED: www/index.html already exists! Maybe delete it and try again?'},
-  {kind: 'deny', browserify: true, expected: 'BORKED: www/demo.js already exists! Maybe delete it and try again?'},
-  {kind: 'deny', browserify: true, expected: 'BORKED: www/main.css already exists! Maybe delete it and try again?'}
+  {kind: 'deny', twitter: true, expectations: ['BORKED: tweet.js already exists! Maybe delete it and try again?',
+                                               'BORKED: bot.js already exists! Maybe delete it and try again?',
+                                               'CATastrophic failure occurred while trying to shove stuff into package.json:']},
+  {kind: 'deny', cli: true, expectations: ['BORKED: cmd.js already exists! Maybe delete it and try again?',
+                                           'WEEEOOOO looks like you already have a bin entry in yr package.json?']},
+  {kind: 'deny', browserify: true, expectations: ['CATastrophic failure occurred while trying to shove stuff into package.json:',
+                                                  'BORKED: www/index.html already exists! Maybe delete it and try again?',
+                                                  'BORKED: www/demo.js already exists! Maybe delete it and try again?',
+                                                  'BORKED: www/main.css already exists! Maybe delete it and try again?']}
 ]
 
 var after = require('after')
 var counter = after(testCases.length, function () {
+  // it would be WAAAAAY better to t.ok(true) instead of doing this to ensure everything passes,
+  // but tap seems to hate the recursion.
   console.log('CALLED THEM ALL!! ALL OF THEM!!! (but did they all pass? (that is a question for my friend Travis. (he would know!)))')
 })
 
