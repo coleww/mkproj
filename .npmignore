@@ -1,3 +1,4 @@
-/tests/*
-^/tests/test_utils.js
+/tests
+test.js
+.travis.yml
 construction.png
