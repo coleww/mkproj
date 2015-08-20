@@ -192,7 +192,7 @@ function addScripts (data) {
     var bin = {}
     bin[data.camelName] = 'cmd.js'
     packaged.bin = bin
-    jsonfile.writeFileSync('package.json', packaged)
+    jsonfile.writeFileSync('package.json', packaged, {spaces: 2})
   }
   if (data.twitter) {
     npmAddScript({key: 'tweet', value: 'node bot.js'})
