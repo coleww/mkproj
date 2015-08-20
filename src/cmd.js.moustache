@@ -36,4 +36,8 @@ if (process.stdin.isTTY) {
   // if (err) {
   //   process.exit(1)
   // }
+
+  // if this module is CLI only, be sure to add
+  // "preferGlobal": true,
+  // to yr package.json
 }
