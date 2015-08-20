@@ -42,7 +42,7 @@ function testMkingAProject (options, cb) {
       mkproj(name, options, function () {
         t.ok(fs.existsSync(name), 'mks a new directory')
         t.ok(fs.readFileSync(name + '/.gitignore', {encoding: 'utf-8'}).toString().match('/node_modules'), 'echoes node_modules into gitignore')
-        t.equal(fs.readFileSync(name + '/.npmignore', {encoding: 'utf-8'}), 'www', 'echoes dubdubdub into npmignore')
+        t.equal(fs.readFileSync(name + '/.npmignore', {encoding: 'utf-8'}), 'www\ntest.js\n.travis.yml', 'echoes stuff into npmignore')
         t.ok(fs.readFileSync(name + '/README.md', {encoding: 'utf-8'}).toString().match(name + '\n----------------'), 'echoes proj name into README.md')
         t.ok(fs.existsSync(name + '/index.js'), 'mks an index.js')
         t.ok(fs.existsSync(name + '/.travis.yml'), 'mks a trav')
