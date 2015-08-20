@@ -27,6 +27,7 @@ module.exports = function (name, options, cb) {
 }
 
 function mkTheProj (name, options, cb) {
+  if (options.twitter && options.browserify && options.cli) console.log('GENERATING A WHOPPER, ONE blt, COMING RIGHT UP')
   var templateData = makeTemplateData(name, options)
 
   var selected = []
