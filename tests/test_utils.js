@@ -10,7 +10,8 @@ module.exports = {
   testHandlingFileCollissionsWhileAdding: testHandlingFileCollissionsWhileAdding
 }
 
-function testMkingAProject (name, options, cb) {
+function testMkingAProject (options, cb) {
+  var name = makeName(options)
   var count = 0
   var exclusions = [] // files to check for exclusion
   if (options.browserify) {
@@ -71,7 +72,8 @@ function testMkingAProject (name, options, cb) {
   }
 }
 
-function testAddingToAnExistingProject (name, options, cb) {
+function testAddingToAnExistingProject (options, cb) {
+  var name = makeName(options)
   var count = 0
   if (options.browserify) {
     count += 4
@@ -108,7 +110,8 @@ function testAddingToAnExistingProject (name, options, cb) {
   }
 }
 
-function testHandlingFileCollissionsWhileAdding (name, options, cb) {
+function testHandlingFileCollissionsWhileAdding (options, cb) {
+  var name = makeName(options)
   cleanUpAndRun(name, actuallyTestThings)
 
   function actuallyTestThings () {
@@ -131,6 +134,10 @@ function testHandlingFileCollissionsWhileAdding (name, options, cb) {
       })
     })
   }
+}
+
+function makeName (options) {
+  return JSON.stringify(options).replace(/\s+/g, ' ').replace(/\s/g, '-').replace(/\W/g, '').substr(0, 26)
 }
 
 function cleanUpAndRun (path, cb) {

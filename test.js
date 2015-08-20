@@ -17,45 +17,28 @@ tap.test('throws an error if not passed a project name', function (t) {
   }
 })
 
-var creations = [
-  ['defaulty', {}],
-  ['cli', {cli: true}],
-  ['browsy', {browserify: true}],
-  ['tweety', {twitter: true}],
-  ['browsatweet', {twitter: true, browserify: true}],
-  ['clibro', {browserify: true, cli: true}],
-  ['tweecli', {twitter: true, cli: true}],
-  ['everything', {twitter: true, browserify: true, cli: true}]
+var testCases = [
+  {kind: 'create'},
+  {kind: 'create', cli: true},
+  {kind: 'create', browserify: true},
+  {kind: 'create', twitter: true},
+  {kind: 'create', twitter: true, browserify: true},
+  {kind: 'create', browserify: true, cli: true},
+  {kind: 'create', twitter: true, cli: true},
+  {kind: 'create', twitter: true, browserify: true, cli: true},
+  {kind: 'add', browserify: true},
+  {kind: 'add', cli: true},
+  {kind: 'add', twitter: true},
+  {kind: 'deny', expected: 'BORKED: tweet.js already exists! Maybe delete it and try again?', twitter: true},
+  {kind: 'deny', expected: 'BORKED: bot.js already exists! Maybe delete it and try again?', twitter: true},
+  {kind: 'deny', expected: 'CATastrophic failure occurred while trying to shove stuff into package.json:', twitter: true},
+  {kind: 'deny', expected: 'BORKED: cmd.js already exists! Maybe delete it and try again?', cli: true},
+  {kind: 'deny', expected: 'WEEEOOOO looks like you already have a bin entry in yr package.json?', cli: true},
+  {kind: 'deny', expected: 'CATastrophic failure occurred while trying to shove stuff into package.json:', browserify: true},
+  {kind: 'deny', expected: 'BORKED: www/index.html already exists! Maybe delete it and try again?', browserify: true},
+  {kind: 'deny', expected: 'BORKED: www/demo.js already exists! Maybe delete it and try again?', browserify: true},
+  {kind: 'deny', expected: 'BORKED: www/main.css already exists! Maybe delete it and try again?', browserify: true}
 ]
-
-var additions = [
-  ['brewsy', {browserify: true}],
-  ['clingy', {cli: true}],
-  ['tooty', {twitter: true}]
-]
-
-var denials = [
-  ['tweetfile', {expected: 'BORKED: tweet.js already exists! Maybe delete it and try again?', twitter: true}],
-  ['botfile', {expected: 'BORKED: bot.js already exists! Maybe delete it and try again?', twitter: true}],
-  ['tweetscript', {expected: 'CATastrophic failure occurred while trying to shove stuff into package.json:', twitter: true}],
-
-  ['cmdfile', {expected: 'BORKED: cmd.js already exists! Maybe delete it and try again?', cli: true}],
-  ['clibin', {expected: 'WEEEOOOO looks like you already have a bin entry in yr package.json?', cli: true}],
-
-  ['browsyscripts', {expected: 'CATastrophic failure occurred while trying to shove stuff into package.json:', browserify: true}],
-  ['browsyindex', {expected: 'BORKED: www/index.html already exists! Maybe delete it and try again?', browserify: true}],
-  ['browsydemo', {expected: 'BORKED: www/demo.js already exists! Maybe delete it and try again?', browserify: true}],
-  ['browsymain', {expected: 'BORKED: www/main.css already exists! Maybe delete it and try again?', browserify: true}]
-]
-
-// there is probably a clever-er way to make this data structure thing...
-var testCases = [].concat(denials.map(function (tc) {
-  return [testHandlingFileCollissionsWhileAdding, tc]
-})).concat(creations.map(function (tc) {
-  return [testMkingAProject, tc]
-})).concat(additions.map(function (tc) {
-  return [testAddingToAnExistingProject, tc]
-}))
 
 var after = require('after')
 var counter = after(testCases.length, function () {
@@ -66,9 +49,17 @@ function doThatDance () {
   var tc = testCases.pop()
   console.log('Running one now!!! Ok so like ' + testCases.length + ' tests left!!!')
   if (tc) {
-    var args = tc[1]
-    args.push(doThatDance)
-    tc[0].apply(this, args)
+    switch (tc.kind) {
+      case 'create':
+        testMkingAProject(tc, doThatDance)
+        break
+      case 'add':
+        testAddingToAnExistingProject(tc, doThatDance)
+        break
+      case 'deny':
+        testHandlingFileCollissionsWhileAdding(tc, doThatDance)
+        break
+    }
     counter()
   } else {
     console.log('finished!')
