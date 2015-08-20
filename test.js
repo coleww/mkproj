@@ -29,15 +29,15 @@ var testCases = [
   {kind: 'add', browserify: true},
   {kind: 'add', cli: true},
   {kind: 'add', twitter: true},
-  {kind: 'deny', expected: 'BORKED: tweet.js already exists! Maybe delete it and try again?', twitter: true},
-  {kind: 'deny', expected: 'BORKED: bot.js already exists! Maybe delete it and try again?', twitter: true},
-  {kind: 'deny', expected: 'CATastrophic failure occurred while trying to shove stuff into package.json:', twitter: true},
-  {kind: 'deny', expected: 'BORKED: cmd.js already exists! Maybe delete it and try again?', cli: true},
-  {kind: 'deny', expected: 'WEEEOOOO looks like you already have a bin entry in yr package.json?', cli: true},
-  {kind: 'deny', expected: 'CATastrophic failure occurred while trying to shove stuff into package.json:', browserify: true},
-  {kind: 'deny', expected: 'BORKED: www/index.html already exists! Maybe delete it and try again?', browserify: true},
-  {kind: 'deny', expected: 'BORKED: www/demo.js already exists! Maybe delete it and try again?', browserify: true},
-  {kind: 'deny', expected: 'BORKED: www/main.css already exists! Maybe delete it and try again?', browserify: true}
+  {kind: 'deny', twitter: true, expected: 'BORKED: tweet.js already exists! Maybe delete it and try again?'},
+  {kind: 'deny', twitter: true, expected: 'BORKED: bot.js already exists! Maybe delete it and try again?'},
+  {kind: 'deny', twitter: true, expected: 'CATastrophic failure occurred while trying to shove stuff into package.json:'},
+  {kind: 'deny', cli: true, expected: 'BORKED: cmd.js already exists! Maybe delete it and try again?'},
+  {kind: 'deny', cli: true, expected: 'WEEEOOOO looks like you already have a bin entry in yr package.json?'},
+  {kind: 'deny', browserify: true, expected: 'CATastrophic failure occurred while trying to shove stuff into package.json:'},
+  {kind: 'deny', browserify: true, expected: 'BORKED: www/index.html already exists! Maybe delete it and try again?'},
+  {kind: 'deny', browserify: true, expected: 'BORKED: www/demo.js already exists! Maybe delete it and try again?'},
+  {kind: 'deny', browserify: true, expected: 'BORKED: www/main.css already exists! Maybe delete it and try again?'}
 ]
 
 var after = require('after')
