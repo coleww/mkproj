@@ -1,24 +1,36 @@
 #!/usr/bin/env node
-
+var mkproj = require('./')
 var figlet = require('figlet')
-var header = figlet.textSync('M K P R O J', { font: 'Big Money-nw'})
-
+var fonts = ['Big Money-nw', 'Def Leppard', 'Alligator2']
+var header = figlet.textSync('M K P R O J', { font: fonts[~~(Math.random() * fonts.length)]})
 console.log(header)
 
 var argv = require('yargs')
-  .alias('h', 'help')
-  .help('help')
-  .demand(1, figlet.textSync('E R R O R :', { font: 'Fire Font-k'}) + figlet.textSync('You must pass', { font: 'Fire Font-k'}) + figlet.textSync('a project name', { font: 'Fire Font-s'}))
-  .usage('generates tiny node projects')
-  .example('mkproj yr-awesome-node-project -b')
-  .alias('b', 'browserify')
-  .describe('b', 'adds browserify/watchify and /www folder')
-  .alias('t', 'twitter')
-  .describe('t', 'adds twit and tweet.js file')
-  .alias('c', 'cli')
-  .describe('c', 'adds yargs and cmd.js file')
-  .argv
+                          .alias('h', 'help')
+                          .help('help')
+                          .usage('generates tiny node projects')
+                          .example('mkproj yr-awesome-vanilla-node-project')
+                          .example('mkproj yr-cool-twitter-bot -tweet')
+                          .example('mkproj make-me-a-sandwich-please -blt')
+                          .example('mkproj -b # add /www and browserify to an existing project')
+                          .alias('b', 'browserify')
+                          .alias('b', 'browser')
+                          .alias('b', 'bacon')
+                          .describe('b', 'installs browserify/watchify and adds /www folder')
+                          .alias('c', 'cli')
+                          .alias('c', 'cmd')
+                          .alias('c', 'l') // -blt
+                          .alias('c', 'lettuce')
+                          .describe('c', 'installs yargs and adds cmd.js file')
+                          .alias('t', 'twitter')
+                          .alias('t', 'tweet')
+                          .alias('t', 'tomato')
+                          .describe('t', 'installs twit and adds tweet.js file')
+                          .alias('n', 'noPleaseDoNotInstallThanks')
+                          .describe('n', 'skip the whole "npm init/npm install/git init/initial commit" business')
+                          .argv
 
 var projectName = argv._.join('-').replace(/\W/g, '-')
 
-require('./')(projectName, {browserify: argv.b, twitter: argv.t, cli: argv.c})
+// SHOULD BE TRYING AND CATCHING HERE I THINK, YES?!?!
+mkproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b, twitter: argv.t, cli: argv.c})

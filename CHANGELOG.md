@@ -1,6 +1,16 @@
 CH-CH-CH-CHANGES
 ----------------------------------------------
 
+8/16/205 v4.2.0
+- sweetens up CLI with more cats and cooler fonts
+- adds ability to add stuff to a created project, i.e, by running `mkproj -c` to get a cmd.js
+- adds process.exit to generated cmd.js and bin boilerplate to package.json for CLI generations
+- adds tweet script when tooting
+- add process.exit to internal cmd.js
+- adds lettuce to the bacon and tomato
+- better error throwing in bad cases
+- gets missing name error test working
+
 8/13/205 v3.2.0
 - adds sweet yargs/figlet CLI interface
 - adds options for generating browersify/www, twitter-bot, and CLI boilerplate

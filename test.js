@@ -1,19 +1,72 @@
-var testIt = require('./tests/test_utils')
+var testUtils = require('./tests/test_utils')
+var testMkingAProject = testUtils.testMkingAProject
+var testAddingToAnExistingProject = testUtils.testAddingToAnExistingProject
+var testHandlingFileCollissionsWhileAdding = testUtils.testHandlingFileCollissionsWhileAdding
+var tap = require('tap')
+var mkproj = require('./')
 
-testIt('defaulty', {twitter: false, browserify: false, cli: false})
-testIt('cli', {twitter: false, browserify: false, cli: true})
-testIt('browsy', {twitter: false, browserify: true, cli: false})
-testIt('tweety', {twitter: true, browserify: false, cli: false})
-testIt('browsatweet', {twitter: true, browserify: true, cli: false})
-testIt('clibro', {twitter: false, browserify: true, cli: true})
-testIt('tweecli', {twitter: true, browserify: false, cli: true})
-testIt('everything', {twitter: true, browserify: true, cli: true})
+// DO EVERYTHING from inside the /tests directory, so u got a clean state.
+process.chdir('./tests')
 
-// um where to put this lol
-// tap.test('does nothing without a project name', function (t) {
-//   t.plan(2)
-//   console.log = function (msg) {
-//     t.equal(msg, 'you must pass a project name!', 'warns if no proj name is passed')
-//   }
-//   t.equal(mkproj(), 'fail', 'process exits')
-// })
+tap.test('throws an error if not passed a project name', function (t) {
+  t.plan(1)
+  try {
+    mkproj(null, {noFunnyBusiness: true})
+  } catch (e) {
+    t.ok(e)
+  }
+})
+
+var testCases = [
+  {kind: 'create'},
+  {kind: 'create', cli: true},
+  {kind: 'create', browserify: true},
+  {kind: 'create', twitter: true},
+  {kind: 'create', twitter: true, browserify: true},
+  {kind: 'create', browserify: true, cli: true},
+  {kind: 'create', twitter: true, cli: true},
+  {kind: 'create', twitter: true, browserify: true, cli: true},
+  {kind: 'add', browserify: true},
+  {kind: 'add', cli: true},
+  {kind: 'add', twitter: true},
+  {kind: 'deny', twitter: true, expectations: ['BORKED: tweet.js already exists! Maybe delete it and try again?',
+                                               'BORKED: bot.js already exists! Maybe delete it and try again?',
+                                               'CATastrophic failure occurred while trying to shove stuff into package.json:']},
+  {kind: 'deny', cli: true, expectations: ['BORKED: cmd.js already exists! Maybe delete it and try again?',
+                                           'WEEEOOOO looks like you already have a bin entry in yr package.json?']},
+  {kind: 'deny', browserify: true, expectations: ['CATastrophic failure occurred while trying to shove stuff into package.json:',
+                                                  'BORKED: www/index.html already exists! Maybe delete it and try again?',
+                                                  'BORKED: www/demo.js already exists! Maybe delete it and try again?',
+                                                  'BORKED: www/main.css already exists! Maybe delete it and try again?']}
+]
+
+var after = require('after')
+var counter = after(testCases.length, function () {
+  // it would be WAAAAAY better to t.ok(true) instead of doing this to ensure everything passes,
+  // but tap seems to hate the recursion.
+  console.log('CALLED THEM ALL!! ALL OF THEM!!! (but did they all pass? (that is a question for my friend Travis. (he would know!)))')
+})
+
+function doThatDance () {
+  var tc = testCases.pop()
+  console.log('Running one now!!! Ok so like ' + testCases.length + ' tests left!!!')
+  if (tc) {
+    switch (tc.kind) {
+      case 'create':
+        testMkingAProject(tc, doThatDance)
+        break
+      case 'add':
+        testAddingToAnExistingProject(tc, doThatDance)
+        break
+      case 'deny':
+        testHandlingFileCollissionsWhileAdding(tc, doThatDance)
+        break
+    }
+    counter()
+  } else {
+    console.log('finished!')
+  }
+}
+
+doThatDance()
+// so elegant
