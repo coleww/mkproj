@@ -42,7 +42,7 @@
 {{/browserify}}
 {{#cli}}
   "bin": {
-    "mkproj": "cmd.js"
+    "{{camelName}}": "cmd.js"
   },
 {{/cli}}
   "license": "MIT"
