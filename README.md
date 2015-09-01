@@ -62,8 +62,7 @@ Just `cd` into any project folder that contains a `package.json`, whether create
 ``` 
   mkproj -t
 ```
-
-`mkproj` will add some twitter bot config files and boilerplate and install the `twit` module and even add a `tweet` entry to the `scripts` in yr `package.json`. It will even guess a good variable name to use for your module ;).
+(or `-b` or `-c` or any combination thereof) `mkproj` will add some twitter bot config files and boilerplate and install the `twit` module and even add a `tweet` entry to the `scripts` in yr `package.json`. It will even guess a good variable name to use for your module ;).
 
 If at any point the module hits a bump in the road due to, say, a file already existing or a duplicate `scripts` entry it will output a helpful error, thus allowing you, the programmer, to rectify this error. 
 
