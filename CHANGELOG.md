@@ -1,7 +1,14 @@
 CH-CH-CH-CHANGES
 ----------------------------------------------
 
-8/16/205 v4.2.0
+9/2/2015 v4.2.4
+- update the args to all be booleans, making `mproj -t foobar` work properly
+- use project name wherever possible since we, like, know what it is
+- add ability to use a `.mkproj.json` file for configuration
+- properly handle if the user passes no meaningful options whatsoever
+- add warnings re: whats happening if user passes -n/not hitting the network
+
+8/16/2015 v4.2.0
 - sweetens up CLI with more cats and cooler fonts
 - adds ability to add stuff to a created project, i.e, by running `mkproj -c` to get a cmd.js
 - adds process.exit to generated cmd.js and bin boilerplate to package.json for CLI generations
@@ -11,7 +18,7 @@ CH-CH-CH-CHANGES
 - better error throwing in bad cases
 - gets missing name error test working
 
-8/13/205 v3.2.0
+8/13/2015 v3.2.0
 - adds sweet yargs/figlet CLI interface
 - adds options for generating browersify/www, twitter-bot, and CLI boilerplate
 - new default is to only make index.js and test.js w/ standard and tap 

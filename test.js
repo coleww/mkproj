@@ -18,7 +18,7 @@ tap.test('throws an error if not passed a project name', function (t) {
 })
 
 var testCases = [
-  {kind: 'create', cli: false},
+  {kind: 'create'},
   {kind: 'create', cli: true},
   {kind: 'create', browserify: true},
   {kind: 'create', twitter: true},
