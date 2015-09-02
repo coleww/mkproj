@@ -34,10 +34,12 @@ var argv = require('yargs')
                           .describe('n', 'skip the whole "npm init/npm install/git init/initial commit" business')
                           .argv
 
-// should manually fail here if not passed a proj name OR a non n option
-// dont think yargs demand works...
-
-var projectName = argv._.join('-').replace(/\W/g, '-')
-
-// SHOULD BE TRYING AND CATCHING HERE I THINK, YES?!?!
-mkproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b, twitter: argv.t, cli: argv.c})
+if (argv.b || argv.c || argv.t || argv._.length){
+  var projectName = argv._.join('-').replace(/\W/g, '-')
+  mkproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b, twitter: argv.t, cli: argv.c})
+} else {
+  console.log('ERRORERRORERRORERRORERRORERRORERRORERRORERRORERROR')
+  console.log('YOU MUST PASS EITHER AN OPTION OR A PROJECT NAME!!')
+  console.log('RUN   mkproj -help    FOR MORE INFORMATION!!!!!!!!')
+  console.log('ERRORERRORERRORERRORERRORERRORERRORERRORERRORERROR')
+}
