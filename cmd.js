@@ -35,7 +35,7 @@ var argv = require('yargs')
                           .describe('n', 'skip the whole "npm init/npm install/git init/initial commit" business')
                           .argv
 
-if (argv.b || argv.c || argv.t || argv._.length){
+if (argv.b || argv.c || argv.t || argv._.length) {
   var projectName = argv._.join('-').replace(/\W/g, '-')
   mkproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b, twitter: argv.t, cli: argv.c})
 } else {

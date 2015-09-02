@@ -42,9 +42,8 @@ var testCases = [
 
 var after = require('after')
 var counter = after(testCases.length, function () {
-  // it would be WAAAAAY better to t.ok(true) instead of doing this to ensure everything passes,
-  // but tap seems to hate the recursion.
   console.log('CALLED THEM ALL!! ALL OF THEM!!! (but did they all pass? (that is a question for my friend Travis. (he would know!)))')
+  process.exit(0)
 })
 
 function doThatDance () {
@@ -70,3 +69,8 @@ function doThatDance () {
 
 doThatDance()
 // so elegant
+
+setTimeout(function () {
+  console.log('whoops something horrible happened')
+  process.exit(1)
+}, 1000 * 60 * 9.5)
