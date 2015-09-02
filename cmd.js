@@ -31,6 +31,7 @@ var argv = require('yargs')
                           .describe('t', 'installs twit and adds tweet.js file')
                           .boolean('n')
                           .alias('n', 'noPleaseDoNotInstallThanks')
+                          .alias('n', 'noFunnyBusiness')
                           .describe('n', 'skip the whole "npm init/npm install/git init/initial commit" business')
                           .argv
 

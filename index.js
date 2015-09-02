@@ -50,7 +50,14 @@ function mkTheProj (name, options, cb) {
     console.log(catMe())
     console.log('W A Y    C H I L L!               =^.^=            R A D I C A L!')
     cb()
-    if (!options.noFunnyBusiness) kexec('cd ' + name + ' && npm init && npm install && git init && git add -A && git commit -m \'initial\'')
+    if (!options.noFunnyBusiness) {
+      kexec('cd ' + name + ' && npm init && npm install && git init && git add -A && git commit -m \'initial\'')
+    } else {
+      console.log('WARNING: you passed the no funny business option')
+      console.log('WARNING: therefore packages will not be installed nor will a git repository be initialized and committed to')
+      console.log('DANGER: be certain to run     npm install    so as to install the necessary packages')
+      console.log('ADVICE: and please use version control because really why not i mean it doesn\'t mean you gotta make super nice clean commits all the time and doe everything through feature branches and pull requests, gosh, just make a big commit when you have things working and that way you can easily jump back if you need to or take a look at a diff and see what went so utterly wrong')
+    }
   })
 
   function doYourWorst (err) {
@@ -99,7 +106,15 @@ function add2proj (name, options, cb) {
   console.log('todo', files.length)
   var init = after(files.length + 1, function () {
     cb()
-    if (!options.noFunnyBusiness) kexec(templateData.install.join(' && '))
+    if (!options.noFunnyBusiness) {
+      kexec(templateData.install.join(' && '))
+    } else {
+      console.log('WARNING: you passed the "noFunnyBusiness" paramater, so packages won\'t be installed nor will the package.json be updated!')
+      console.log('DANGER: be sure to run the following command to install the required packages and update the package.json:')
+      console.log('    ' + templateData.install.join(' && '))
+      console.log(catMe())
+      console.log('thank you')
+    }
   })
   function doYourWorst (err) {
     if (err) {
