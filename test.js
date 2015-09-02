@@ -18,7 +18,7 @@ tap.test('throws an error if not passed a project name', function (t) {
 })
 
 var testCases = [
-  {kind: 'create'},
+  {kind: 'create', cli: false},
   {kind: 'create', cli: true},
   {kind: 'create', browserify: true},
   {kind: 'create', twitter: true},
@@ -43,7 +43,9 @@ var testCases = [
 var after = require('after')
 var counter = after(testCases.length, function () {
   console.log('CALLED THEM ALL!! ALL OF THEM!!! (but did they all pass? (that is a question for my friend Travis. (he would know!)))')
-  process.exit(0)
+  setTimeout(function () {
+    process.exit(0)
+  }, 15000)
 })
 
 function doThatDance () {
