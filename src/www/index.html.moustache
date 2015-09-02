@@ -10,9 +10,9 @@
   INPUT: <textarea id="input"></textarea><br/><br/>
   OUTPUT :<span id="output"></span><br/><br/>
   <hr/>
-  <a href="https://github.com/YR_GH_NAME/{{name}}">FORK THIS</a>
+  <a href="https://github.com/{{githubUserName}}/{{name}}">FORK THIS</a>
   <br/><br/>
-  <a href="http://YR_WEBSITE_HERE.com">by YR_NAME</a>
+  <a href="{{website}}">by YR_NAME</a>
   <script src="bundle.js"></script>
 </body>
 </html>

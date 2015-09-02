@@ -6,6 +6,8 @@ var jsonfile = require('jsonfile')
 var kexec = require('kexec')
 var mustache = require('mustache')
 var npmAddScript = require('npm-add-script')
+var merge = require('merge')
+var osenv = require('osenv')
 
 var baseFiles = ['.gitignore', '.npmignore', '.travis.yml', 'README.md',
                    'index.js', 'package.json', 'test.js']
@@ -150,6 +152,14 @@ function getName () {
   return jsonfile.readFileSync('package.json').name
 }
 
+function getConfig () {
+  try {
+    return jsonfile.readFileSync(osenv.home() + '/.mkproj.json')
+  } catch (e) {
+    return {configError: e}
+  }
+}
+
 function makeTemplateData (name, options) {
   var both = options.cli && options.twitter ? ',' : ''
   var either = options.cli || options.twitter
@@ -159,6 +169,8 @@ function makeTemplateData (name, options) {
     options.twitter ? twitterPackages : 'echo "=^.^= aaawwwesome =^.^="'
   ]
 
+  var config = merge({githubUserName: 'yrGithubUsername', travisUserName: 'yrTravisUsername', website: 'yrWebsite'}, getConfig())
+
   return {
     name: name,
     camelName: camelcase(name),
@@ -167,7 +179,10 @@ function makeTemplateData (name, options) {
     twitter: options.twitter,
     both: both,
     either: either,
-    install: installs
+    install: installs,
+    githubUserName: config.githubUserName,
+    website: config.website,
+    travisUserName: config.travisUserName
   }
 }
 

@@ -122,7 +122,21 @@ My close friend [https://travis-ci.org/](Travis) will totally check out your cod
 ### BADGES
 
 Aww yeah you got some badges in that `README.md`. Yeah you do. Look at those! Just replace the 2 instances of `YR_TRAVIS_USER_NAME` with, umm, your travis user name. Oh also if you are publishing or distributing your project _please for the love of glob write an appropriate amount of documentation in yr `README.md`_, thanks. 
- 
+
+### CONFIG
+
+There are a few configuration things that mkproj just can't possibly guess, and for that you can create a `~/.mkproj.json` file. Mine looks like this:
+
+```
+{
+  "githubUserName": "coleww",
+  "website": "http://www.colewillsea.com",
+  "travisUserName": "coleww"
+}
+```
+
+This basically handles personal stuff for the `README.md` and `www/index.html` files, but more awesome tricks might be possible with a little JSON.
+
 ### A BLT
 
 Some node modules are so awesome that they deserve to be not only balled up into a tar and sent to npm, but also browserified into a web app, bundled into a command line tool, and deployed as a twitter bot. These modules are known colloquially as "whoppers", "ham-sandwiches", or "BLT's", and when we generate one we use the argument `mkproj someProject -blt`. I have never personally made nor witnessed a BLT so unfortunately I cannot link you to an example, but I can dream on, glob willing...
