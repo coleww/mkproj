@@ -92,7 +92,7 @@ function testAddingToAnExistingProject (options, cb) {
       mkproj(name, {noFunnyBusiness: true, browserify: false, twitter: false, cli: false}, function () {
         process.chdir(name)
         options.noFunnyBusiness = true
-        mkproj(name, options, function () {
+        mkproj('', options, function () {
           if (options.browserify) {
             checkForBrowser('.', t)
           }
@@ -130,7 +130,7 @@ function testHandlingFileCollissionsWhileAdding (options, cb) {
           }
           l(msg)
         }
-        mkproj(name, options, function () {
+        mkproj('', options, function () {
           console.log = l
           process.chdir('../')
           rimraf(name, cb)
