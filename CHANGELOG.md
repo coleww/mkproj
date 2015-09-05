@@ -1,6 +1,10 @@
 CH-CH-CH-CHANGES
 ----------------------------------------------
 
+9/52015 v4.2.5
+- handle errors better at the cmd.js level
+- allow creating a new project inside of an existing project.
+
 9/2/2015 v4.2.4
 - update the args to all be booleans, making `mproj -t foobar` work properly
 - use project name wherever possible since we, like, know what it is
