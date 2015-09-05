@@ -19,7 +19,7 @@ var twitterFiles = ['bot.js', 'tweet.js']
 var twitterPackages = 'npm install twit --save'
 
 module.exports = function (name, options, cb) {
-  if (fs.existsSync('package.json')) {
+  if (fs.existsSync('package.json') && !name) {
     add2proj(name || getName(), options || {}, cb || function () {})
   } else if (!name) {
     throw new ItIsEssentialThatYouGiveThisProjectSomeSortOfNameHowAboutFluffyDestroyerError()
