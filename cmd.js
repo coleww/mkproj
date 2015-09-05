@@ -37,7 +37,11 @@ var argv = require('yargs')
 
 if (argv.b || argv.c || argv.t || argv._.length) {
   var projectName = argv._.join('-').replace(/\W/g, '-')
-  mkproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b, twitter: argv.t, cli: argv.c})
+  try {
+    mkproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b, twitter: argv.t, cli: argv.c})
+  } catch (e) {
+    console.log(e.message)
+  }
 } else {
   console.log('ERRORERRORERRORERRORERRORERRORERRORERRORERRORERROR')
   console.log('YOU MUST PASS EITHER AN OPTION OR A PROJECT NAME!!')
