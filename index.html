@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>mkproj by coleww</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>mkproj</h1>
+        <h2>a scaffolding tool for tiny JavaScript projects</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/coleww/mkproj/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/coleww/mkproj/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/coleww/mkproj" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h2>
+<a id="mkproj" class="anchor" href="#mkproj" aria-hidden="true"><span class="octicon octicon-link"></span></a>MKPROJ</h2>
+
+<p><img src="construction.png" alt="welcome 2 hell"></p>
+
+<p>simple scaffolding tool for making node modules and/or Browserify'd web apps and/or twitter bots and/or CLI tools, or any combination thereof, and also for adding any of these aformentioned things to any existing project that has a <code>package.json</code> file. </p>
+
+<p><a href="https://nodei.co/npm/mkproj/"><img src="https://nodei.co/npm/mkproj.png" alt="NPM"></a>
+<a href="http://travis-ci.org/coleww/mkproj"><img src="https://secure.travis-ci.org/coleww/mkproj.png" alt="Build Status"></a>
+<a href="https://github.com/feross/standard"><img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat" alt="js-standard-style"></a></p>
+
+<h3>
+<a id="install-it" class="anchor" href="#install-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>INSTALL IT</h3>
+
+<p><code>npm install -g mkproj</code></p>
+
+<h3>
+<a id="use-it" class="anchor" href="#use-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>USE IT</h3>
+
+<pre><code>$ mkproj wat
+$$\      $$\       $$\   $$\       $$$$$$$\        $$$$$$$\         $$$$$$\           $$$$$\
+$$$\    $$$ |      $$ | $$  |      $$  __$$\       $$  __$$\       $$  __$$\          \__$$ |
+$$$$\  $$$$ |      $$ |$$  /       $$ |  $$ |      $$ |  $$ |      $$ /  $$ |            $$ |
+$$\$$\$$ $$ |      $$$$$  /        $$$$$$$  |      $$$$$$$  |      $$ |  $$ |            $$ |
+$$ \$$$  $$ |      $$  $$&lt;         $$  ____/       $$  __$$&lt;       $$ |  $$ |      $$\   $$ |
+$$ |\$  /$$ |      $$ |\$$\        $$ |            $$ |  $$ |      $$ |  $$ |      $$ |  $$ |
+$$ | \_/ $$ |      $$ | \$$\       $$ |            $$ |  $$ |       $$$$$$  |      \$$$$$$  |
+\__|     \__|      \__|  \__|      \__|            \__|  \__|       \______/        \______/
+
+
+
+CREATED: wat/.gitignore
+CREATED: wat/.travis.yml
+CREATED: wat/.npmignore
+CREATED: wat/README.md
+CREATED: wat/`package.json`
+CREATED: wat/index.js
+CREATED: wat/test.js
+wat project has been mk'd with  boilerplate!
+                               |        |
+                               |\      /|
+                               | \____/ |
+                               |  /\/\  |
+                              .'___  ___`.
+                             /  \|/  \|/  \
+            _.--------------( ____ __ _____)
+         .-' \  -. | | | | | \ ----\/---- /
+       .'\  | | / \` | | | |  `.  -'`-  .'
+      /`  ` ` '/ / \ | | | | \  `------'\
+     /-  `-------.' `-----.       -----. `---.
+    (  / | | | |  )/ | | | )/ | | | | | ) | | )
+     `._________.'_____,,,/\_______,,,,/_,,,,/
+W A Y    C H I L L!               =^.^=            R A D I C A L!
+</code></pre>
+
+<p>After generating the project folder/files, it <code>cd</code>'s into the new folder and runs <code>npm init</code> and <code>npm install</code> and <code>git init</code> and <code>git commit -m "initial"</code> FOR YOU! NO WORRIES! WE GOT YOU ON THIS ONE!</p>
+
+<h3>
+<a id="add-to-an-existing-project" class="anchor" href="#add-to-an-existing-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>ADD TO AN EXISTING PROJECT</h3>
+
+<p>Just <code>cd</code> into any project folder that contains a <code>package.json</code>, whether created via <code>mkproj</code> or not, and run:</p>
+
+<pre><code>  mkproj -t
+</code></pre>
+
+<p>(or <code>-b</code> or <code>-c</code> or any combination thereof) <code>mkproj</code> will add some twitter bot config files and boilerplate and install the <code>twit</code> module and even add a <code>tweet</code> entry to the <code>scripts</code> in yr <code>package.json</code>. It will even guess a good variable name to use for your module ;).</p>
+
+<p>If at any point the module hits a bump in the road due to, say, a file already existing or a duplicate <code>scripts</code> entry it will output a helpful error, thus allowing you, the programmer, to rectify this error. </p>
+
+<h3>
+<a id="the-command-line-api" class="anchor" href="#the-command-line-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>THE COMMAND LINE API</h3>
+
+<pre><code>::::    ::::       :::    :::      :::::::::       :::::::::        ::::::::       :::::::::::
++:+:+: :+:+:+      :+:   :+:       :+:    :+:      :+:    :+:      :+:    :+:          :+:
++:+ +:+:+ +:+      +:+  +:+        +:+    +:+      +:+    +:+      +:+    +:+          +:+
++#+  +:+  +#+      +#++:++         +#++:++#+       +#++:++#:       +#+    +:+          +#+
++#+       +#+      +#+  +#+        +#+             +#+    +#+      +#+    +#+          +#+
+#+#       #+#      #+#   #+#       #+#             #+#    #+#      #+#    #+#      #+# #+#
+###       ###      ###    ###      ###             ###    ###       ########        #####
+generates tiny node projects
+
+Options:
+  -b, --browserify, --browser, --bacon  installs browserify/watchify and adds /
+                                        www folder
+  -c, --cli, --cmd, -l, --lettuce       installs yargs and adds cmd.js file
+  -t, --twitter, --tweet, --tomato      installs twit and adds tweet.js file
+  -n, --noPleaseDoNotInstallThanks      skip the whole "npm init/npm install/git
+                                        init/initial commit" business
+  -h, --help                            Show help                      [boolean]
+
+Examples:
+  mkproj yr-awesome-vanilla-node-project
+  mkproj yr-cool-twitter-bot -tweet
+  mkproj make-me-a-sandwich-please -blt
+  mkproj -b # add /www and browserify to an existing project
+
+</code></pre>
+
+<h3>
+<a id="browserify" class="anchor" href="#browserify" aria-hidden="true"><span class="octicon octicon-link"></span></a>BROWSERIFY</h3>
+
+<p>Browserify is awesome. It lets you use node modules in the browser, and push all yr code to npm. Sweet. Even if you are making a "node module" to publish, you might want to use browserify to create a tiny demo page for your tiny module. Run <code>npm run watch</code> to start watchify and also plz fire up a simple HTTPserver (<a href="https://www.npmjs.com/package/serve">i like this node module</a> though any sort of gem or egg will do) and then you can immediately get started writing NODE IN THE BROWSER ZOMG AWESOME! This also adds gh-pages deploy, which is a pretty sweet way to push yr projects to the cloud for free. Check the config in the <code>package.json</code>. <a href="https://github.com/substack/browserify-handbook">read more about browserify</a></p>
+
+<h3>
+<a id="twitter" class="anchor" href="#twitter" aria-hidden="true"><span class="octicon octicon-link"></span></a>TWITTER</h3>
+
+<p>Every time I make a twitter bot I have to google "node <a href="https://github.com/ttezel/twit">twit</a>" and copy paste the boilerplate setup with the access tokens and whatnot. NEVER MORE. Add your keys to tweet.js and "business logic" to bot.js, and call <code>npm run tweet</code> on a cronjob or something. <a href="https://github.com/dariusk/examplebot">an example node twitter bot</a></p>
+
+<h3>
+<a id="cli" class="anchor" href="#cli" aria-hidden="true"><span class="octicon octicon-link"></span></a>CLI</h3>
+
+<p>By using some <a href="https://github.com/bcoe/yargs">yargs</a> boilerplate, we are reminded to write good documentation for our CLI tool, so that when it fails or someone passes <code>-h</code> or <code>-help</code> or <code>-ohMyWhatIsGoingOnHere</code>, people will get a helpful message instead of abstract garbage. The code inside <code>cmd.js</code> is setup to do stuff like <code>yrModule -i 1000 wowowowowow ok cool</code> as well as pipey stuff like <code>cat index.js | yrModule -i 5000</code>. <a href="http://www.colewillsea.com/blog/npm-cli">read more about node CLI magics here</a> This option also adds a <code>bin</code> entry to yr <code>package.json</code> so that when someone <code>npm install -g</code>s it they will have yr module available on their path. If your module only makes sense as a command line tool, add <code>"preferGlobal": true</code> to yr <code>package.json</code> as well.</p>
+
+<h3>
+<a id="standard" class="anchor" href="#standard" aria-hidden="true"><span class="octicon octicon-link"></span></a>STANDARD</h3>
+
+<p><code>mkproj</code> installs <a href="https://github.com/feross/standard">standard</a> on all projects by default. It is ok. Do not fret or gnash those teeth! The semi-colons will be automatically inserted by the computer. This is the first thing that runs if you <code>npm test</code>. TBQH, I vastly prefer <code>function(){}</code> over <code>function () {}</code>, which is what <code>standard</code> expects, but hey, I roll with it.</p>
+
+<h3>
+<a id="taptape" class="anchor" href="#taptape" aria-hidden="true"><span class="octicon octicon-link"></span></a>TAP/TAPE</h3>
+
+<p>A <code>test.js</code> file will be created for you which requires <code>tape</code> if you are using browserify or <code>tap</code> if you are not. The only real difference between tape and tap is that the former is for the browser and the latter is for the Node.js. <code>npm test</code> will fire off this test file, after running <code>standard</code> of course.</p>
+
+<h3>
+<a id="my-dear-friend-travis" class="anchor" href="#my-dear-friend-travis" aria-hidden="true"><span class="octicon octicon-link"></span></a>MY DEAR FRIEND, TRAVIS</h3>
+
+<p>My close friend <a href="Travis">https://travis-ci.org/</a> will totally check out your code and run your tests whenever you push to <code>git</code> or whatever, all for free. I even put little twitter bots and silly art projects on CI because it is worth getting that extra once-over from my longtime friend, Travis. If yr developing on a macbook and deploying to various linux-based cloud architectures then CI is indispendable for catching all those little edge case environment bugs.</p>
+
+<h3>
+<a id="badges" class="anchor" href="#badges" aria-hidden="true"><span class="octicon octicon-link"></span></a>BADGES</h3>
+
+<p>Aww yeah you got some badges in that <code>README.md</code>. Yeah you do. Look at those! Just replace the 2 instances of <code>YR_TRAVIS_USER_NAME</code> with, umm, your travis user name. Oh also if you are publishing or distributing your project <em>please for the love of glob write an appropriate amount of documentation in yr <code>README.md</code></em>, thanks. </p>
+
+<h3>
+<a id="config" class="anchor" href="#config" aria-hidden="true"><span class="octicon octicon-link"></span></a>CONFIG</h3>
+
+<p>There are a few configuration things that mkproj just can't possibly guess, and for that you can create a <code>~/.mkproj.json</code> file. Mine looks like this:</p>
+
+<pre><code>{
+  "githubUserName": "coleww",
+  "website": "http://www.colewillsea.com",
+  "travisUserName": "coleww"
+}
+</code></pre>
+
+<p>This basically handles personal stuff for the <code>README.md</code> and <code>www/index.html</code> files, but more awesome tricks might be possible with a little JSON.</p>
+
+<h3>
+<a id="a-blt" class="anchor" href="#a-blt" aria-hidden="true"><span class="octicon octicon-link"></span></a>A BLT</h3>
+
+<p>Some node modules are so awesome that they deserve to be not only balled up into a tar and sent to npm, but also browserified into a web app, bundled into a command line tool, and deployed as a twitter bot. These modules are known colloquially as "whoppers", "ham-sandwiches", or "BLT's", and when we generate one we use the argument <code>mkproj someProject -blt</code>. I have never personally made nor witnessed a BLT so unfortunately I cannot link you to an example, but I can dream on, glob willing...</p>
+
+<h2>
+<a id="f-r-e-e-d-o-m" class="anchor" href="#f-r-e-e-d-o-m" aria-hidden="true"><span class="octicon octicon-link"></span></a>F R E E D O M</h2>
+
+<p><code>npm publish</code></p>
+
+<h3>
+<a id="development" class="anchor" href="#development" aria-hidden="true"><span class="octicon octicon-link"></span></a>DEVELOPMENT</h3>
+
+<p>'mkproj' creates a dummy index.js as well as a tap/tape smokescreen test suite as part of its regular due course of use. When testing this module, it generates a dummy app and makes assertions against the result, but it also copies the <code>tests/{tap,tape}_modules</code> directory into the generated test directory, and then runs the test suite that is generated by the test suite. <a href="http://www.colewillsea.com/blog/test-yr-test-suite">META-TDD, AWWW YEAH.</a> </p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
