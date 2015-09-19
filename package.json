@@ -18,6 +18,7 @@
   "license": "MIT",
   "devDependencies": {
     "rimraf": "^2.3.4",
+    "shuffle-array": "^0.1.0",
     "standard": "^4.5.4",
     "tap": "^1.2.0"
   },

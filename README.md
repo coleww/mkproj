@@ -69,29 +69,41 @@ If at any point the module hits a bump in the road due to, say, a file already e
 ### THE COMMAND LINE API
 
 ```
-::::    ::::       :::    :::      :::::::::       :::::::::        ::::::::       :::::::::::
-+:+:+: :+:+:+      :+:   :+:       :+:    :+:      :+:    :+:      :+:    :+:          :+:
-+:+ +:+:+ +:+      +:+  +:+        +:+    +:+      +:+    +:+      +:+    +:+          +:+
-+#+  +:+  +#+      +#++:++         +#++:++#+       +#++:++#:       +#+    +:+          +#+
-+#+       +#+      +#+  +#+        +#+             +#+    +#+      +#+    +#+          +#+
-#+#       #+#      #+#   #+#       #+#             #+#    #+#      #+#    #+#      #+# #+#
-###       ###      ###    ###      ###             ###    ###       ########        #####
+                                                                                    :
+                             G:                                                    t#,
+                             E#,    :       t                j.                   ;##W.          itttttttt
+            ..       :       E#t  .GE       ED.              EW,                 :#L:WE          fDDK##DDi
+           ,W,     .Et       E#t j#K;       E#K:             E##j               .KG  ,#D            t#E
+          t##,    ,W#t       E#GK#f         E##W;            E###D.             EE    ;#f           t#E
+         L###,   j###t       E##D.          E#E##t           E#jG#W;           f#.     t#i          t#E
+       .E#j##,  G#fE#t       E##Wi          E#ti##f          E#t t##f          :#G     GK           t#E
+      ;WW; ##,:K#i E#t       E#jL#D:        E#t ;##D.        E#t  :K#E:         ;#L   LW.           t#E
+     j#E.  ##f#W,  E#t       E#t ,K#j       E#ELLE##K:       E#KDDDD###i         t#f f#:          jfL#E
+   .D#L    ###K:   E#t       E#t   jD       E#L;;;;;;,       E#f,t#Wi,,,          f#D#;           :K##E
+  :K#t     ##D.    E#t       j#t            E#t              E#t  ;#W:             G#t              G#E
+  ...      #G      ..         ,;            E#t              DWi   ,KK:             t                tE
+           j                                                                                          .
+
 generates tiny node projects
 
 Options:
-  -b, --browserify, --browser, --bacon  installs browserify/watchify and adds /
-                                        www folder
-  -c, --cli, --cmd, -l, --lettuce       installs yargs and adds cmd.js file
-  -t, --twitter, --tweet, --tomato      installs twit and adds tweet.js file
-  -n, --noPleaseDoNotInstallThanks      skip the whole "npm init/npm install/git
-                                        init/initial commit" business
-  -h, --help                            Show help                      [boolean]
+  -b, --browserify, --browser, --bacon      installs browserify/watchify and
+                                            adds /www folder           [boolean]
+  -c, --cli, --cmd, -l, --lettuce           installs yargs and adds cmd.js file
+                                                                       [boolean]
+  -t, --twitter, --tweet, --tomato          installs twit and adds config.js and
+                                            bot.js files               [boolean]
+  -n, --noPleaseDoNotInstallThanks, --      skip the whole "npm init/npm install
+  noFunnyBusiness                           /git init/initial commit" business
+                                                                       [boolean]
+  -h, --help                                Show help                  [boolean]
 
 Examples:
   mkproj yr-awesome-vanilla-node-project
   mkproj yr-cool-twitter-bot -tweet
   mkproj make-me-a-sandwich-please -blt
-  mkproj -b # add /www and browserify to an existing project
+  mkproj -b # add /www and browserify to
+  an existing project
 
 ```
 
@@ -101,7 +113,7 @@ Browserify is awesome. It lets you use node modules in the browser, and push all
 
 ### TWITTER
 
-Every time I make a twitter bot I have to google "node [twit](https://github.com/ttezel/twit)" and copy paste the boilerplate setup with the access tokens and whatnot. NEVER MORE. Add your keys to tweet.js and "business logic" to bot.js, and call `npm run tweet` on a cronjob or something. [an example node twitter bot](https://github.com/dariusk/examplebot)
+Every time I make a twitter bot I have to google "node [twit](https://github.com/ttezel/twit)" and copy paste the boilerplate setup with the access tokens and whatnot. NEVER MORE. Add your keys to config.js and use your index.js "business logic" in bot.js, and call `npm run tweet` on a cronjob or something. [a screencast of me making a twitter bot with mkproj](https://vimeo.com/139794441)
 
 ### CLI
 

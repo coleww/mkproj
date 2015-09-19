@@ -27,7 +27,7 @@ function testMkingAProject (options, cb) {
   if (options.twitter) {
     count += 4 // 3 assertions
   } else {
-    exclusions.push('tweet.js')
+    exclusions.push('config.js')
     exclusions.push('bot.js')
   }
 
@@ -165,8 +165,8 @@ function checkForCli (path, t, goThere) {
 }
 
 function checkForTwitter (path, t, goThere) {
-  t.ok(fs.readFileSync(path + '/tweet.js').toString().match('twit'), 'mks a twitter boilerplate file')
-  t.ok(fs.readFileSync(path + '/bot.js').toString().match('tweet'), 'mks a botfile')
+  t.ok(fs.readFileSync(path + '/config.js').toString().match('SPIDERS'), 'mks a twitter boilerplate file')
+  t.ok(fs.readFileSync(path + '/bot.js').toString().match('toot'), 'mks a botfile')
   var packagedJson = fs.readFileSync(path + '/package.json').toString()
   t.ok(packagedJson.match('node bot.js'), 'mks a package.json containing scripts entry for tooting')
   if (goThere) {

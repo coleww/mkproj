@@ -15,7 +15,7 @@ var browserifyFiles = ['www/demo.js', 'www/index.html', 'www/main.css']
 var browserPackages = 'npm install browserify watchify tape --save-dev'
 var cliFiles = ['cmd.js']
 var cliPackages = 'npm install yargs --save'
-var twitterFiles = ['bot.js', 'tweet.js']
+var twitterFiles = ['bot.js', 'config.js']
 var twitterPackages = 'npm install twit --save'
 
 module.exports = function (name, options, cb) {
