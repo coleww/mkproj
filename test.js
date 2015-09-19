@@ -3,6 +3,7 @@ var testMkingAProject = testUtils.testMkingAProject
 var testAddingToAnExistingProject = testUtils.testAddingToAnExistingProject
 var testHandlingFileCollissionsWhileAdding = testUtils.testHandlingFileCollissionsWhileAdding
 var tap = require('tap')
+var shuffle = require('shuffle-array')
 var mkproj = require('./')
 
 // DO EVERYTHING from inside the /tests directory, so u got a clean state.
@@ -17,7 +18,7 @@ tap.test('throws an error if not passed a project name', function (t) {
   }
 })
 
-var testCases = [
+var testCases = shuffle([
   {kind: 'create'},
   {kind: 'create', cli: true},
   {kind: 'create', browserify: true},
@@ -29,7 +30,7 @@ var testCases = [
   {kind: 'add', browserify: true},
   {kind: 'add', cli: true},
   {kind: 'add', twitter: true},
-  {kind: 'deny', twitter: true, expectations: ['BORKED: tweet.js already exists! Maybe delete it and try again?',
+  {kind: 'deny', twitter: true, expectations: ['BORKED: config.js already exists! Maybe delete it and try again?',
                                                'BORKED: bot.js already exists! Maybe delete it and try again?',
                                                'CATastrophic failure occurred while trying to shove stuff into package.json:']},
   {kind: 'deny', cli: true, expectations: ['BORKED: cmd.js already exists! Maybe delete it and try again?',
@@ -38,7 +39,7 @@ var testCases = [
                                                   'BORKED: www/index.html already exists! Maybe delete it and try again?',
                                                   'BORKED: www/demo.js already exists! Maybe delete it and try again?',
                                                   'BORKED: www/main.css already exists! Maybe delete it and try again?']}
-]
+])
 
 var after = require('after')
 var counter = after(testCases.length, function () {

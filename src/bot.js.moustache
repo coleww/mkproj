@@ -1,4 +1,12 @@
-var tweet = require('./tweet')
 var {{camelName}} = require('./')
+var config = require('./')
+var Twit = require('twit')
+var T = new Twit(config)
 
-tweet({{camelName}}())
+var toot = {{camelName}}()
+
+T.post('statuses/update', {status: toot}, function (err, data, response) {
+  console.log(err)
+  console.log(data)
+  console.log(response)
+})
