@@ -1,5 +1,5 @@
-var {{camelName}} = require('./config')
-var config = require('./')
+var {{camelName}} = require('./')
+var config = require('./config')
 var Twit = require('twit')
 var T = new Twit(config)
 
