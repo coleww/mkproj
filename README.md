@@ -142,7 +142,7 @@ There are a few configuration things that mkproj just can't possibly guess, and 
 ```
 {
   "githubUserName": "coleww",
-  "website": "http://www.colewillsea.com",
+  "website": "www.colewillsea.com",
   "travisUserName": "coleww"
 }
 ```
