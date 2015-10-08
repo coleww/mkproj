@@ -4,6 +4,8 @@ var figlet = require('figlet')
 var fonts = ['Big Money-nw', 'Def Leppard', 'Alligator2']
 var header = figlet.textSync('M K P R O J', { font: fonts[~~(Math.random() * fonts.length)]})
 console.log(header)
+var internalErrors = ['ItIsEssentialThatYouGiveThisProjectSomeSortOfNameHowAboutFluffyDestroyerError', 'YouMustGiveMeAtLeastOneThingToDoPleaseThankYouError']
+var thePackage = require('./package.json')
 
 var argv = require('yargs')
                           .alias('h', 'help')
@@ -13,6 +15,9 @@ var argv = require('yargs')
                           .example('mkproj yr-cool-twitter-bot -tweet')
                           .example('mkproj make-me-a-sandwich-please -blt')
                           .example('mkproj -b # add /www and browserify to an existing project')
+                          .boolean('v')
+                          .alias('v', 'version')
+                          .describe('v', 'reports yr mkproj version number')
                           .boolean('b')
                           .alias('b', 'browserify')
                           .alias('b', 'browser')
@@ -29,18 +34,29 @@ var argv = require('yargs')
                           .alias('t', 'tweet')
                           .alias('t', 'tomato')
                           .describe('t', 'installs twit and adds config.js and bot.js files')
+                          .boolean('s')
+                          .alias('s', 'server')
+                          .alias('s', 'http')
+                          .describe('s', 'makes a server.js for yr API')
                           .boolean('n')
                           .alias('n', 'noPleaseDoNotInstallThanks')
                           .alias('n', 'noFunnyBusiness')
                           .describe('n', 'skip the whole "npm init/npm install/git init/initial commit" business')
                           .argv
 
-if (argv.b || argv.c || argv.t || argv._.length) {
+if (argv.v) {
+  console.log('MKPROJ: version', require('./package.json')['version'])
+} else if (argv.b || argv.c || argv.t || argv._.length) {
   var projectName = argv._.join('-').replace(/\W/g, '-')
   try {
-    mkproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b, twitter: argv.t, cli: argv.c})
+    mkproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b, twitter: argv.t, cli: argv.c, server: argv.s})
   } catch (e) {
-    console.log(e.message)
+    if (internalErrors.indexOf(e.name) !== -1){
+      console.log('uh oh something strange happened in version', thePackage['version'], '\nthe errors was', e, '\n if you report it to', thePackage['bugs']['url'], '\nthen maybe we can fix it?')
+    } else {
+      console.log(e.message)
+    }
+
   }
 } else {
   console.log('ERRORERRORERRORERRORERRORERRORERRORERRORERRORERROR')

@@ -1,0 +1,24 @@
+var http = require("http")
+var url = require("url")
+
+var server = http.createServer(function (req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Request-Method', 'OPTIONS, GET')
+  res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET')
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, Token, Auth-Token, Email')
+
+  if ( req.method === 'OPTIONS' ) {
+    res.writeHead(200)
+    res.end()
+    return
+  }
+
+  var thePath = url.parse(req.url).pathname
+
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({data: "you requested " + path}));
+
+})
+
+server.listen(process.env.PORT || 8000)
+console.log('listening on: ', process.env.PORT || 8000)

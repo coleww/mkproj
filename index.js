@@ -14,6 +14,7 @@ var baseFiles = ['.gitignore', '.npmignore', '.travis.yml', 'README.md',
 var browserifyFiles = ['www/demo.js', 'www/index.html', 'www/main.css']
 var browserPackages = 'npm install browserify watchify tape --save-dev'
 var cliFiles = ['cmd.js']
+var serverFiles = ['server.js']
 var cliPackages = 'npm install yargs --save'
 var twitterFiles = ['bot.js', 'config.js']
 var twitterPackages = 'npm install twit --save'
@@ -46,6 +47,10 @@ function mkTheProj (name, options, cb) {
     count += 2
     selected.push('twitterbot')
   }
+  if (options.server) {
+    count += 1
+    selected.push('server')
+  }
   if (!options.twitter && !options.browserify && !options.cli) selected.push('default')
   var init = after(count, function () {
     console.log(name + ' project has been mk\'d with ' + selected.join(' and ') + ' boilerplate!')
@@ -70,6 +75,7 @@ function mkTheProj (name, options, cb) {
       if (options.browserify) files = files.concat(browserifyFiles)
       if (options.twitter) files = files.concat(twitterFiles)
       if (options.cli) files = files.concat(cliFiles)
+      if (options.server) files = files.concat(serverFiles)
       files.forEach(function (filename) {
         writeFile(name + '/' + filename, compiley('/src/' + filename, templateData), logCreation, init)
       })
@@ -104,6 +110,10 @@ function add2proj (name, options, cb) {
   if (options.cli) {
     files = files.concat(cliFiles)
     selected.push('CLI')
+  }
+  if (options.server) {
+    files = files.concat(serverFiles)
+    selected.push('server')
   }
   console.log('todo', files.length)
   var init = after(files.length + 1, function () {
@@ -179,6 +189,7 @@ function makeTemplateData (name, options) {
     twitter: options.twitter,
     both: both,
     either: either,
+    server: options.server,
     install: installs,
     githubUserName: config.githubUserName,
     website: config.website,
@@ -226,6 +237,9 @@ function addScripts (data) {
   }
   if (data.twitter) {
     npmAddScript({key: 'tweet', value: 'node bot.js'})
+  }
+  if (data.server) {
+    npmAddScript({key: 'start', value: 'node server.js'})
   }
 }
 

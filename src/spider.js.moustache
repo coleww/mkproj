@@ -1,0 +1,5 @@
+var $ = require('cheerio')
+var request = require('request')
+var fs = require('fs')
+
+// ack put the boilerplate here
