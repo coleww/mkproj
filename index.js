@@ -14,10 +14,12 @@ var baseFiles = ['.gitignore', '.npmignore', '.travis.yml', 'README.md',
 var browserifyFiles = ['www/demo.js', 'www/index.html', 'www/main.css']
 var browserPackages = 'npm install browserify watchify tape --save-dev'
 var cliFiles = ['cmd.js']
-var serverFiles = ['server.js']
 var cliPackages = 'npm install yargs --save'
 var twitterFiles = ['bot.js', 'config.js']
 var twitterPackages = 'npm install twit --save'
+var serverFiles = ['server.js']
+var spiderFilers = ['spider.js']
+var spiderPackages = 'npm install cheerio request --save'
 
 module.exports = function (name, options, cb) {
   if (fs.existsSync('package.json') && !name) {
@@ -51,6 +53,10 @@ function mkTheProj (name, options, cb) {
     count += 1
     selected.push('server')
   }
+  if (options.spider) {
+    count += 1
+    selected.push('web spider')
+  }
   if (!options.twitter && !options.browserify && !options.cli) selected.push('default')
   var init = after(count, function () {
     console.log(name + ' project has been mk\'d with ' + selected.join(' and ') + ' boilerplate!')
@@ -76,6 +82,7 @@ function mkTheProj (name, options, cb) {
       if (options.twitter) files = files.concat(twitterFiles)
       if (options.cli) files = files.concat(cliFiles)
       if (options.server) files = files.concat(serverFiles)
+      if (options.spider) files = files.concat(spiderFiles)
       files.forEach(function (filename) {
         writeFile(name + '/' + filename, compiley('/src/' + filename, templateData), logCreation, init)
       })
@@ -115,6 +122,10 @@ function add2proj (name, options, cb) {
     files = files.concat(serverFiles)
     selected.push('server')
   }
+  if (options.spider) {
+    files = files.concat(spiderFiles)
+    selected.push('web spider')
+  }
   console.log('todo', files.length)
   var init = after(files.length + 1, function () {
     cb()
@@ -147,7 +158,7 @@ function add2proj (name, options, cb) {
       }
     }
   }
-  if (options.browserify || options.cli || options.twitter) {
+  if (options.browserify || options.cli || options.twitter || options.server || options.spider) {
     if (options.browserify && !fs.existsSync('./www')) {
       fs.mkdir('www', doYourWorst)
     } else {
@@ -171,6 +182,7 @@ function getConfig () {
 }
 
 function makeTemplateData (name, options) {
+  // uh what does this do again?
   var both = options.cli && options.twitter ? ',' : ''
   var either = options.cli || options.twitter
   var installs = [
@@ -190,6 +202,7 @@ function makeTemplateData (name, options) {
     both: both,
     either: either,
     server: options.server,
+    spider: options.spider,
     install: installs,
     githubUserName: config.githubUserName,
     website: config.website,
@@ -240,6 +253,9 @@ function addScripts (data) {
   }
   if (data.server) {
     npmAddScript({key: 'start', value: 'node server.js'})
+  }
+  if (data.spider) {
+    npmAddScript({key: 'spider', value: 'node spider.js'})
   }
 }
 

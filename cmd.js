@@ -38,6 +38,10 @@ var argv = require('yargs')
                           .alias('s', 'server')
                           .alias('s', 'http')
                           .describe('s', 'makes a server.js for yr API')
+                          .boolean('w')
+                          .alias('w', 'www')
+                          .alias('w', 'spider')
+                          .describe('w', 'makes a spider.js for gathering datas')
                           .boolean('n')
                           .alias('n', 'noPleaseDoNotInstallThanks')
                           .alias('n', 'noFunnyBusiness')
@@ -46,10 +50,10 @@ var argv = require('yargs')
 
 if (argv.v) {
   console.log('MKPROJ: version', require('./package.json')['version'])
-} else if (argv.b || argv.c || argv.t || argv._.length) {
+} else if (argv.b || argv.c || argv.t || argv.s || argv.w || argv._.length) {
   var projectName = argv._.join('-').replace(/\W/g, '-')
   try {
-    mkproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b, twitter: argv.t, cli: argv.c, server: argv.s})
+    mkproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b, twitter: argv.t, cli: argv.c, server: argv.s, spider: argv.w})
   } catch (e) {
     if (internalErrors.indexOf(e.name) !== -1){
       console.log('uh oh something strange happened in version', thePackage['version'], '\nthe errors was', e, '\n if you report it to', thePackage['bugs']['url'], '\nthen maybe we can fix it?')
