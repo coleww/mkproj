@@ -11,6 +11,8 @@ var osenv = require('osenv')
 
 var baseFiles = ['.gitignore', '.npmignore', '.travis.yml', 'README.md',
                    'index.js', 'package.json', 'test.js']
+
+                   // THIS SHOULD B AN OBJECT THAT MATCHES ARG BOOLEANS
 var browserifyFiles = ['www/demo.js', 'www/index.html', 'www/main.css']
 var browserPackages = 'npm install browserify watchify tape --save-dev'
 var cliFiles = ['cmd.js']
@@ -18,8 +20,15 @@ var cliPackages = 'npm install yargs --save'
 var twitterFiles = ['bot.js', 'config.js']
 var twitterPackages = 'npm install twit --save'
 var serverFiles = ['server.js']
-var spiderFilers = ['spider.js']
+var spiderFiles = ['spider.js']
 var spiderPackages = 'npm install cheerio request --save'
+var synthFiles = ['synth.js']
+var levelFiles = ['level.js']
+var levelPackages = 'npm install level --save'
+var canvasFiles = ['canvas.js']
+var canvasPackages = 'npm install canvas --save'
+var testFiles = ['test.js']
+var testPackages = 'npm install tap standard --save-dev'
 
 module.exports = function (name, options, cb) {
   if (fs.existsSync('package.json') && !name) {
@@ -47,17 +56,29 @@ function mkTheProj (name, options, cb) {
   }
   if (options.twitter) {
     count += 2
-    selected.push('twitterbot')
+    selected.push('twitter')
   }
   if (options.server) {
-    count += 1
+    count += 1 // ???????????????????????????????????????????????????????????????????????????????????????????
     selected.push('server')
   }
   if (options.spider) {
-    count += 1
-    selected.push('web spider')
+    count += 1 // ???????????????????????????????????????????????????????????????????????????????????????????
+    selected.push('spider')
   }
-  if (!options.twitter && !options.browserify && !options.cli) selected.push('default')
+  if (options.canvas) {
+    count += 1 // ???????????????????????????????????????????????????????????????????????????????????????????
+    selected.push('canvas')
+  }
+  if (options.level) {
+    count += 1 // ???????????????????????????????????????????????????????????????????????????????????????????
+    selected.push('level')
+  }
+  if (options.synth) {
+    count += 1 // ???????????????????????????????????????????????????????????????????????????????????????????
+    selected.push('synth')
+  }
+  if (!options.twitter && !options.browserify && !options.cli && !options.server && !options.spider && !options.canvas && !options.level && !options.synth) selected.push('default')
   var init = after(count, function () {
     console.log(name + ' project has been mk\'d with ' + selected.join(' and ') + ' boilerplate!')
     console.log(catMe())
@@ -83,6 +104,9 @@ function mkTheProj (name, options, cb) {
       if (options.cli) files = files.concat(cliFiles)
       if (options.server) files = files.concat(serverFiles)
       if (options.spider) files = files.concat(spiderFiles)
+      if (options.level) files = files.concat(levelFiles)
+      if (options.synth) files = files.concat(synthFiles)
+      if (options.canvas) files = files.concat(canvasFiles)
       files.forEach(function (filename) {
         writeFile(name + '/' + filename, compiley('/src/' + filename, templateData), logCreation, init)
       })
@@ -124,9 +148,25 @@ function add2proj (name, options, cb) {
   }
   if (options.spider) {
     files = files.concat(spiderFiles)
-    selected.push('web spider')
+    selected.push('spider')
   }
-  console.log('todo', files.length)
+  if (options.synth) {
+    files = files.concat(synthFiles)
+    selected.push('server')
+  }
+  if (options.level) {
+    files = files.concat(levelFiles)
+    selected.push('level')
+  }
+  if (options.canvas) {
+    files = files.concat(canvasFiles)
+    selected.push('canvas')
+  }
+  if (options.test) {
+    files = files.concat(testFiles)
+    selected.push('test')
+  }
+  console.log('todo:', files.length)
   var init = after(files.length + 1, function () {
     cb()
     if (!options.noFunnyBusiness) {
@@ -158,7 +198,7 @@ function add2proj (name, options, cb) {
       }
     }
   }
-  if (options.browserify || options.cli || options.twitter || options.server || options.spider) {
+  if (options.browserify || options.cli || options.twitter || options.server || options.spider || options.level || options.synth || options.canvas || options.test) {
     if (options.browserify && !fs.existsSync('./www')) {
       fs.mkdir('www', doYourWorst)
     } else {
@@ -203,6 +243,9 @@ function makeTemplateData (name, options) {
     either: either,
     server: options.server,
     spider: options.spider,
+    canvas: options.canvas,
+    level: options.level,
+    test: options.test,
     install: installs,
     githubUserName: config.githubUserName,
     website: config.website,
