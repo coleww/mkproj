@@ -82,7 +82,7 @@ if (argv.v) {
       test: argv.o
     })
   } catch (e) {
-    if (internalErrors.indexOf(e.name) !== -1){
+    if (internalErrors.indexOf(e.name) !== -1) {
       console.log('uh oh something strange happened in version', thePackage['version'], '\nthe error was', e, '\n if you report it to', thePackage['bugs']['url'], '\nthen maybe we can fix it?')
     } else {
       console.log(e.message)

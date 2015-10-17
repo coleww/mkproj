@@ -28,7 +28,7 @@ module.exports = {
     files: ['level.js'],
     install: 'npm install level --save',
     name: 'level'
-  }
+  },
   canvas: {
     files: ['canvas.js'],
     install: 'npm install canvas --save',
@@ -45,7 +45,7 @@ module.exports = {
     name: 'test'
   },
   default: {
-    files: ['.gitignore', '.npmignore', '.travis.yml', 'README.md', 'index.js', 'package.json', 'test.js'],
+    files: ['.gitignore', '.npmignore', '.travis.yml', 'README.md', 'index.js', 'package.json'],
     install: 'npm install tap standard --save-dev',
     name: 'default'
   }

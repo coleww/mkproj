@@ -26,7 +26,7 @@ function addToOrMkTheProj (name, options, cb) {
   if (options.twitter && options.browserify && options.cli && options.level && options.synth && options.canvas && options.spider) console.log('GENERATING A WHOPPER, ONE blt, COMING RIGHT UP')
   var templateData = makeTemplateData(name, options)
   var selected = Object.keys(templates).filter(function (k) {
-    return options[k] || (!options.add && k === 'default')
+    return options[k] || (!options.add && k === 'default') || (!options.add && k === 'test')
   }).map(function (k) {
     return templates[k]
   })
@@ -34,8 +34,6 @@ function addToOrMkTheProj (name, options, cb) {
     return t.files
   }).reduce(function (a, b) {
     return a.concat(b)
-  }).map(function (f) {
-    return ((options.add) ? '' : name + '/') + f
   })
   var count = selected.reduce(function (a, b) {
     return a + b.files.length
@@ -61,7 +59,7 @@ function addToOrMkTheProj (name, options, cb) {
     } else {
       console.log('Generating the ' + selected.map(function (t) {return t.name}).join(' and ') + ' boilerplate for you now!!!')
       files.forEach(function (filename) {
-        writeFile(filename, compiley('/src/' + filename, templateData), logCreation, function () {
+        writeFile(((options.add) ? '' : name + '/'), compiley('/src/' + filename, templateData), logCreation, function () {
           try {
             addScripts(templateData)
           } catch (e) {
@@ -144,30 +142,41 @@ function logCreation (filename, cb) {
   }
 }
 
-function addScripts (data) {
-  if (data.browserify) {
+function addScripts (opts) {
+  var packaged
+  if (opts.browserify || opts.cli) packaged = jsonfile.readFileSync('package.json')
+  if (opts.browserify) {
     npmAddScript({key: 'build', value: 'browserify www/demo.js -o www/bundle.js'})
     npmAddScript({key: 'deploy', value: 'git push origin master && gh-pages-deploy'})
     npmAddScript({key: 'watch', value: 'watchify www/demo.js -o www/bundle.js --debug --verbose'})
+    if (packaged['gh-pages-deploy']) console.log('WEEEOOOO looks like you already have a gh-pages-deploy entry in yr package.json?')
+    packaged['gh-pages-deploy'] = {
+      'staticpath': 'www',
+      'prep': [
+        'test',
+        'build'
+      ],
+      'noprompt': false
+    }
+    jsonfile.writeFileSync('package.json', packaged, {spaces: 2})
   }
-  if (data.cli) {
-    var packaged = jsonfile.readFileSync('package.json')
+  if (opts.cli) {
     if (packaged.bin) console.log('WEEEOOOO looks like you already have a bin entry in yr package.json?')
     var bin = {}
-    bin[data.camelName] = 'cmd.js'
+    bin[opts.camelName] = 'cmd.js'
     packaged.bin = bin
     jsonfile.writeFileSync('package.json', packaged, {spaces: 2})
   }
-  if (data.twitter) {
+  if (opts.twitter) {
     npmAddScript({key: 'tweet', value: 'node bot.js'})
   }
-  if (data.server) {
+  if (opts.server) {
     npmAddScript({key: 'start', value: 'node server.js'})
   }
-  if (data.spider) {
+  if (opts.spider) {
     npmAddScript({key: 'spider', value: 'node spider.js'})
   }
-  if (data.test) {
+  if (opts.test) {
     npmAddScript({key: 'test', value: 'standard && node test.js'})
   }
 }

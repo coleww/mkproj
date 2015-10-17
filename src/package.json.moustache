@@ -2,20 +2,5 @@
   "name": "{{name}}",
   "version": "1.0.0",
   "main": "index.js",
-{{#browserify}}
-  "gh-pages-deploy": {
-    "staticpath": "www",
-    "prep": [
-      "test",
-      "build"
-    ],
-    "noprompt": false
-  },
-{{/browserify}}
-{{#cli}}
-  "bin": {
-    "{{camelName}}": "cmd.js"
-  },
-{{/cli}}
   "license": "MIT"
 }
