@@ -31,22 +31,22 @@ function testMkingAProject (options, cb) {
     exclusions.push('bot.js')
   }
   if (options.server) {
-    count += 4 // 3 assertions
+    count += 3 // 2 assertions
   } else {
     exclusions.push('server.js')
   }
   if (options.spider) {
-    count += 4 // 3 assertions
+    count += 6 // 5 assertions
   } else {
     exclusions.push('spider.js')
   }
   if (options.synth) {
-    count += 4 // 3 assertions
+    count += 2 // 1 assertions
   } else {
     exclusions.push('synth.js')
   }
   if (options.level) {
-    count += 4 // 3 assertions
+    count += 3 // 2 assertions
   } else {
     exclusions.push('level.js')
   }
@@ -130,9 +130,22 @@ function testAddingToAnExistingProject (options, cb) {
   if (options.twitter) {
     count += 3
   }
-  if (options.twitter) {
-    count += 3
+  if (options.spider) {
+    count += 2
   }
+  if (options.level) {
+    count += 1
+  }
+  if (options.canvas) {
+    count += 1
+  }
+  if (options.server) {
+    count += 2
+  }
+  if (options.synth) {
+    count += 1
+  }
+
   cleanUpAndRun(name, reallyTestIt)
 
   function reallyTestIt () {
@@ -226,9 +239,6 @@ function checkForCli (path, t, goThere) {
   t.ok(fs.readFileSync(path + '/cmd.js').toString().match('yargs'), 'mks a CLI boilerplate file')
   var packagedJson = fs.readFileSync(path + '/package.json').toString()
   t.ok(packagedJson.match('bin'), 'mks a package.json containing bin entry because i am garbage')
-  if (goThere) {
-    t.ok(packagedJson.match('yargs'), 'mks a package.json containing yargs cuz it is YARRRRRRRR time')
-  }
 }
 
 function checkForTwitter (path, t, goThere) {
@@ -236,9 +246,6 @@ function checkForTwitter (path, t, goThere) {
   t.ok(fs.readFileSync(path + '/bot.js').toString().match('toot'), 'mks a botfile')
   var packagedJson = fs.readFileSync(path + '/package.json').toString()
   t.ok(packagedJson.match('node bot.js'), 'mks a package.json containing scripts entry for tooting')
-  if (goThere) {
-    t.ok(packagedJson.match('twit'), 'mks a package.json containing twit cuz it is tooting time')
-  }
 }
 
 function checkForBrowser (path, t, goThere) {
@@ -247,50 +254,26 @@ function checkForBrowser (path, t, goThere) {
   t.ok(fs.readFileSync(path + '/www/index.html').toString().match('html'), 'mks some html5 boilerplate')
   var packagedJson = fs.readFileSync(path + '/package.json').toString()
   t.ok(packagedJson.match('build'), 'adds scripts entries for building/watching')
-  if (goThere) {
-    t.ok(packagedJson.match('browserify'), 'mks a package.json containing browserify cuz it is time')
-    t.ok(packagedJson.match('watchify'), 'mks a package.json containing watchify cuz it is cool')
-    t.ok(packagedJson.match('gh-pages-deploy'), 'mks a package.json containing gh-pages-deploy cuz it is sweet')
-  }
 }
 
 function checkForSpider (path, t, goThere) {
-  t.ok(fs.readFileSync(path + '/cmd.js').toString().match('yargs'), 'mks a Spider boilerplate file')
+  var spider = fs.readFileSync(path + '/spider.js').toString()
+  t.ok(spider.match('request'), 'mks a Spider boilerplate file')
+  t.ok(spider.match('cheerio'), 'mks a Spider boilerplate file')
   var packagedJson = fs.readFileSync(path + '/package.json').toString()
-  t.ok(packagedJson.match('bin'), 'mks a package.json containing bin entry because i am garbage')
-  if (goThere) {
-    t.ok(packagedJson.match('yargs'), 'mks a package.json containing yargs cuz it is YARRRRRRRR time')
-  }
+  t.ok(packagedJson.match('spider'), 'mks a package.json containing spider entry because flaming trash heap')
+
 }
 function checkForServer (path, t, goThere) {
-  t.ok(fs.readFileSync(path + '/cmd.js').toString().match('yargs'), 'mks a CLI boilerplate file')
-  var packagedJson = fs.readFileSync(path + '/package.json').toString()
-  t.ok(packagedJson.match('bin'), 'mks a package.json containing bin entry because i am garbage')
-  if (goThere) {
-    t.ok(packagedJson.match('yargs'), 'mks a package.json containing yargs cuz it is YARRRRRRRR time')
-  }
+  t.ok(fs.readFileSync(path + '/server.js').toString().match('http'), 'mks a server boilerplate file')
+  t.ok(fs.readFileSync(path + '/package.json').toString().match('server'), 'mks a package.json containing serve entry because i am garbage')
 }
 function checkForSynth (path, t, goThere) {
-  t.ok(fs.readFileSync(path + '/cmd.js').toString().match('yargs'), 'mks a CLI boilerplate file')
-  var packagedJson = fs.readFileSync(path + '/package.json').toString()
-  t.ok(packagedJson.match('bin'), 'mks a package.json containing bin entry because i am garbage')
-  if (goThere) {
-    t.ok(packagedJson.match('yargs'), 'mks a package.json containing yargs cuz it is YARRRRRRRR time')
-  }
+  t.ok(fs.readFileSync(path + '/synth.js').toString().match('AudioContext'), 'mks a synthy boilerplate file')
 }
 function checkForLevel (path, t, goThere) {
-  t.ok(fs.readFileSync(path + '/cmd.js').toString().match('yargs'), 'mks a CLI boilerplate file')
-  var packagedJson = fs.readFileSync(path + '/package.json').toString()
-  t.ok(packagedJson.match('bin'), 'mks a package.json containing bin entry because i am garbage')
-  if (goThere) {
-    t.ok(packagedJson.match('yargs'), 'mks a package.json containing yargs cuz it is YARRRRRRRR time')
-  }
+  t.ok(fs.readFileSync(path + '/level.js').toString().match('level'), 'mks a levelDB boilerplate file')
 }
 function checkForCanvas (path, t, goThere) {
-  t.ok(fs.readFileSync(path + '/cmd.js').toString().match('yargs'), 'mks a CLI boilerplate file')
-  var packagedJson = fs.readFileSync(path + '/package.json').toString()
-  t.ok(packagedJson.match('bin'), 'mks a package.json containing bin entry because i am garbage')
-  if (goThere) {
-    t.ok(packagedJson.match('yargs'), 'mks a package.json containing yargs cuz it is YARRRRRRRR time')
-  }
+  t.ok(fs.readFileSync(path + '/canvas.js').toString().match('Canvas'), 'mks a canvas boilerplate file')
 }

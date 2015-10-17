@@ -11,8 +11,6 @@ var osenv = require('osenv')
 
 var baseFiles = ['.gitignore', '.npmignore', '.travis.yml', 'README.md',
                    'index.js', 'package.json', 'test.js']
-
-                   // THIS SHOULD B AN OBJECT THAT MATCHES ARG BOOLEANS
 var browserifyFiles = ['www/demo.js', 'www/index.html', 'www/main.css']
 var browserPackages = 'npm install browserify watchify tape --save-dev'
 var cliFiles = ['cmd.js']
@@ -41,42 +39,51 @@ module.exports = function (name, options, cb) {
 }
 
 function mkTheProj (name, options, cb) {
-  if (options.twitter && options.browserify && options.cli) console.log('GENERATING A WHOPPER, ONE blt, COMING RIGHT UP')
+  if (options.twitter && options.browserify && options.cli && options.level && options.synth && options.canvas && options.spider) console.log('GENERATING A WHOPPER, ONE blt, COMING RIGHT UP')
   var templateData = makeTemplateData(name, options)
 
   var selected = []
+  var files = baseFiles
   var count = 7
   if (options.browserify) {
-    count += 3
+    count += browserifyFiles.length
     selected.push('browserify')
+    files = files.concat(browserifyFiles)
   }
   if (options.cli) {
-    count++
+    count += cliFiles.length
     selected.push('CLI')
+    files = files.concat(cliFiles)
   }
   if (options.twitter) {
-    count += 2
+    count += twitterFiles.length
     selected.push('twitter')
+    files = files.concat(twitterFiles)
   }
   if (options.server) {
-    count += 1 // ???????????????????????????????????????????????????????????????????????????????????????????
+    count += serverFiles.length
     selected.push('server')
+    files = files.concat(serverFiles)
   }
   if (options.spider) {
-    count += 1 // ???????????????????????????????????????????????????????????????????????????????????????????
+    count += spiderFiles.length
     selected.push('spider')
+    files = files.concat(spiderFiles)
   }
   if (options.canvas) {
-    count += 1 // ???????????????????????????????????????????????????????????????????????????????????????????
+    count += canvasFiles.length
     selected.push('canvas')
+    files = files.concat(canvasFiles)
   }
   if (options.level) {
-    count += 1 // ???????????????????????????????????????????????????????????????????????????????????????????
+    count += levelFiles.length
     selected.push('level')
+    files = files.concat(levelFiles)
   }
   if (options.synth) {
-    count += 1 // ???????????????????????????????????????????????????????????????????????????????????????????
+    count += synthFiles.length
     selected.push('synth')
+    files = files.concat(synthFiles)
   }
   if (!options.twitter && !options.browserify && !options.cli && !options.server && !options.spider && !options.canvas && !options.level && !options.synth) selected.push('default')
   var init = after(count, function () {
@@ -85,28 +92,20 @@ function mkTheProj (name, options, cb) {
     console.log('W A Y    C H I L L!               =^.^=            R A D I C A L!')
     cb()
     if (!options.noFunnyBusiness) {
-      kexec('cd ' + name + ' && npm init && npm install && git init && git add -A && git commit -m \'initial\'')
+      kexec('cd ' + name + ' && npm init && ' + templateData.install.join(' && ') + ' && git init && git add -A && git commit -m \'initial\'')
     } else {
-      console.log('WARNING: you passed the no funny business option')
-      console.log('WARNING: therefore packages will not be installed nor will a git repository be initialized and committed to')
-      console.log('DANGER: be certain to run     npm install    so as to install the necessary packages')
-      console.log('ADVICE: and please use version control because really why not i mean it doesn\'t mean you gotta make super nice clean commits all the time and doe everything through feature branches and pull requests, gosh, just make a big commit when you have things working and that way you can easily jump back if you need to or take a look at a diff and see what went so utterly wrong')
-    }
+        console.log('WARNING: you passed the "noFunnyBusiness" paramater, so packages won\'t be installed nor will the package.json be updated!')
+        console.log('DANGER: be sure to run the following command to install the required packages and update the package.json:')
+        console.log('    ' + templateData.install.join(' && '))
+        console.log(catMe())
+        console.log('thank you')
+      }
   })
 
   function doYourWorst (err) {
     if (err) {
       throw err
     } else {
-      var files = baseFiles
-      if (options.browserify) files = files.concat(browserifyFiles)
-      if (options.twitter) files = files.concat(twitterFiles)
-      if (options.cli) files = files.concat(cliFiles)
-      if (options.server) files = files.concat(serverFiles)
-      if (options.spider) files = files.concat(spiderFiles)
-      if (options.level) files = files.concat(levelFiles)
-      if (options.synth) files = files.concat(synthFiles)
-      if (options.canvas) files = files.concat(canvasFiles)
       files.forEach(function (filename) {
         writeFile(name + '/' + filename, compiley('/src/' + filename, templateData), logCreation, init)
       })
@@ -223,8 +222,6 @@ function getConfig () {
 
 function makeTemplateData (name, options) {
   // uh what does this do again?
-  var both = options.cli && options.twitter ? ',' : ''
-  var either = options.cli || options.twitter
   var installs = [
     options.browserify ? browserPackages : 'echo "=^.^= coool =^.^="',
     options.cli ? cliPackages : 'echo "=^.^= raaadical =^.^="',
@@ -238,9 +235,6 @@ function makeTemplateData (name, options) {
     camelName: camelcase(name),
     browserify: options.browserify,
     cli: options.cli,
-    twitter: options.twitter,
-    both: both,
-    either: either,
     server: options.server,
     spider: options.spider,
     canvas: options.canvas,

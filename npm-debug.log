@@ -1,0 +1,172 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/Users/cole/.nvm/v0.12.0/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '--save-dev',
+1 verbose cli   'level',
+1 verbose cli   'cheerio',
+1 verbose cli   'request',
+1 verbose cli   'node-canvas' ]
+2 info using npm@2.14.2
+3 info using node@v0.12.0
+4 verbose install initial load of /Users/cole/projects/mkproj/package.json
+5 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/after/package.json
+6 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/browserify/package.json
+7 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/camelcase/package.json
+8 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/cat-me/package.json
+9 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/figlet/package.json
+10 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/gh-pages-deploy/package.json
+11 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/jsonfile/package.json
+12 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/kexec/package.json
+13 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/merge/package.json
+14 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/mustache/package.json
+15 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/npm-add-script/package.json
+16 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/osenv/package.json
+17 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/rimraf/package.json
+18 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/shuffle-array/package.json
+19 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/standard/package.json
+20 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/tap/package.json
+21 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/tape/package.json
+22 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/twit/package.json
+23 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/watchify/package.json
+24 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/yargonaut/package.json
+25 verbose installManyTop reading scoped package data from /Users/cole/projects/mkproj/node_modules/yargs/package.json
+26 info package.json twit@2.1.0 No license field.
+27 info package.json after@0.8.1 No license field.
+28 info package.json kexec@1.2.0 No license field.
+29 verbose readDependencies loading dependencies from /Users/cole/projects/mkproj/package.json
+30 silly cache add args [ 'level', null ]
+31 verbose cache add spec level
+32 silly cache add args [ 'cheerio', null ]
+33 verbose cache add spec cheerio
+34 silly cache add args [ 'request', null ]
+35 verbose cache add spec request
+36 silly cache add args [ 'node-canvas', null ]
+37 verbose cache add spec node-canvas
+38 silly cache add parsed spec { raw: 'level',
+38 silly cache add   scope: null,
+38 silly cache add   name: 'level',
+38 silly cache add   rawSpec: '',
+38 silly cache add   spec: '*',
+38 silly cache add   type: 'range' }
+39 silly addNamed level@*
+40 verbose addNamed "*" is a valid semver range for level
+41 silly addNameRange { name: 'level', range: '*', hasData: false }
+42 silly mapToRegistry name level
+43 silly mapToRegistry using default registry
+44 silly mapToRegistry registry https://registry.npmjs.org/
+45 silly mapToRegistry uri https://registry.npmjs.org/level
+46 verbose addNameRange registry:https://registry.npmjs.org/level not in flight; fetching
+47 silly cache add parsed spec { raw: 'cheerio',
+47 silly cache add   scope: null,
+47 silly cache add   name: 'cheerio',
+47 silly cache add   rawSpec: '',
+47 silly cache add   spec: '*',
+47 silly cache add   type: 'range' }
+48 silly addNamed cheerio@*
+49 verbose addNamed "*" is a valid semver range for cheerio
+50 silly addNameRange { name: 'cheerio', range: '*', hasData: false }
+51 silly mapToRegistry name cheerio
+52 silly mapToRegistry using default registry
+53 silly mapToRegistry registry https://registry.npmjs.org/
+54 silly mapToRegistry uri https://registry.npmjs.org/cheerio
+55 verbose addNameRange registry:https://registry.npmjs.org/cheerio not in flight; fetching
+56 silly cache add parsed spec { raw: 'request',
+56 silly cache add   scope: null,
+56 silly cache add   name: 'request',
+56 silly cache add   rawSpec: '',
+56 silly cache add   spec: '*',
+56 silly cache add   type: 'range' }
+57 silly addNamed request@*
+58 verbose addNamed "*" is a valid semver range for request
+59 silly addNameRange { name: 'request', range: '*', hasData: false }
+60 silly mapToRegistry name request
+61 silly mapToRegistry using default registry
+62 silly mapToRegistry registry https://registry.npmjs.org/
+63 silly mapToRegistry uri https://registry.npmjs.org/request
+64 verbose addNameRange registry:https://registry.npmjs.org/request not in flight; fetching
+65 silly cache add parsed spec { raw: 'node-canvas',
+65 silly cache add   scope: null,
+65 silly cache add   name: 'node-canvas',
+65 silly cache add   rawSpec: '',
+65 silly cache add   spec: '*',
+65 silly cache add   type: 'range' }
+66 silly addNamed node-canvas@*
+67 verbose addNamed "*" is a valid semver range for node-canvas
+68 silly addNameRange { name: 'node-canvas', range: '*', hasData: false }
+69 silly mapToRegistry name node-canvas
+70 silly mapToRegistry using default registry
+71 silly mapToRegistry registry https://registry.npmjs.org/
+72 silly mapToRegistry uri https://registry.npmjs.org/node-canvas
+73 verbose addNameRange registry:https://registry.npmjs.org/node-canvas not in flight; fetching
+74 verbose request uri https://registry.npmjs.org/cheerio
+75 verbose request no auth needed
+76 info attempt registry request try #1 at 11:26:09 AM
+77 verbose request using bearer token for auth
+78 verbose request id 52a39800ada532e9
+79 verbose etag "88S5UXDPXS0VSBAYD88XTM8RA"
+80 http request GET https://registry.npmjs.org/cheerio
+81 verbose request uri https://registry.npmjs.org/request
+82 verbose request no auth needed
+83 info attempt registry request try #1 at 11:26:09 AM
+84 verbose request using bearer token for auth
+85 verbose etag "1AV8I7OMMTAH9YKOHZXWOAQ6Z"
+86 http request GET https://registry.npmjs.org/request
+87 verbose request uri https://registry.npmjs.org/level
+88 verbose request no auth needed
+89 info attempt registry request try #1 at 11:26:09 AM
+90 verbose request using bearer token for auth
+91 verbose etag "B43U24EMGFJUQKEO3WO0L4180"
+92 http request GET https://registry.npmjs.org/level
+93 verbose request uri https://registry.npmjs.org/node-canvas
+94 verbose request no auth needed
+95 info attempt registry request try #1 at 11:26:09 AM
+96 verbose request using bearer token for auth
+97 http request GET https://registry.npmjs.org/node-canvas
+98 http 304 https://registry.npmjs.org/request
+99 silly get cb [ 304,
+99 silly get   { 'cache-control': 'max-age=60',
+99 silly get     'accept-ranges': 'bytes',
+99 silly get     date: 'Sat, 17 Oct 2015 18:26:09 GMT',
+99 silly get     via: '1.1 varnish',
+99 silly get     connection: 'keep-alive',
+99 silly get     'x-served-by': 'cache-sjc3129-SJC',
+99 silly get     'x-cache': 'MISS',
+99 silly get     'x-cache-hits': '0',
+99 silly get     'x-timer': 'S1445106369.672154,VS0,VE38' } ]
+100 verbose etag https://registry.npmjs.org/request from cache
+101 verbose get saving request to /Users/cole/.npm/registry.npmjs.org/request/.cache.json
+102 http 404 https://registry.npmjs.org/node-canvas
+103 verbose headers { 'content-type': 'application/json',
+103 verbose headers   'cache-control': 'max-age=0',
+103 verbose headers   'content-length': '2',
+103 verbose headers   'accept-ranges': 'bytes',
+103 verbose headers   date: 'Sat, 17 Oct 2015 18:26:09 GMT',
+103 verbose headers   via: '1.1 varnish',
+103 verbose headers   connection: 'keep-alive',
+103 verbose headers   'x-served-by': 'cache-sjc3124-SJC',
+103 verbose headers   'x-cache': 'MISS',
+103 verbose headers   'x-cache-hits': '0',
+103 verbose headers   'x-timer': 'S1445106369.673349,VS0,VE40' }
+104 silly get cb [ 304, undefined ]
+105 verbose get saving undefined to /Users/cole/.npm/registry.npmjs.org/node-canvas/.cache.json
+106 silly addNameRange number 2 { name: 'node-canvas', range: '*', hasData: true }
+107 silly addNameRange versions [ undefined, [] ]
+108 verbose stack TypeError: Cannot read property 'latest' of undefined
+108 verbose stack     at next (/Users/cole/.nvm/v0.12.0/lib/node_modules/npm/lib/cache/add-named.js:242:35)
+108 verbose stack     at setData (/Users/cole/.nvm/v0.12.0/lib/node_modules/npm/lib/cache/add-named.js:230:5)
+108 verbose stack     at RES (/Users/cole/.nvm/v0.12.0/lib/node_modules/npm/node_modules/inflight/inflight.js:23:14)
+108 verbose stack     at f (/Users/cole/.nvm/v0.12.0/lib/node_modules/npm/node_modules/once/once.js:17:25)
+108 verbose stack     at fixName (/Users/cole/.nvm/v0.12.0/lib/node_modules/npm/lib/cache/add-named.js:29:5)
+108 verbose stack     at saved (/Users/cole/.nvm/v0.12.0/lib/node_modules/npm/lib/cache/caching-client.js:173:7)
+108 verbose stack     at /Users/cole/.nvm/v0.12.0/lib/node_modules/npm/node_modules/graceful-fs/polyfills.js:210:7
+108 verbose stack     at FSReqWrap.oncomplete (fs.js:99:15)
+109 verbose cwd /Users/cole/projects/mkproj
+110 error Darwin 14.5.0
+111 error argv "node" "/Users/cole/.nvm/v0.12.0/bin/npm" "install" "--save-dev" "level" "cheerio" "request" "node-canvas"
+112 error node v0.12.0
+113 error npm  v2.14.2
+114 error Cannot read property 'latest' of undefined
+115 error If you need help, you may report this error at:
+115 error     <https://github.com/npm/npm/issues>
+116 verbose exit [ 1, true ]
