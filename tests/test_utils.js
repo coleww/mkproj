@@ -9,7 +9,7 @@ module.exports = function (tc, doThatDance) {
   var expectations = []
   var exclusions = [] // files to check for exclusion
   Object.keys(templates).forEach(function (t) {
-    if (tc[t]) {
+    if (tc[t] || (tc.kind = 'create' && (t === 'default' || t === 'test'))) {
       expectations = expectations.concat(templates[t].files)
     } else {
       exclusions = exclusions.concat(templates[t].files)

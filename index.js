@@ -59,7 +59,7 @@ function addToOrMkTheProj (name, options, cb) {
     } else {
       console.log('Generating the ' + selected.map(function (t) {return t.name}).join(' and ') + ' boilerplate for you now!!!')
       files.forEach(function (filename) {
-        writeFile(((options.add) ? '' : name + '/'), compiley('/src/' + filename, templateData), logCreation, function () {
+        writeFile(((options.add) ? '' : name + '/') + filename, compiley('/src/' + filename, templateData), logCreation, function () {
           try {
             addScripts(templateData)
           } catch (e) {
@@ -112,8 +112,10 @@ function makeTemplateData (name, options) {
   return merge(opts, {
     name: name,
     camelName: camelcase(name),
-    install: Object.keys(options).map(function (t) {
-      return options[t].install
+    install: Object.keys(options).filter(function (t) {
+      return templates[t]
+    }).map(function (t) {
+      return templates[t].install
     })
   })
 }
