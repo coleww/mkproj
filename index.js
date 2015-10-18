@@ -43,6 +43,15 @@ function addToOrMkTheProj (name, options, cb) {
     console.log(catMe())
     console.log('W A Y    C H I L L!               =^.^=            R A D I C A L!')
     cb()
+    if (!options.add) {
+      try {
+        process.chdir('./' + name)
+        addScripts(templateData)
+      } catch (e) {
+        console.log('CATastrophic failure occurred while trying to shove stuff into package.json:')
+        console.log(e.message)
+      }
+    }
     if (!options.noFunnyBusiness) {
       kexec('cd ' + name + ' && npm init && ' + templateData.install.join(' && ') + ' && git init && git add -A && git commit -m \'initial\'')
     } else {
@@ -59,18 +68,8 @@ function addToOrMkTheProj (name, options, cb) {
     } else {
       console.log('Generating the ' + selected.map(function (t) {return t.name}).join(' and ') + ' boilerplate for you now!!!')
       files.forEach(function (filename) {
-        writeFile(((options.add) ? '' : name + '/') + filename, compiley('/src/' + filename, templateData), logCreation, function () {
-          try {
-            addScripts(templateData)
-          } catch (e) {
-            console.log('CATastrophic failure occurred while trying to shove stuff into package.json:')
-            console.log(e.message)
-          } finally {
-            init()
-          }
-        })
+        writeFile(((options.add) ? '' : name + '/') + filename, compiley('/src/' + filename, templateData), logCreation, init)
       })
-
     }
   }
 
