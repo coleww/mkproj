@@ -16,31 +16,29 @@ tap.test('throws an error if not passed a project name', function (t) {
     t.ok(e)
   }
 })
+var tmps = Object.keys(templates)
 
-var testCases = shuffle([
-  {kind: 'create'},
-  {kind: 'create', cli: true},
-  {kind: 'create', browserify: true},
-  {kind: 'create', twitter: true},
-  {kind: 'create', server: true},
-  {kind: 'create', spider: true},
-  {kind: 'create', level: true},
-  {kind: 'create', canvas: true},
-  {kind: 'create', synth: true},
-  {kind: 'create', twitter: true, browserify: true, cli: true, synth: true, canvas: true, level: true, spider: true}
-
-  // {kind: 'add', browserify: true},
-  // {kind: 'add', cli: true},
-  // {kind: 'add', twitter: true},
-  // {kind: 'add', server: true},
-  // {kind: 'add', spider: true},
-  // {kind: 'add', level: true},
-  // {kind: 'add', canvas: true},
-  // {kind: 'add', synth: true},
-  // {kind: 'add', test: true},
-
-  // {kind: 'deny', twitter: true}
-])
+var testCases = shuffle(tmps.map(function (t) {
+  if (t === 'default') {
+    return [
+      {kind: 'create'},
+      tmps.reduce(function (a, b) {
+        if (b !== 'default') a[b] = true
+        return a
+      }, {kind: 'create'})
+    ]
+  } else {
+    return [
+      {kind: 'create'},
+      {kind: 'add'},
+      {kind: 'deny'}
+    ].map(function (tc) {
+      return (tc[t] = true) && tc
+    })
+  }
+}).reduce(function (a, b) {
+  return a.concat(b)
+}))
 
 var after = require('after')
 var counter = after(testCases.length, function () {
@@ -84,6 +82,12 @@ function testThatCase (tc, doThatDance) {
   console.log(expectations, exclusions)
   tc.expectations = expectations
   tc.exclusions = exclusions
+  tc.scripts = []
+  tc.keys = []
+  Object.keys(tc).forEach(function (k) {
+    tc.scripts = tc.scripts.concat(templates[k].scripts)
+    tc.keys = tc.keys.concat(templates[k].keys)
+  })
   console.log(tc.kind)
   switch (tc.kind) {
     case 'create':
@@ -143,9 +147,8 @@ function testMkingAProject (options, cb) {
 
 function testAddingToAnExistingProject (options, cb) {
   var name = makeName(options)
-  var count = Object.keys(options).reduce(function (a, b) {
-    return a + options[b].files.length
-  }, 0)
+  console.log(options)
+  var count = options.expectations.length
   cleanUpAndRun(name, reallyTestIt)
 
   function reallyTestIt () {
@@ -169,8 +172,20 @@ function testAddingToAnExistingProject (options, cb) {
 
 function testHandlingFileCollissionsWhileAdding (options, cb) {
   var name = makeName(options)
-  var expectations = options.expectations
-
+  console.log(options)
+  var expectations = options.expectations.map(function (f) {
+    return 'BORKED: ' + f + ' already exists! Maybe delete it and try again?'
+  })
+  if (options.keys) {
+    options.keys.forEach(function (k) {
+      expectations.push('WEEEOOOO looks like you already have a ' + k + ' entry in yr package.json?')
+    })
+  }
+  if (options.scripts) {
+    options.scripts.forEach(function (k) {
+      expectations.push('CATastrophic failure occurred while trying to shove stuff into package.json:')
+    })
+  }
   cleanUpAndRun(name, actuallyTestThings)
 
   function actuallyTestThings () {

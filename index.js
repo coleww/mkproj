@@ -151,23 +151,29 @@ function addScripts (opts) {
     npmAddScript({key: 'build', value: 'browserify www/demo.js -o www/bundle.js'})
     npmAddScript({key: 'deploy', value: 'git push origin master && gh-pages-deploy'})
     npmAddScript({key: 'watch', value: 'watchify www/demo.js -o www/bundle.js --debug --verbose'})
-    if (packaged['gh-pages-deploy']) console.log('WEEEOOOO looks like you already have a gh-pages-deploy entry in yr package.json?')
-    packaged['gh-pages-deploy'] = {
-      'staticpath': 'www',
-      'prep': [
-        'test',
-        'build'
-      ],
-      'noprompt': false
+    if (packaged['gh-pages-deploy']) {
+      console.log('WEEEOOOO looks like you already have a gh-pages-deploy entry in yr package.json?')
+    } else {
+      packaged['gh-pages-deploy'] = {
+        'staticpath': 'www',
+        'prep': [
+          'test',
+          'build'
+        ],
+        'noprompt': false
+      }
+      jsonfile.writeFileSync('package.json', packaged, {spaces: 2})
     }
-    jsonfile.writeFileSync('package.json', packaged, {spaces: 2})
   }
   if (opts.cli) {
-    if (packaged.bin) console.log('WEEEOOOO looks like you already have a bin entry in yr package.json?')
-    var bin = {}
-    bin[opts.camelName] = 'cmd.js'
-    packaged.bin = bin
-    jsonfile.writeFileSync('package.json', packaged, {spaces: 2})
+    if (packaged.bin) {
+      console.log('WEEEOOOO looks like you already have a bin entry in yr package.json?')
+    } else {
+      var bin = {}
+      bin[opts.camelName] = 'cmd.js'
+      packaged.bin = bin
+      jsonfile.writeFileSync('package.json', packaged, {spaces: 2})
+    }
   }
   if (opts.twitter) {
     npmAddScript({key: 'tweet', value: 'node bot.js'})
