@@ -39,23 +39,7 @@ var testCases = shuffle([
   // {kind: 'add', synth: true},
   // {kind: 'add', test: true},
 
-  // {kind: 'deny', twitter: true, expectations: ['BORKED: config.js already exists! Maybe delete it and try again?',
-  //                                              'BORKED: bot.js already exists! Maybe delete it and try again?',
-  //                                              'CATastrophic failure occurred while trying to shove stuff into package.json:']},
-  // {kind: 'deny', cli: true, expectations: ['BORKED: cmd.js already exists! Maybe delete it and try again?',
-  //                                          'WEEEOOOO looks like you already have a bin entry in yr package.json?']},
-  // {kind: 'deny', browserify: true, expectations: ['CATastrophic failure occurred while trying to shove stuff into package.json:',
-  //                                                 'BORKED: www/index.html already exists! Maybe delete it and try again?',
-  //                                                 'BORKED: www/demo.js already exists! Maybe delete it and try again?',
-  //                                                 'BORKED: www/main.css already exists! Maybe delete it and try again?']},
-  // {kind: 'deny', spider: true, expectations: ['BORKED: spider.js already exists! Maybe delete it and try again?',
-  //                                          'WEEEOOOO looks like you already have a spider entry in yr package.json?']},
-  // {kind: 'deny', server: true, expectations: ['BORKED: server.js already exists! Maybe delete it and try again?',
-  //                                          'WEEEOOOO looks like you already have a start entry in yr package.json?']},
-  // {kind: 'deny', level: true, expectations: ['BORKED: level.js already exists! Maybe delete it and try again?']},
-  // {kind: 'deny', synth: true, expectations: ['BORKED: synth.js already exists! Maybe delete it and try again?']},
-  // {kind: 'deny', canvas: true, expectations: ['BORKED: canvas.js already exists! Maybe delete it and try again?']}
-
+  // {kind: 'deny', twitter: true}
 ])
 
 var after = require('after')
@@ -167,7 +151,7 @@ function testAddingToAnExistingProject (options, cb) {
   function reallyTestIt () {
     tap.test(name, function (t) {
       t.plan(count)
-      mkproj(name, {noFunnyBusiness: true, browserify: false, twitter: false, cli: false}, function () {
+      mkproj(name, {noFunnyBusiness: true}, function () {
         process.chdir(name)
         options.noFunnyBusiness = true
         if (options.test) fs.unlinkSync('test.js')

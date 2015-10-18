@@ -1,27 +1,33 @@
 module.exports = {
   browserify: {
     files: ['www/demo.js', 'www/index.html', 'www/main.css'],
-    install: 'npm install browserify watchify tape --save-dev',
+    install: 'npm install browserify watchify tape gh-pages-deploy --save-dev',
+    scripts: ['build', 'deploy', 'watch'],
+    keys: ['gh-pages-deploy'],
     name: 'browserify'
   },
   server: {
     files: ['server.js'],
     install: 'echo "meow!"',
+    scripts: ['start'],
     name: 'server'
   },
   spider: {
     files: ['spider.js'],
     install: 'npm install cheerio request --save',
+    scripts: ['spider'],
     name: 'spider'
   },
   twitter: {
     files: ['bot.js', 'config.js'],
     install: 'npm install twit --save',
+    scripts: ['tweet'],
     name: 'twitter'
   },
   cli: {
     files: ['cmd.js'],
     install: 'npm install yargs --save',
+    keys: ['bin'],
     name: 'cli'
   },
   level: {
@@ -42,6 +48,7 @@ module.exports = {
   test: {
     files: ['test.js'],
     install: 'npm install tap standard --save-dev',
+    scripts: ['test'],
     name: 'test'
   },
   default: {
