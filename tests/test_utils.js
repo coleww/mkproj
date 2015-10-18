@@ -6,19 +6,24 @@ var fs = require('fs')
 var templates = require('../templates')
 
 module.exports = function (tc, doThatDance) {
+  console.log(tc)
+  console.log(tc.kind)
   var expectations = []
   var exclusions = [] // files to check for exclusion
   Object.keys(templates).forEach(function (t) {
-    if (tc[t] || (tc.kind = 'create' && (t === 'default' || t === 'test'))) {
+    if (tc[t] || (tc.kind === 'create' && (t === 'default' || t === 'test'))) {
       expectations = expectations.concat(templates[t].files)
     } else {
       exclusions = exclusions.concat(templates[t].files)
     }
   })
+  console.log(expectations, exclusions)
   tc.expectations = expectations
   tc.exclusions = exclusions
+  console.log(tc.kind)
   switch (tc.kind) {
     case 'create':
+      console.log('CREATION')
       testMkingAProject(tc, doThatDance)
       break
     case 'add':
@@ -27,16 +32,20 @@ module.exports = function (tc, doThatDance) {
     case 'deny':
       testHandlingFileCollissionsWhileAdding(tc, doThatDance)
       break
+    default:
+      console.log('sup')
   }
 }
 
 function testMkingAProject (options, cb) {
   var name = makeName(options)
-
+  console.log(name)
   var type = options.browserify ? 'tape' : 'tap'
+  console.log(type)
   cleanUpAndRun(name, reallyTestIt)
   function reallyTestIt () {
     tap.test(name, function (t) {
+      console.log('TESTING', name)
       t.plan(options.expectations.length + options.exclusions.length + 9)
       options.noFunnyBusiness = true
       mkproj(name, options, function () {
