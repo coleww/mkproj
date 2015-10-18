@@ -1,9 +1,9 @@
 var tap = require('tap')
-var mkproj = require('../')
+var mkproj = require('./')
 var exec = require('child_process').exec
 var rimraf = require('rimraf')
 var fs = require('fs')
-var templates = require('../templates')
+var templates = require('./templates')
 
 module.exports = function (tc, doThatDance) {
   console.log(tc)
@@ -38,6 +38,7 @@ module.exports = function (tc, doThatDance) {
 }
 
 function testMkingAProject (options, cb) {
+  console.log(process.cwd(), 'CWDSTART')
   var name = makeName(options)
   console.log(name)
   var type = options.browserify ? 'tape' : 'tap'
@@ -63,9 +64,12 @@ function testMkingAProject (options, cb) {
         options.exclusions.forEach(function (filename) {
           t.ok(!fs.existsSync(name + '/' + filename), 'does not make a ' + filename)
         })
-        exec('cp -r ./' + type + '_modules ./' + name + '/node_modules && cd ' + name + ' && standard && node test.js', function (error, stdout, stderr) {
+        exec('cp -r ../' + type + '_modules ./' + name + '/node_modules && cd ' + name + ' && standard && node test.js', function (error, stdout, stderr) {
           t.ok(!error, 'generated module also works')
+          process.chdir('../')
+          console.log(name)
           rimraf(name, cb)
+          console.log(process.cwd(), 'CWD')
         })
       })
     })

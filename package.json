@@ -20,7 +20,7 @@
     "rimraf": "^2.3.4",
     "shuffle-array": "^0.1.0",
     "standard": "^4.5.4",
-    "tap": "^1.2.0"
+    "tap": "^2.1.1"
   },
   "dependencies": {
     "after": "^0.8.1",

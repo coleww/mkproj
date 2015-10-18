@@ -23,6 +23,7 @@ module.exports = function (name, options, cb) {
 }
 
 function addToOrMkTheProj (name, options, cb) {
+  console.log(name, options)
   if (options.twitter && options.browserify && options.cli && options.level && options.synth && options.canvas && options.spider) console.log('GENERATING A WHOPPER, ONE blt, COMING RIGHT UP')
   var templateData = makeTemplateData(name, options)
   var selected = Object.keys(templates).filter(function (k) {
@@ -39,7 +40,7 @@ function addToOrMkTheProj (name, options, cb) {
     return a + b.files.length
   }, 0)
   var init = after(count, function () {
-    console.log('generated ' + selected.join(' and ') + ' boilerplate in ' + name + ' project')
+    console.log('generated ' + selected.map(function (t) {return t.name}).join(' and ') + ' boilerplate in ' + name + ' project')
     console.log(catMe())
     console.log('W A Y    C H I L L!               =^.^=            R A D I C A L!')
     cb()
