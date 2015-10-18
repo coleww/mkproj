@@ -1,7 +1,13 @@
 CH-CH-CH-CHANGES
 ----------------------------------------------
 
-9/52015 v4.2.5
+10//2015 v5.0.0
+- FIVE OH: THE POLICE RELEASE
+- adds generators for http server, web audio synth, web spider, leveldb, tap/test, and node-canvas
+- adds `-v` flag. whoops.
+- better and more professional error handling
+
+9/5/2015 v4.2.5
 - handle errors better at the cmd.js level
 - allow creating a new project inside of an existing project.
 

@@ -3,7 +3,7 @@ MKPROJ
 
 ![welcome 2 hell](construction.png)
 
-simple scaffolding tool for making node modules and/or Browserify'd web apps and/or twitter bots and/or CLI tools, or any combination thereof, and also for adding any of these aformentioned things to any existing project that has a `package.json` file. 
+simple scaffolding tool for making node modules and/or Browserify'd web apps and/or twitter bots and/or CLI tools and/or HTTP servers and/or web spiders and/or web audio synths and/or leveldb interfaces, or any combination thereof, and also for adding any of these aformentioned things to any existing project that has a `package.json` file. WO_OW
 
 [![NPM](https://nodei.co/npm/mkproj.png)](https://nodei.co/npm/mkproj/)
 [![Build Status](https://secure.travis-ci.org/coleww/mkproj.png)](http://travis-ci.org/coleww/mkproj)
@@ -54,17 +54,16 @@ W A Y    C H I L L!               =^.^=            R A D I C A L!
 
 After generating the project folder/files, it `cd`'s into the new folder and runs `npm init` and `npm install` and `git init` and `git commit -m "initial"` FOR YOU! NO WORRIES! WE GOT YOU ON THIS ONE!
 
+Additional flags can be passed to generate more boilerplte files and do more `npm install`s. For example, you can generate everything by running You `mkproj -wbuncts yr-app-name` which i guess stands for "wild bun cats" which i imagine might look something like this:
+
+![](cinn.jpg)
+
 
 ### ADD TO AN EXISTING PROJECT
 
-Just `cd` into any project folder that contains a `package.json`, whether created via `mkproj` or not, and run:
+Just `cd` into any project folder that contains a `package.json` file, whether created via `mkproj` or not, and run mkproj with the flags for the files you want generated.
 
-``` 
-  mkproj -t
-```
-(or `-b` or `-c` or any combination thereof) `mkproj` will add some twitter bot config files and boilerplate and install the `twit` module and even add a `tweet` entry to the `scripts` in yr `package.json`. It will even guess a good variable name to use for your module ;).
-
-If at any point the module hits a bump in the road due to, say, a file already existing or a duplicate `scripts` entry it will output a helpful error, thus allowing you, the programmer, to rectify this error. 
+For example, `mkproj -t` will add some twitter bot config files and boilerplate and install the `twit` module and even add a `tweet` entry to the `scripts` in yr `package.json`. If at any point the module hits a bump in the road due to, say, a file already existing or a duplicate `scripts` entry it will output a helpful error, thus allowing you, the programmer, to rectify this error. 
 
 ### THE COMMAND LINE API
 
