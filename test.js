@@ -70,6 +70,15 @@ setTimeout(function () {
 function testThatCase (tc, doThatDance) {
   console.log(tc)
   console.log(tc.kind)
+  var scripts = []
+  var keys = []
+  Object.keys(tc).forEach(function (k) {
+    if (k !== 'kind') {
+      console.log(k)
+      scripts = scripts.concat(templates[k].scripts)
+      keys = keys.concat(templates[k].keys)
+    }
+  })
   var expectations = []
   var exclusions = [] // files to check for exclusion
   Object.keys(templates).forEach(function (t) {
@@ -80,14 +89,11 @@ function testThatCase (tc, doThatDance) {
     }
   })
   console.log(expectations, exclusions)
+  tc.scripts = scripts
+  tc.keys = keys
   tc.expectations = expectations
   tc.exclusions = exclusions
-  tc.scripts = []
-  tc.keys = []
-  Object.keys(tc).forEach(function (k) {
-    tc.scripts = tc.scripts.concat(templates[k].scripts)
-    tc.keys = tc.keys.concat(templates[k].keys)
-  })
+
   console.log(tc.kind)
   switch (tc.kind) {
     case 'create':
