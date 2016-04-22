@@ -20,24 +20,10 @@ tap.test('throws an error if not passed a project name', function (t) {
 
 var testCases = shuffle([
   {kind: 'create'},
-  {kind: 'create', cli: true},
   {kind: 'create', browserify: true},
-  {kind: 'create', twitter: true},
-  {kind: 'create', twitter: true, browserify: true},
-  {kind: 'create', browserify: true, cli: true},
-  {kind: 'create', twitter: true, cli: true},
-  {kind: 'create', twitter: true, browserify: true, cli: true},
   {kind: 'add', browserify: true},
-  {kind: 'add', cli: true},
-  {kind: 'add', twitter: true},
-  {kind: 'deny', twitter: true, expectations: ['BORKED: config.js already exists! Maybe delete it and try again?',
-                                               'BORKED: bot.js already exists! Maybe delete it and try again?',
-                                               'CATastrophic failure occurred while trying to shove stuff into package.json:']},
-  {kind: 'deny', cli: true, expectations: ['BORKED: cmd.js already exists! Maybe delete it and try again?',
-                                           'WEEEOOOO looks like you already have a bin entry in yr package.json?']},
   {kind: 'deny', browserify: true, expectations: ['CATastrophic failure occurred while trying to shove stuff into package.json:',
                                                   'BORKED: www/index.html already exists! Maybe delete it and try again?',
-                                                  'BORKED: www/demo.js already exists! Maybe delete it and try again?',
                                                   'BORKED: www/main.css already exists! Maybe delete it and try again?']}
 ])
 

@@ -3,7 +3,7 @@ MKPROJ
 
 ![welcome 2 hell](construction.png)
 
-simple scaffolding tool for making node modules and/or Browserify'd web apps and/or twitter bots and/or CLI tools, or any combination thereof, and also for adding any of these aformentioned things to any existing project that has a `package.json` file. 
+simple scaffolding tool for making tiny node modules or big Browserify'd web apps!
 
 [![NPM](https://nodei.co/npm/mkproj.png)](https://nodei.co/npm/mkproj/)
 [![Build Status](https://secure.travis-ci.org/coleww/mkproj.png)](http://travis-ci.org/coleww/mkproj)
@@ -55,14 +55,15 @@ W A Y    C H I L L!               =^.^=            R A D I C A L!
 After generating the project folder/files, it `cd`'s into the new folder and runs `npm init` and `npm install` and `git init` and `git commit -m "initial"` FOR YOU! NO WORRIES! WE GOT YOU ON THIS ONE!
 
 
-### ADD TO AN EXISTING PROJECT
+### ADD BROWSERIFY TO AN EXISTING PROJECT
 
 Just `cd` into any project folder that contains a `package.json`, whether created via `mkproj` or not, and run:
 
 ``` 
-  mkproj -t
+  mkproj -b
 ```
-(or `-b` or `-c` or any combination thereof) `mkproj` will add some twitter bot config files and boilerplate and install the `twit` module and even add a `tweet` entry to the `scripts` in yr `package.json`. It will even guess a good variable name to use for your module ;).
+
+This will `npm install` some junk and add modify yr package.json and make a `/www` with some HTML5 and CSS3 boilerplate all good to go
 
 If at any point the module hits a bump in the road due to, say, a file already existing or a duplicate `scripts` entry it will output a helpful error, thus allowing you, the programmer, to rectify this error. 
 
@@ -89,10 +90,6 @@ generates tiny node projects
 Options:
   -b, --browserify, --browser, --bacon      installs browserify/watchify and
                                             adds /www folder           [boolean]
-  -c, --cli, --cmd, -l, --lettuce           installs yargs and adds cmd.js file
-                                                                       [boolean]
-  -t, --twitter, --tweet, --tomato          installs twit and adds config.js and
-                                            bot.js files               [boolean]
   -n, --noPleaseDoNotInstallThanks, --      skip the whole "npm init/npm install
   noFunnyBusiness                           /git init/initial commit" business
                                                                        [boolean]
@@ -100,8 +97,7 @@ Options:
 
 Examples:
   mkproj yr-awesome-vanilla-node-project
-  mkproj yr-cool-twitter-bot -tweet
-  mkproj make-me-a-sandwich-please -blt
+  mkproj yr-cool-browser-app -b
   mkproj -b # add /www and browserify to
   an existing project
 
@@ -110,14 +106,6 @@ Examples:
 ### BROWSERIFY
 
 Browserify is awesome. It lets you use node modules in the browser, and push all yr code to npm. Sweet. Even if you are making a "node module" to publish, you might want to use browserify to create a tiny demo page for your tiny module. Run `npm run watch` to start watchify and also plz fire up a simple HTTPserver ([i like this node module](https://www.npmjs.com/package/serve) though any sort of gem or egg will do) and then you can immediately get started writing NODE IN THE BROWSER ZOMG AWESOME! This also adds gh-pages deploy, which is a pretty sweet way to push yr projects to the cloud for free. Check the config in the `package.json`. [read more about browserify](https://github.com/substack/browserify-handbook)
-
-### TWITTER
-
-Every time I make a twitter bot I have to google "node [twit](https://github.com/ttezel/twit)" and copy paste the boilerplate setup with the access tokens and whatnot. NEVER MORE. Add your keys to config.js and use your index.js "business logic" in bot.js, and call `npm run tweet` on a cronjob or something. [a screencast of me making a twitter bot with mkproj](https://vimeo.com/139794441)
-
-### CLI
-
-By using some [yargs](https://github.com/bcoe/yargs) boilerplate, we are reminded to write good documentation for our CLI tool, so that when it fails or someone passes `-h` or `-help` or `-ohMyWhatIsGoingOnHere`, people will get a helpful message instead of abstract garbage. The code inside `cmd.js` is setup to do stuff like `yrModule -i 1000 wowowowowow ok cool` as well as pipey stuff like `cat index.js | yrModule -i 5000`. [read more about node CLI magics here](http://www.colewillsea.com/blog/npm-cli) This option also adds a `bin` entry to yr `package.json` so that when someone `npm install -g`s it they will have yr module available on their path. If your module only makes sense as a command line tool, add `"preferGlobal": true` to yr `package.json` as well.
 
 ### STANDARD
 
@@ -134,28 +122,6 @@ My close friend [https://travis-ci.org/](Travis) will totally check out your cod
 ### BADGES
 
 Aww yeah you got some badges in that `README.md`. Yeah you do. Look at those! Just replace the 2 instances of `YR_TRAVIS_USER_NAME` with, umm, your travis user name. Oh also if you are publishing or distributing your project _please for the love of glob write an appropriate amount of documentation in yr `README.md`_, thanks. 
-
-### CONFIG
-
-There are a few configuration things that mkproj just can't possibly guess, and for that you can create a `~/.mkproj.json` file. Mine looks like this:
-
-```
-{
-  "githubUserName": "coleww",
-  "website": "www.colewillsea.com",
-  "travisUserName": "coleww"
-}
-```
-
-This basically handles personal stuff for the `README.md` and `www/index.html` files, but more awesome tricks might be possible with a little JSON.
-
-### A BLT
-
-Some node modules are so awesome that they deserve to be not only balled up into a tar and sent to npm, but also browserified into a web app, bundled into a command line tool, and deployed as a twitter bot. These modules are known colloquially as "whoppers", "ham-sandwiches", or "BLT's", and when we generate one we use the argument `mkproj someProject -blt`. I have never personally made nor witnessed a BLT so unfortunately I cannot link you to an example, but I can dream on, glob willing...
-
-## F R E E D O M
-
-`npm publish`
 
 ### DEVELOPMENT
 

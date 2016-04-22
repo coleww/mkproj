@@ -6,13 +6,7 @@
 <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
-  <h1>{{name}}</h1>
-  INPUT: <textarea id="input"></textarea><br/><br/>
-  OUTPUT :<span id="output"></span><br/><br/>
-  <hr/>
-  <a href="https://github.com/{{githubUserName}}/{{name}}">FORK THIS</a>
-  <br/><br/>
-  <a href="http://{{website}}">by YR_NAME</a>
+  <div id ="main"></div>
   <script src="bundle.js"></script>
 </body>
 </html>

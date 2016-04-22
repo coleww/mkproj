@@ -1,5 +1,0 @@
-var {{camelName}} = require('../')
-
-document.getElementById('input').addEventListener('keyup', function (e) {
-  document.getElementById('output').textContent = {{camelName}}(document.getElementById('input').value)
-})
