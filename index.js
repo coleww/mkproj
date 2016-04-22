@@ -9,8 +9,8 @@ var npmAddScript = require('npm-add-script')
 var baseFiles = ['.gitignore', '.npmignore', '.travis.yml', 'README.md',
                    'index.js', 'package.json', 'test.js']
 var browserifyFiles = ['www/index.html', 'www/main.css']
-var browserPackages = 'npm install browserify watchify uglifyify serve livereloadify --save-dev'
-
+var browserPackages = 'npm install browserify watchify uglifyify serve livereloadify standard tap --save-dev'
+var basicPackages = 'npm install standard tap --save-dev'
 module.exports = function (name, options, cb) {
   if (fs.existsSync('package.json') && !name) {
     add2proj(name || getName(), options || {}, cb || function () {})
@@ -39,11 +39,11 @@ function mkTheProj (name, options, cb) {
     console.log('W A Y    C H I L L!               =^.^=            R A D I C A L!')
     cb()
     if (!options.noFunnyBusiness) {
-      kexec('cd ' + name + ' && npm init && npm install && git init && git add -A && git commit -m \'initial\'')
+      kexec('cd ' + name + ' && npm init && npm install ' + templateData.install.join(' && ') + ' && git init && git add -A && git commit -m \'initial\'')
     } else {
       console.log('WARNING: you passed the no funny business option')
       console.log('WARNING: therefore packages will not be installed nor will a git repository be initialized and committed to')
-      console.log('DANGER: be certain to run     npm install    so as to install the necessary packages')
+      console.log('DANGER: be certain to run     npm install   ' + templateData.install.join(' && ') + '  so as to install the necessary packages')
       console.log('ADVICE: and please use version control because really why not i mean it doesn\'t mean you gotta make super nice clean commits all the time and doe everything through feature branches and pull requests, gosh, just make a big commit when you have things working and that way you can easily jump back if you need to or take a look at a diff and see what went so utterly wrong')
     }
   })
@@ -133,7 +133,7 @@ function getName () {
 
 function makeTemplateData (name, options) {
   var installs = [
-    options.browserify ? browserPackages : 'echo "=^.^= coool =^.^="'
+    options.browserify ? browserPackages : basicPackages
   ]
 
   return {
