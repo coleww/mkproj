@@ -1,4 +1,4 @@
-var tap = {{#browserify}}require('tape'){{/browserify}}{{^browserify}}require('tap'){{/browserify}}
+var tap = require('tap')
 
 var {{camelName}} = require('./')
 

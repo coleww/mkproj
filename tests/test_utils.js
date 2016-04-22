@@ -15,29 +15,16 @@ function testMkingAProject (options, cb) {
   var count = 0
   var exclusions = [] // files to check for exclusion
   if (options.browserify) {
-    count += 7 // 6 assertions
+    count += 4 // 6 assertions
   } else {
     exclusions.push('www')
   }
-  if (options.cli) {
-    count += 3 // 2 assertions
-  } else {
-    exclusions.push('cmd.js')
-  }
-  if (options.twitter) {
-    count += 4 // 3 assertions
-  } else {
-    exclusions.push('config.js')
-    exclusions.push('bot.js')
-  }
-
-  var type = options.browserify ? 'tape' : 'tap'
 
   cleanUpAndRun(name, reallyTestIt)
 
   function reallyTestIt () {
     tap.test(name, function (t) {
-      t.plan(count + exclusions.length + 9)
+      t.plan(count + exclusions.length + 8)
       options.noFunnyBusiness = true
       mkproj(name, options, function () {
         t.ok(fs.existsSync(name), 'mks a new directory')
@@ -46,24 +33,17 @@ function testMkingAProject (options, cb) {
         t.ok(fs.readFileSync(name + '/README.md', {encoding: 'utf-8'}).toString().match(name + '\n----------------'), 'echoes proj name into README.md')
         t.ok(fs.existsSync(name + '/index.js'), 'mks an index.js')
         t.ok(fs.existsSync(name + '/.travis.yml'), 'mks a trav')
-        t.ok(fs.readFileSync(name + '/package.json').toString().match('\"' + type + '\"'), 'mks a package.json containing ' + type + '.')
-        t.ok(fs.readFileSync(name + '/test.js').toString().match('\'' + type + '\''), 'mks a test file that requires ' + type + '.')
+        t.ok(fs.existsSync(name + '/test.js'), 'mks a test file')
 
         if (options.browserify) {
           checkForBrowser(name, t, true)
-        }
-        if (options.cli) {
-          checkForCli(name, t, true)
-        }
-        if (options.twitter) {
-          checkForTwitter(name, t, true)
         }
 
         exclusions.forEach(function (filename) {
           t.ok(!fs.existsSync(name + '/' + filename), 'does not make a ' + filename)
         })
 
-        exec('cp -r ./' + type + '_modules ./' + name + '/node_modules && cd ' + name + ' && standard && node test.js', function (error, stdout, stderr) {
+        exec('cp -r ./tap_modules ./' + name + '/node_modules && cd ' + name + ' && standard && node test.js', function (error, stdout, stderr) {
           t.ok(!error, 'generated module also works')
           rimraf(name, cb)
         })
@@ -78,29 +58,17 @@ function testAddingToAnExistingProject (options, cb) {
   if (options.browserify) {
     count += 4
   }
-  if (options.cli) {
-    count += 2
-  }
-  if (options.twitter) {
-    count += 3
-  }
   cleanUpAndRun(name, reallyTestIt)
 
   function reallyTestIt () {
     tap.test(name, function (t) {
       t.plan(count)
-      mkproj(name, {noFunnyBusiness: true, browserify: false, twitter: false, cli: false}, function () {
+      mkproj(name, {noFunnyBusiness: true, browserify: false}, function () {
         process.chdir(name)
         options.noFunnyBusiness = true
         mkproj('', options, function () {
           if (options.browserify) {
             checkForBrowser('.', t)
-          }
-          if (options.cli) {
-            checkForCli('.', t)
-          }
-          if (options.twitter) {
-            checkForTwitter('.', t)
           }
           process.chdir('../')
           rimraf(name, cb)
@@ -155,34 +123,10 @@ function cleanUpAndRun (path, cb) {
 }
 
 // CHANGE DEEZ to check for the project name??
-function checkForCli (path, t, goThere) {
-  t.ok(fs.readFileSync(path + '/cmd.js').toString().match('yargs'), 'mks a CLI boilerplate file')
-  var packagedJson = fs.readFileSync(path + '/package.json').toString()
-  t.ok(packagedJson.match('bin'), 'mks a package.json containing bin entry because i am garbage')
-  if (goThere) {
-    t.ok(packagedJson.match('yargs'), 'mks a package.json containing yargs cuz it is YARRRRRRRR time')
-  }
-}
-
-function checkForTwitter (path, t, goThere) {
-  t.ok(fs.readFileSync(path + '/config.js').toString().match('SPIDERS'), 'mks a twitter boilerplate file')
-  t.ok(fs.readFileSync(path + '/bot.js').toString().match('toot'), 'mks a botfile')
-  var packagedJson = fs.readFileSync(path + '/package.json').toString()
-  t.ok(packagedJson.match('node bot.js'), 'mks a package.json containing scripts entry for tooting')
-  if (goThere) {
-    t.ok(packagedJson.match('twit'), 'mks a package.json containing twit cuz it is tooting time')
-  }
-}
-
 function checkForBrowser (path, t, goThere) {
   t.ok(fs.readFileSync(path + '/www/main.css').toString().match('hidden'), 'mks a main.css')
   t.ok(fs.readFileSync(path + '/www/demo.js').toString().match('document'), 'mks a demo.js')
   t.ok(fs.readFileSync(path + '/www/index.html').toString().match('html'), 'mks some html5 boilerplate')
   var packagedJson = fs.readFileSync(path + '/package.json').toString()
   t.ok(packagedJson.match('build'), 'adds scripts entries for building/watching')
-  if (goThere) {
-    t.ok(packagedJson.match('browserify'), 'mks a package.json containing browserify cuz it is time')
-    t.ok(packagedJson.match('watchify'), 'mks a package.json containing watchify cuz it is cool')
-    t.ok(packagedJson.match('gh-pages-deploy'), 'mks a package.json containing gh-pages-deploy cuz it is sweet')
-  }
 }
