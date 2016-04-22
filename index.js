@@ -6,9 +6,6 @@ var jsonfile = require('jsonfile')
 var kexec = require('kexec')
 var mustache = require('mustache')
 var npmAddScript = require('npm-add-script')
-var merge = require('merge')
-var osenv = require('osenv')
-
 var baseFiles = ['.gitignore', '.npmignore', '.travis.yml', 'README.md',
                    'index.js', 'package.json', 'test.js']
 var browserifyFiles = ['www/demo.js', 'www/index.html', 'www/main.css']
@@ -131,35 +128,16 @@ function getName () {
   return jsonfile.readFileSync('package.json').name
 }
 
-function getConfig () {
-  try {
-    return jsonfile.readFileSync(osenv.home() + '/.mkproj.json')
-  } catch (e) {
-    return {configError: e}
-  }
-}
-
 function makeTemplateData (name, options) {
-  var both = options.cli && options.twitter ? ',' : ''
-  var either = options.cli || options.twitter
   var installs = [
     options.browserify ? browserPackages : 'echo "=^.^= coool =^.^="'
   ]
-
-  var config = merge({githubUserName: 'yrGithubUsername', travisUserName: 'yrTravisUsername', website: 'yrWebsite'}, getConfig())
 
   return {
     name: name,
     camelName: camelcase(name),
     browserify: options.browserify,
-    cli: options.cli,
-    twitter: options.twitter,
-    both: both,
-    either: either,
-    install: installs,
-    githubUserName: config.githubUserName,
-    website: config.website,
-    travisUserName: config.travisUserName
+    install: installs
   }
 }
 

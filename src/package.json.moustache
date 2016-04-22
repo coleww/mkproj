@@ -8,9 +8,6 @@
     "deploy": "git push origin master && gh-pages-deploy",
     "watch": "watchify www/demo.js -o www/bundle.js --debug --verbose",
   {{/browserify}}
-  {{#twitter}}
-    "tweet": "node bot.js",
-  {{/twitter}}
     "test": "standard && node test.js",
     "publish": "npm run test"
   },
@@ -24,12 +21,6 @@
     {{^browserify}}"tap": "^1.3.2",{{/browserify}}
     "standard": "4.5.4"
   },
-{{#either}}
-  "dependencies": {
-    {{#cli}}"yargs": "^3.18.0"{{/cli}}{{both}}
-    {{#twitter}}"twit": "^2.1.0"{{/twitter}}
-  },
-{{/either}}
 {{#browserify}}
   "gh-pages-deploy": {
     "staticpath": "www",
@@ -40,10 +31,5 @@
     "noprompt": false
   },
 {{/browserify}}
-{{#cli}}
-  "bin": {
-    "{{camelName}}": "cmd.js"
-  },
-{{/cli}}
   "license": "MIT"
 }
