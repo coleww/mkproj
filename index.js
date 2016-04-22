@@ -13,10 +13,6 @@ var baseFiles = ['.gitignore', '.npmignore', '.travis.yml', 'README.md',
                    'index.js', 'package.json', 'test.js']
 var browserifyFiles = ['www/demo.js', 'www/index.html', 'www/main.css']
 var browserPackages = 'npm install browserify watchify tape --save-dev'
-var cliFiles = ['cmd.js']
-var cliPackages = 'npm install yargs --save'
-var twitterFiles = ['bot.js', 'config.js']
-var twitterPackages = 'npm install twit --save'
 
 module.exports = function (name, options, cb) {
   if (fs.existsSync('package.json') && !name) {
@@ -32,23 +28,16 @@ function mkTheProj (name, options, cb) {
   if (options.twitter && options.browserify && options.cli) console.log('GENERATING A WHOPPER, ONE blt, COMING RIGHT UP')
   var templateData = makeTemplateData(name, options)
 
-  var selected = []
+  var selected
   var count = 7
   if (options.browserify) {
     count += 3
-    selected.push('browserify')
+    selected = 'browserify'
+  } else {
+    selected = 'default'
   }
-  if (options.cli) {
-    count++
-    selected.push('CLI')
-  }
-  if (options.twitter) {
-    count += 2
-    selected.push('twitterbot')
-  }
-  if (!options.twitter && !options.browserify && !options.cli) selected.push('default')
   var init = after(count, function () {
-    console.log(name + ' project has been mk\'d with ' + selected.join(' and ') + ' boilerplate!')
+    console.log(name + ' project has been mk\'d with ' + selected + ' boilerplate!')
     console.log(catMe())
     console.log('W A Y    C H I L L!               =^.^=            R A D I C A L!')
     cb()
@@ -68,8 +57,6 @@ function mkTheProj (name, options, cb) {
     } else {
       var files = baseFiles
       if (options.browserify) files = files.concat(browserifyFiles)
-      if (options.twitter) files = files.concat(twitterFiles)
-      if (options.cli) files = files.concat(cliFiles)
       files.forEach(function (filename) {
         writeFile(name + '/' + filename, compiley('/src/' + filename, templateData), logCreation, init)
       })
@@ -97,14 +84,6 @@ function add2proj (name, options, cb) {
     files = files.concat(browserifyFiles)
     selected.push('browserify')
   }
-  if (options.twitter) {
-    files = files.concat(twitterFiles)
-    selected.push('twitter')
-  }
-  if (options.cli) {
-    files = files.concat(cliFiles)
-    selected.push('CLI')
-  }
   console.log('todo', files.length)
   var init = after(files.length + 1, function () {
     cb()
@@ -122,7 +101,7 @@ function add2proj (name, options, cb) {
     if (err) {
       console.log(err)
     } else {
-      console.log('Generating the ' + selected.join(' and ') + ' boilerplate for you now!!!')
+      console.log('Generating the Browserify boilerplate for you now!!!')
       files.forEach(function (filename) {
         writeFile(filename, compiley('/src/' + filename, templateData), logCreation, init)
       })
@@ -137,8 +116,8 @@ function add2proj (name, options, cb) {
       }
     }
   }
-  if (options.browserify || options.cli || options.twitter) {
-    if (options.browserify && !fs.existsSync('./www')) {
+  if (options.browserify) {
+    if (!fs.existsSync('./www')) {
       fs.mkdir('www', doYourWorst)
     } else {
       doYourWorst()
@@ -164,9 +143,7 @@ function makeTemplateData (name, options) {
   var both = options.cli && options.twitter ? ',' : ''
   var either = options.cli || options.twitter
   var installs = [
-    options.browserify ? browserPackages : 'echo "=^.^= coool =^.^="',
-    options.cli ? cliPackages : 'echo "=^.^= raaadical =^.^="',
-    options.twitter ? twitterPackages : 'echo "=^.^= aaawwwesome =^.^="'
+    options.browserify ? browserPackages : 'echo "=^.^= coool =^.^="'
   ]
 
   var config = merge({githubUserName: 'yrGithubUsername', travisUserName: 'yrTravisUsername', website: 'yrWebsite'}, getConfig())

@@ -1,7 +1,7 @@
 {
   "name": "mkproj",
   "version": "4.2.9",
-  "description": "Generates lil nodely projects",
+  "description": "generates tiny node projects or big browserify apps!",
   "bin": {
     "mkproj": "cmd.js"
   },
