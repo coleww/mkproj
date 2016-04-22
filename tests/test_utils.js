@@ -15,7 +15,7 @@ function testMkingAProject (options, cb) {
   var count = 0
   var exclusions = [] // files to check for exclusion
   if (options.browserify) {
-    count += 4 // 6 assertions
+    count = 3 // 6 assertions
   } else {
     exclusions.push('www')
   }
@@ -56,7 +56,7 @@ function testAddingToAnExistingProject (options, cb) {
   var name = makeName(options)
   var count = 0
   if (options.browserify) {
-    count += 4
+    count += 3
   }
   cleanUpAndRun(name, reallyTestIt)
 
@@ -125,7 +125,6 @@ function cleanUpAndRun (path, cb) {
 // CHANGE DEEZ to check for the project name??
 function checkForBrowser (path, t, goThere) {
   t.ok(fs.readFileSync(path + '/www/main.css').toString().match('hidden'), 'mks a main.css')
-  t.ok(fs.readFileSync(path + '/www/demo.js').toString().match('document'), 'mks a demo.js')
   t.ok(fs.readFileSync(path + '/www/index.html').toString().match('html'), 'mks some html5 boilerplate')
   var packagedJson = fs.readFileSync(path + '/package.json').toString()
   t.ok(packagedJson.match('build'), 'adds scripts entries for building/watching')

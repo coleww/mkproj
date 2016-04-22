@@ -24,7 +24,6 @@ var testCases = shuffle([
   {kind: 'add', browserify: true},
   {kind: 'deny', browserify: true, expectations: ['CATastrophic failure occurred while trying to shove stuff into package.json:',
                                                   'BORKED: www/index.html already exists! Maybe delete it and try again?',
-                                                  'BORKED: www/demo.js already exists! Maybe delete it and try again?',
                                                   'BORKED: www/main.css already exists! Maybe delete it and try again?']}
 ])
 

@@ -8,8 +8,8 @@ var mustache = require('mustache')
 var npmAddScript = require('npm-add-script')
 var baseFiles = ['.gitignore', '.npmignore', '.travis.yml', 'README.md',
                    'index.js', 'package.json', 'test.js']
-var browserifyFiles = ['www/demo.js', 'www/index.html', 'www/main.css']
-var browserPackages = 'npm install browserify watchify tape --save-dev'
+var browserifyFiles = ['www/index.html', 'www/main.css']
+var browserPackages = 'npm install browserify watchify uglifyify serve livereloadify --save-dev'
 
 module.exports = function (name, options, cb) {
   if (fs.existsSync('package.json') && !name) {
@@ -28,7 +28,7 @@ function mkTheProj (name, options, cb) {
   var selected
   var count = 7
   if (options.browserify) {
-    count += 3
+    count += 2
     selected = 'browserify'
   } else {
     selected = 'default'
@@ -87,8 +87,8 @@ function add2proj (name, options, cb) {
     if (!options.noFunnyBusiness) {
       kexec(templateData.install.join(' && '))
     } else {
-      console.log('WARNING: you passed the "noFunnyBusiness" paramater, so packages won\'t be installed nor will the package.json be updated!')
-      console.log('DANGER: be sure to run the following command to install the required packages and update the package.json:')
+      console.log('WARNING: you passed the "noFunnyBusiness" paramater, so packages won\'t be installed!')
+      console.log('DANGER: be sure to run the following command to install the required packages=:')
       console.log('    ' + templateData.install.join(' && '))
       console.log(catMe())
       console.log('thank you')
@@ -104,7 +104,10 @@ function add2proj (name, options, cb) {
       })
 
       try {
-        addScripts(templateData)
+        npmAddScript({key: 'build', value: 'browserify -g uglifyify index.js -o www/bundle.js'})
+        npmAddScript({key: 'watch', value: 'watchify index.js -o www/bundle.js --debug --verbose'})
+        npmAddScript({key: 'livereload', value: 'livereloadify ./www'})
+        npmAddScript({key: 'serve', value: 'serve ./www'})
       } catch (e) {
         console.log('CATastrophic failure occurred while trying to shove stuff into package.json:')
         console.log(e.message)
@@ -162,25 +165,6 @@ function logCreation (filename, cb) {
       console.log('CREATED: ' + filename)
       if (cb) cb()
     }
-  }
-}
-
-function addScripts (data) {
-  if (data.browserify) {
-    npmAddScript({key: 'build', value: 'browserify www/demo.js -o www/bundle.js'})
-    npmAddScript({key: 'deploy', value: 'git push origin master && gh-pages-deploy'})
-    npmAddScript({key: 'watch', value: 'watchify www/demo.js -o www/bundle.js --debug --verbose'})
-  }
-  if (data.cli) {
-    var packaged = jsonfile.readFileSync('package.json')
-    if (packaged.bin) console.log('WEEEOOOO looks like you already have a bin entry in yr package.json?')
-    var bin = {}
-    bin[data.camelName] = 'cmd.js'
-    packaged.bin = bin
-    jsonfile.writeFileSync('package.json', packaged, {spaces: 2})
-  }
-  if (data.twitter) {
-    npmAddScript({key: 'tweet', value: 'node bot.js'})
   }
 }
 
