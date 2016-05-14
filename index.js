@@ -39,7 +39,7 @@ function mkTheProj (name, options, cb) {
     console.log('W A Y    C H I L L!               =^.^=            R A D I C A L!')
     cb()
     if (!options.noFunnyBusiness) {
-      kexec('cd ' + name + ' && npm init && npm install ' + templateData.install.join(' && ') + ' && git init && git add -A && git commit -m \'initial\'')
+      kexec('cd ' + name + ' && npm init && ' + templateData.install + ' && git init && git add -A && git commit -m \'initial\'')
     } else {
       console.log('WARNING: you passed the no funny business option')
       console.log('WARNING: therefore packages will not be installed nor will a git repository be initialized and committed to')
@@ -85,7 +85,7 @@ function add2proj (name, options, cb) {
   var init = after(files.length + 1, function () {
     cb()
     if (!options.noFunnyBusiness) {
-      kexec(templateData.install.join(' && '))
+      kexec(templateData.install)
     } else {
       console.log('WARNING: you passed the "noFunnyBusiness" paramater, so packages won\'t be installed!')
       console.log('DANGER: be sure to run the following command to install the required packages=:')
