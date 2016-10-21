@@ -131,9 +131,8 @@ function getName () {
 }
 
 function makeTemplateData (name, options) {
-  var installs = [
-    options.browserify ? browserPackages : basicPackages
-  ]
+  var installs = options.browserify ? browserPackages : basicPackages
+
 
   return {
     name: name,
