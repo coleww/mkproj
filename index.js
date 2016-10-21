@@ -133,7 +133,6 @@ function getName () {
 function makeTemplateData (name, options) {
   var installs = options.browserify ? browserPackages : basicPackages
 
-
   return {
     name: name,
     camelName: camelcase(name),
