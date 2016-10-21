@@ -26,7 +26,7 @@ var argv = require('yargs')
 if (argv.b || argv._.length) {
   var projectName = argv._.join('-').replace(/\W/g, '-')
   try {
-    mkproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b, twitter: argv.t, cli: argv.c})
+    mkproj(projectName, {noFunnyBusiness: argv.n, browserify: argv.b})
   } catch (e) {
     console.log(e.message)
   }
