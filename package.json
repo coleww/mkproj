@@ -1,6 +1,6 @@
 {
   "name": "mkproj",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "generates tiny node projects or big browserify apps!",
   "bin": {
     "mkproj": "cmd.js"
